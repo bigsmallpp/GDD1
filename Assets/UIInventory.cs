@@ -9,6 +9,9 @@ public class UIInventory : MonoBehaviour
     private Inventory inventory;
     private Transform itemSlotContainer;
     private Transform itemSlotTemplate;
+
+    private bool UIisActive;
+
     public void SetInventory(Inventory inventory)
     {
         this.inventory = inventory;
@@ -28,6 +31,8 @@ public class UIInventory : MonoBehaviour
     {
         itemSlotContainer = transform.Find("ItemSlotContainer");
         itemSlotTemplate = itemSlotContainer.Find("ItemSlotTemplate");
+
+        UIisActive = false;
 
         
     }
@@ -79,6 +84,24 @@ public class UIInventory : MonoBehaviour
 
 
         }
+    }
+
+    public void SetActiveAlternativly()
+    {
+        
+        
+        if (UIisActive == true)
+        {
+            gameObject.SetActive(false);
+            UIisActive = false;
+        } else
+        {
+            gameObject.SetActive(true);
+            UIisActive = true;
+        }
+        
+
+
     }
 
 }

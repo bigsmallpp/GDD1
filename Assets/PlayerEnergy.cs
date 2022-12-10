@@ -15,18 +15,10 @@ public class PlayerEnergy : MonoBehaviour
     void Start()
     {
         currentEnergy = TotalEnergy;
-
-        
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            EnergyChange();
-        }
-    }
+    
 
     public void EnergyChange()
     {
@@ -37,8 +29,8 @@ public class PlayerEnergy : MonoBehaviour
             EnergySlider EnergySliderScript = Slider.GetComponent<EnergySlider>();
             EnergySliderScript.SetEnergy(currentEnergy);
         }
-        
 
+        
         
         
 

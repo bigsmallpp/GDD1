@@ -22,9 +22,11 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D rb;
     [SerializeField] private UIInventory uiInventory;
+    [SerializeField] private PlayerEnergy playerEnergy;
 
     private Inventory inventory;
     public UIInteract uiInteract;
+
 
     private float interactTimer = 3f;
     
@@ -55,13 +57,16 @@ public class PlayerController : MonoBehaviour
                 {
                     inventory.AddItem(plantWorld.GetItem());
                     plantWorld.DestroySelf();
-                    //PlayerEnergy.EnergyChange();
+                    playerEnergy.EnergyChange();
                 }
             }
         }
 
-            
-            
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            uiInventory.SetActiveAlternativly();
+        }
         
         
         
