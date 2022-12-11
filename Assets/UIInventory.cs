@@ -33,8 +33,13 @@ public class UIInventory : MonoBehaviour
         itemSlotTemplate = itemSlotContainer.Find("ItemSlotTemplate");
 
         UIisActive = false;
-
         
+        
+    }
+
+    private void Start()
+    {
+        gameObject.SetActive(false);
     }
 
     private void RefreshInventoryItems()
@@ -71,6 +76,7 @@ public class UIInventory : MonoBehaviour
                     uiText.SetText("");
                 }
 
+                
 
                 x++;
                 if (x > 3)

@@ -29,12 +29,13 @@ public class PlayerController : MonoBehaviour
 
 
     private float interactTimer = 3f;
-    
 
+    
     private void Awake()
     {
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
+        
 
     }
 
@@ -62,12 +63,18 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
+        //Show Hide Inventory UI
         if (Input.GetKeyDown(KeyCode.I))
         {
             uiInventory.SetActiveAlternativly();
         }
         
+        //Remove one Tomato from Inventory on Key Q
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log(inventory.GetItemList());
+            inventory.RemoveItem(new Item { itemType = Item.ItemType.tomato, amount = 1 });
+        }
         
         
     }
@@ -117,9 +124,6 @@ public class PlayerController : MonoBehaviour
     private void ToolSelection()
     {
         
-        
-        
-       
         if(currentToolNumb >= 0 && (int)Input.mouseScrollDelta.y > 0)
         {
             currentToolNumb += 1;
@@ -166,27 +170,9 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-        PlantWorld plantWorld = collision.GetComponent<PlantWorld>();
-        if (plantWorld != null)
-        {
-            
-            if (interactTimer <= 0)
-            {
-                inventory.AddItem(plantWorld.GetItem());
-                plantWorld.DestroySelf();
-                
-            }
-            
-            //uiInteract.SetUIActive(true);
-            
-            
-        }
-    }
-
     
+
+
 
 
 

@@ -12,10 +12,7 @@ public class Inventory
     {
         itemList = new List<Item>();
 
-        //AddItem(new Item { itemType = Item.ItemType.potato, amount = 1 });
-        //AddItem(new Item { itemType = Item.ItemType.tomato, amount = 1 });
-        //AddItem(new Item { itemType = Item.ItemType.tomato_seed, amount = 1 });
-        
+               
     }
 
     public void AddItem(Item item)
@@ -42,8 +39,45 @@ public class Inventory
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
+
+    // Item aus Inventar abziehen 
+    public void RemoveItem(Item item)
+    {
+        
+        if(item.isStackable())
+        {
+            Item itemInInventory = null;
+            foreach (Item inventoryItem in itemList)
+            {
+                
+                if (inventoryItem.itemType == item.itemType)
+                {
+                    inventoryItem.amount -= item.amount;
+                    itemInInventory = inventoryItem;
+
+                }
+                
+                
+            }
+            if(itemInInventory.amount <= 0 && itemInInventory != null)
+            {
+                itemList.Remove(itemInInventory);
+                
+            }
+            
+            
+        } else
+        {
+            itemList.Remove(item);
+        }
+
+        OnItemListChanged?.Invoke(this, EventArgs.Empty);
+    }
+
     public List<Item> GetItemList()
     {
         return itemList;
     }
+    
 }
+

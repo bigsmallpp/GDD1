@@ -633,6 +633,7 @@ MonoBehaviour:
   currentToolNumb: 0
   rb: {fileID: 487090406}
   uiInventory: {fileID: 882307885}
+  playerEnergy: {fileID: 487090407}
   uiInteract: {fileID: 1027266770}
 --- !u!50 &487090406
 Rigidbody2D:
