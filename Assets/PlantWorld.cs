@@ -6,6 +6,7 @@ public class PlantWorld : MonoBehaviour
 {
     UIInteract uiInteract;
     PlayerController player;
+    private bool clickable = false;
 
     [SerializeField] private string interactText;
     public static PlantWorld  SpawnPlantWorld(Vector3 position,Item item)
@@ -45,6 +46,27 @@ public class PlantWorld : MonoBehaviour
     public string GetInteractText()
     {
         return interactText;
+    }
+
+    public bool getClickableState()
+    {
+        return clickable;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.name == "Player")
+        {
+            clickable = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.gameObject.name == "Player")
+        {
+            clickable = false;
+        }
     }
 
 }
