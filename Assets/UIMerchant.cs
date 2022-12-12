@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine.UI;
 
-public class UIInventory : MonoBehaviour
+public class UIMerchant : MonoBehaviour
 {
     private Inventory inventory;
     private Transform itemSlotContainer;
     private Transform itemSlotTemplate;
+    private Transform sellPage;
+
+    private Button buttonSell;
+    private Button buttonBuy;
 
     private bool UIisActive;
 
@@ -18,26 +22,29 @@ public class UIInventory : MonoBehaviour
 
         inventory.OnItemListChanged += Inventory_OnItemListChanged;
         RefreshInventoryItems();
-        
+
     }
 
     private void Inventory_OnItemListChanged(object sender, System.EventArgs e)
     {
         RefreshInventoryItems();
-        
+
     }
 
-    private void Awake ()
+    private void Awake()
     {
-        itemSlotContainer = transform.Find("ItemSlotContainer");
+        sellPage = transform.Find("SellPage");
+        itemSlotContainer = sellPage.Find("ItemSlotContainer");
         itemSlotTemplate = itemSlotContainer.Find("ItemSlotTemplate");
 
-        UIisActive = false;
+        buttonSell = GameObject.Find("SellButton").GetComponent<Button>();
+        buttonBuy = GameObject.Find("BuyButton").GetComponent<Button>();
+        
     }
 
     private void Start()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     private void RefreshInventoryItems()
@@ -74,7 +81,7 @@ public class UIInventory : MonoBehaviour
                     uiText.SetText("");
                 }
 
-                
+
 
                 x++;
                 if (x > 3)
@@ -84,28 +91,11 @@ public class UIInventory : MonoBehaviour
                 }
 
             }
-        
+
 
 
         }
     }
 
-    public void SetActiveAlternativly()
-    {
-        
-        
-        if (UIisActive == true)
-        {
-            gameObject.SetActive(false);
-            UIisActive = false;
-        } else
-        {
-            gameObject.SetActive(true);
-            UIisActive = true;
-        }
-        
-
-
-    }
-
+    
 }

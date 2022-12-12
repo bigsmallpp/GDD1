@@ -23,20 +23,21 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     [SerializeField] private UIInventory uiInventory;
     [SerializeField] private PlayerEnergy playerEnergy;
+    [SerializeField] private UIMerchant uiMerchant;
 
     private Inventory inventory;
     public UIInteract uiInteract;
 
 
-    private float interactTimer = 3f;
+    
 
     
     private void Awake()
     {
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
-        
 
+        uiMerchant.SetInventory(inventory);
     }
 
     private void Update()
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log(inventory.GetItemList());
-            inventory.RemoveItem(new Item { itemType = Item.ItemType.tomato, amount = 1 });
+            inventory.RemoveItem(new Item { itemType = Item.ItemType.tomato, amount = 1 , prize = 10});
         }
         
         

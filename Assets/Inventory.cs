@@ -11,8 +11,6 @@ public class Inventory
     public Inventory()
     {
         itemList = new List<Item>();
-
-               
     }
 
     public void AddItem(Item item)

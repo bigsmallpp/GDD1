@@ -15,6 +15,7 @@ public class Item
 
     public ItemType itemType;
     public int amount;
+    public int prize;
 
     public Sprite GetSprite()
     {
