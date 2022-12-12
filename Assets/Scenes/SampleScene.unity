@@ -464,9 +464,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a20b50e268888409a7fae00fbb3275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _seconds_per_day: 0
-  _days_per_season: 0
+  _seconds_per_day: 360
+  _days_per_season: 10
   _timer: {fileID: 0}
+  _time_enabled: 0
 --- !u!4 &1581950874
 Transform:
   m_ObjectHideFlags: 0
