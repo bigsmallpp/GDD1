@@ -13,14 +13,16 @@ public class PlayerController : MonoBehaviour
 
     private float horizontal;
     private float vertical;
-    public float movementSpeed = 8f;
+    public Rigidbody2D rb;
+    Vector2 movement;
+    public float movementSpeed = 10f;
 
     
     public int totalToolNumb = 6;
     public int currentToolNumb;
 
 
-    public Rigidbody2D rb;
+
     [SerializeField] private UIInventory uiInventory;
     [SerializeField] private PlayerEnergy playerEnergy;
     [SerializeField] private UIMerchant uiMerchant;
@@ -36,33 +38,14 @@ public class PlayerController : MonoBehaviour
     {
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
-
-        uiMerchant.SetInventory(inventory);
+        //uiMerchant.SetInventory(inventory);
     }
 
     private void Update()
     {
-        horizontal =  Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
-
+        CheckMovement();
         ToolSelection();
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            float interactRange = 1f;
-            Collider2D[] colliderArray = Physics2D.OverlapCircleAll(transform.position, interactRange);
-
-
-            foreach (Collider2D collider in colliderArray)
-            {
-                if (collider.TryGetComponent(out PlantWorld plantWorld))
-                {
-                    inventory.AddItem(plantWorld.GetItem());
-                    plantWorld.DestroySelf();
-                    playerEnergy.EnergyChange();
-                }
-            }
-        }
+        CheckAction();
 
         //Show Hide Inventory UI
         if (Input.GetKeyDown(KeyCode.I))
@@ -81,10 +64,46 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(horizontal * movementSpeed, vertical * movementSpeed);
-        
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+        rb.velocity = movement;
+
     }
-    
+
+    void CheckMovement()
+    {
+        float inputX = Input.GetAxis("Horizontal");
+        float inputY = Input.GetAxis("Vertical");
+        movement = new Vector2(movementSpeed * inputX, movementSpeed * inputY);
+    }
+
+    void CheckAction()
+    {
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            //Face the Direction clicked
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Camera.main.nearClipPlane;
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
+            transform.LookAt(worldPosition, Vector3.up);
+            //Play Action based on current Inventory Item (Tile Based Action - Action performed on current tile and Tile + 1 in Look direction)
+            float interactRange = 1f;
+            Collider2D[] colliderArray = Physics2D.OverlapCircleAll(transform.position, interactRange);
+            foreach (Collider2D collider in colliderArray)
+            {
+                if (collider.TryGetComponent(out PlantWorld plantWorld))
+                {
+                    inventory.AddItem(plantWorld.GetItem());
+                    plantWorld.DestroySelf();
+                    playerEnergy.EnergyChange();
+                }
+            }
+        }
+        return;
+    }
+
     public PlantWorld GetInteractableObject()
     {
         List<PlantWorld> plantInteractableList = new List<PlantWorld>();
@@ -96,8 +115,6 @@ public class PlayerController : MonoBehaviour
                 if (collider.TryGetComponent(out PlantWorld plantWorld))
                 {
                 plantInteractableList.Add(plantWorld);
-                
-
                 }
             }
 
