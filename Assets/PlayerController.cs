@@ -88,20 +88,41 @@ public class PlayerController : MonoBehaviour
             mousePos.z = Camera.main.nearClipPlane;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
             transform.LookAt(worldPosition, Vector3.up);
-            //Play Action based on current Inventory Item (Tile Based Action - Action performed on current tile and Tile + 1 in Look direction)
-            float interactRange = 1f;
-            Collider2D[] colliderArray = Physics2D.OverlapCircleAll(transform.position, interactRange);
-            foreach (Collider2D collider in colliderArray)
+            //ToDo: Check which Item is active and change Behavior according to it (No Item requirement for harvesting)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D raycastHit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
+            if (raycastHit.collider != null)
             {
-                if (collider.TryGetComponent(out PlantWorld plantWorld))
-                {
-                    inventory.AddItem(plantWorld.GetItem());
-                    plantWorld.DestroySelf();
-                    playerEnergy.EnergyChange();
-                }
+                //Our custom method. 
+                SelectedPlant(raycastHit.collider.gameObject);
             }
+
+
         }
         return;
+    }
+
+    void SelectedPlant(GameObject plant)
+    {
+        //ToDo: Implement Harvestable Tag
+        //if(gameObject.tag == "harvestable")
+        //{
+        //float interactRange = 1f;
+        //Collider2D[] colliderArray = Physics2D.OverlapCircleAll(transform.position, interactRange);
+        //foreach (Collider2D collider in colliderArray)
+        //{
+            if (plant.TryGetComponent(out PlantWorld plantWorld))
+            {
+                if(plantWorld.getClickableState())
+            {
+                inventory.AddItem(plantWorld.GetItem());
+                plantWorld.DestroySelf();
+                playerEnergy.EnergyChange();
+            }
+
+            }
+        //}
+        //}
     }
 
     public PlantWorld GetInteractableObject()
