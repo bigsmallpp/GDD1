@@ -52,20 +52,19 @@ public class PlantWorld : MonoBehaviour
     {
         return clickable;
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if(collision.gameObject.name == "Player")
+        if (collision.gameObject.name == "Player")
         {
-            clickable = true;
+            clickable = false;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.name == "Player")
+        if (collision.gameObject.name == "Player")
         {
-            clickable = false;
+            clickable = true;
         }
     }
 
