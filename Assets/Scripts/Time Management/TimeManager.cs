@@ -7,14 +7,15 @@ using UnityEngine;
 public class TimeManager : MonoBehaviour
 {
     private static TimeManager _instance = null;
+    public static TimeManager Instance => _instance;
 
     [Header("Adjustable Values For Time/Season")]
     [SerializeField] private float _seconds_per_day;
     [SerializeField] private int _days_per_season;
 
-    // [Header("Manager For Plant Growing Progress etc.")]
+    [Header("Manager For Plant Growing Progress etc.")]
     // Manages stuff for plants
-    // [SerializeField] private StateManager _state_manager;
+    [SerializeField] private PlantManager _plant_manager;
     
     [Header("Timer In Our HUD")]
     // Timer in HUD
@@ -48,6 +49,7 @@ public class TimeManager : MonoBehaviour
         if (_time_enabled)
         {
             IncreaseTime();
+            _plant_manager.GrowPlants();
         }
     }
 
@@ -58,6 +60,8 @@ public class TimeManager : MonoBehaviour
         {
             EndDay();
             _game_data._current_seconds = 0.0f;
+            
+            // TODO Create Day-toDay transition here and then re-enable time again
         }
     }
 
@@ -123,8 +127,8 @@ public class TimeManager : MonoBehaviour
         // TODO
     }
 
-    public TimeManager Instance()
+    public PlantManager PlantManagerInstance()
     {
-        return _instance;
+        return _plant_manager;
     }
 }
