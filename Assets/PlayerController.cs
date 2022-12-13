@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
     public PlantWorld GetInteractableObject()
     {
         List<PlantWorld> plantInteractableList = new List<PlantWorld>();
-        float interactRange = 1f;
+        float interactRange = 0.37f;
         Collider2D[] colliderArray = Physics2D.OverlapCircleAll(transform.position, interactRange);
 
             foreach (Collider2D collider in colliderArray)
