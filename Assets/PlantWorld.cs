@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlantWorld : MonoBehaviour
 {
-    UIInteract uiInteract;
     private bool clickable = false;
 
     [SerializeField] private string interactText;
@@ -13,7 +12,7 @@ public class PlantWorld : MonoBehaviour
         Transform transform = Instantiate(ItemAssets.Instance.pfPlantWorld, position, Quaternion.identity );
         PlantWorld plantWorld = transform.GetComponent<PlantWorld>();
         plantWorld.SetItem(item);
-
+    
         return plantWorld;
     }
 

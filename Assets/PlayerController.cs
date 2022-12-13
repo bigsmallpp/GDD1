@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
             mousePos.z = Camera.main.nearClipPlane;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
             transform.LookAt(worldPosition, Vector3.up);
+            
             //ToDo: Check which Item is active and change Behavior according to it (No Item requirement for harvesting)
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D raycastHit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
@@ -102,7 +103,7 @@ public class PlayerController : MonoBehaviour
         return;
     }
 
-    void SelectedPlant(GameObject plant)
+    void SelectedPlant(GameObject obj)
     {
         //ToDo: Implement Harvestable Tag
         //if(gameObject.tag == "harvestable")
@@ -111,52 +112,51 @@ public class PlayerController : MonoBehaviour
         //Collider2D[] colliderArray = Physics2D.OverlapCircleAll(transform.position, interactRange);
         //foreach (Collider2D collider in colliderArray)
         //{
-            if (plant.TryGetComponent(out PlantWorld plantWorld))
+        if (obj.TryGetComponent(out PlantBaseClass plant))
+        { 
+            if(plant.getClickable())
             {
-                if(plantWorld.getClickableState())
-            {
-                inventory.AddItem(plantWorld.GetItem());
-                plantWorld.DestroySelf();
+                inventory.AddItem(plant.getItem());
                 playerEnergy.EnergyChange();
+                Destroy(plant.gameObject);
             }
-
-            }
+        }
         //}
         //}
     }
 
-    public PlantWorld GetInteractableObject()
+    public PlantBaseClass GetInteractableObject()
     {
-        List<PlantWorld> plantInteractableList = new List<PlantWorld>();
+        List<PlantBaseClass> plantInteractableList = new List<PlantBaseClass>();
+        // TODO Move to Utils
         float interactRange = 0.37f;
         Collider2D[] colliderArray = Physics2D.OverlapCircleAll(transform.position, interactRange);
 
-            foreach (Collider2D collider in colliderArray)
+        foreach (Collider2D collider in colliderArray)
+        {
+            if (collider.TryGetComponent(out PlantBaseClass plant))
             {
-                if (collider.TryGetComponent(out PlantWorld plantWorld))
-                {
-                plantInteractableList.Add(plantWorld);
-                }
+                plantInteractableList.Add(plant);
             }
+        }
 
-        PlantWorld closestPlant = null;
-
-        foreach(PlantWorld plantWorld in plantInteractableList)
+        PlantBaseClass closestPlant = null;
+        foreach(PlantBaseClass current_plant in plantInteractableList)
         {
             if (closestPlant == null)
             {
-                closestPlant = plantWorld;
+                closestPlant = current_plant;
             } else
             {
-                if(Vector3.Distance(transform.position, plantWorld.transform.position) < 
+                if(Vector3.Distance(transform.position, current_plant.transform.position) < 
                     Vector3.Distance (transform.position , closestPlant.transform.position))
                 {
-                    closestPlant = plantWorld;
+                    closestPlant = current_plant;
                 }
             }
         }
-        return closestPlant;
         
+        return closestPlant;
     }
    
 
