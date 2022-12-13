@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 
 public class TimeManager : MonoBehaviour
@@ -20,6 +21,8 @@ public class TimeManager : MonoBehaviour
     [Header("Timer In Our HUD")]
     // Timer in HUD
     [SerializeField] private GameObject _timer;
+    [SerializeField] private GameObject _day;
+    [SerializeField] private GameObject _season;
     
     [Header("Enable/Disable Time Progression")]
     public bool _time_enabled = false;
@@ -56,6 +59,7 @@ public class TimeManager : MonoBehaviour
     private void IncreaseTime()
     {
         _game_data._current_seconds += Time.deltaTime;
+        updateHUD(true);
         if (_game_data._current_seconds >= _seconds_per_day)
         {
             EndDay();
@@ -70,6 +74,7 @@ public class TimeManager : MonoBehaviour
         _time_enabled = false;
         ++_game_data._current_day_in_season;
         AdjustSeason();
+        updateHUD(false);
     }
 
     private void AdjustSeason()
@@ -80,6 +85,7 @@ public class TimeManager : MonoBehaviour
             ++_game_data._current_season;
             _game_data._current_season = (Utils.Season)((int)_game_data._current_season % 4);
         }
+        
     }
 
     public void StartDay()
@@ -109,7 +115,8 @@ public class TimeManager : MonoBehaviour
             Debug.Log(a);
             CreateNewData();
         }
-
+        
+        updateHUD(false);
         StartDay();
     }
 
@@ -130,5 +137,33 @@ public class TimeManager : MonoBehaviour
     public PlantManager PlantManagerInstance()
     {
         return _plant_manager;
+    }
+
+    private void adjustDay()
+    {
+        String day = "Day " + _game_data._current_day_in_season.ToString() + "/" + _days_per_season;
+        _day.GetComponent<TextMeshProUGUI>().text = day;
+    }
+
+    private void adjustSeason()
+    {
+        String season = Utils.Constants.SEASONS[(int)_game_data._current_season];
+        _season.GetComponent<TextMeshProUGUI>().text = season;
+    }
+
+    private void adjustTime()
+    {
+        _timer.GetComponent<TextMeshProUGUI>().text = Utils.ConvertSecondsToDaytime(_game_data._current_seconds, _seconds_per_day);
+    }
+
+    private void updateHUD(bool adjust_only_time)
+    {
+        adjustTime();
+        
+        if (!adjust_only_time)
+        {
+            adjustDay();
+            adjustSeason();
+        }
     }
 }
