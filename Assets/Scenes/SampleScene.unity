@@ -275,7 +275,7 @@ Transform:
   m_GameObject: {fileID: 34366523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0154, y: -5.0214, z: 0}
-  m_LocalScale: {x: 1.0438125, y: 0.78392655, z: 1}
+  m_LocalScale: {x: 1.043813, y: 0.78392655, z: 1}
   m_Children:
   - {fileID: 1573401461}
   - {fileID: 1809415149}
@@ -700,12 +700,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 487090402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a04a504b27f3b054aa1442edaee398d1, type: 3}
+  m_Script: {fileID: 11500000, guid: b79b36efea0d8c449b53193d3236fae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySlider: {fileID: 0}
+  energySlider: {fileID: 1121413586}
   currentMoney: 10
-  rb: {fileID: 487090406}
+  rb: {fileID: 0}
   movementSpeed: 8
   totalToolNumb: 6
   currentToolNumb: 0
@@ -3735,7 +3735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemType: 1
+    itemType: 2
     amount: 1
     prize: 0
 --- !u!4 &2043763582

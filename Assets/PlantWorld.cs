@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlantWorld : MonoBehaviour
 {
     UIInteract uiInteract;
-    PlayerController player;
     private bool clickable = false;
 
     [SerializeField] private string interactText;
