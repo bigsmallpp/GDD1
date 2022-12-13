@@ -10,6 +10,7 @@ public class Weed : PlantBaseClass
     {
         _current_plant_stage = Utils.PlantStage.Seed;
         _current_time_spent_growing = 0.0f;
+        _interact_text = Utils.Constants.PLANT_NOT_RIPE_YET;
         SwitchToNextSprite();
 
         if (TimeManager.Instance != null && TimeManager.Instance.PlantManagerInstance() != null)
@@ -37,6 +38,7 @@ public class Weed : PlantBaseClass
         }
         
         _current_time_spent_growing += Time.deltaTime;
+        _interact_text = Utils.Constants.PLANT_NOT_RIPE_YET + getPercentOfGrowth();
         if (CheckEnterNextStage())
         {
             EnterNextStage();
@@ -69,6 +71,11 @@ public class Weed : PlantBaseClass
     {
         _current_plant_stage += 1;
         SwitchToNextSprite();
+
+        if (_current_plant_stage == Utils.PlantStage.Ripe)
+        {
+            _interact_text = Utils.Constants.PLANT_HARVEST;
+        }
     }
 
     public override IEnumerator lateStart()
@@ -78,5 +85,16 @@ public class Weed : PlantBaseClass
             yield return new WaitForSeconds(0.25f);
         }
         TimeManager.Instance.PlantManagerInstance().AddPlant(this);
+    }
+
+    public override bool isRipe()
+    {
+        return _current_plant_stage == Utils.PlantStage.Ripe;
+    }
+
+    private String getPercentOfGrowth()
+    {
+        int percent = (int)Math.Round((_current_time_spent_growing / _required_time_to_grow) * 100.0f);
+        return "(" + percent.ToString() + "%)";
     }
 }

@@ -17,7 +17,7 @@ public abstract class PlantBaseClass : MonoBehaviour
     public Utils.PlantStage _current_plant_stage;
     
     [Header("The Interaction Text To Display")]
-    [SerializeField] private string _interact_text;
+    [SerializeField] protected String _interact_text;
 
     [Header("The Item And Its Stats")]
     public Item _item;
@@ -33,6 +33,7 @@ public abstract class PlantBaseClass : MonoBehaviour
     public abstract void YieldPlant();
     public abstract void SwitchToNextSprite();
     public abstract bool CheckEnterNextStage();
+    public abstract bool isRipe();
     public abstract void EnterNextStage();
     public abstract IEnumerator lateStart();
 

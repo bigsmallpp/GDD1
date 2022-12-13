@@ -31,5 +31,7 @@ public static class Utils
     public static class Constants
     {
         public static String SAVEFILE_NAME = "save.json";
+        public static String PLANT_NOT_RIPE_YET = "Plant is not ripe yet...";
+        public static String PLANT_HARVEST = "Press E to harvest";
     }
 }

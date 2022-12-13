@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
         //{
         if (obj.TryGetComponent(out PlantBaseClass plant))
         { 
-            if(plant.getClickable())
+            if(plant.getClickable() && plant.isRipe())
             {
                 inventory.AddItem(plant.getItem());
                 playerEnergy.EnergyChange();
