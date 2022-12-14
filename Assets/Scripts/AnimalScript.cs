@@ -62,8 +62,6 @@ public class AnimalScript : MonoBehaviour
             if(!startedMoving)
             {
                 startMovingAnim(direction);
-                Debug.Log("Start Anim");
-                Debug.Log(direction);
                 startedMoving = true;
             }
             move(direction);
@@ -114,22 +112,17 @@ public class AnimalScript : MonoBehaviour
         {
             case Direction.Up:
             anim.SetBool("chickenLeft", true);
-            Debug.Log("Up State Start Anim");
             break;
             case Direction.Down:
             anim.SetBool("chickenDown", true);
-            Debug.Log("Down State Start Anim");
             break;
             case Direction.Left:
             anim.SetBool("chickenLeft", true);
-            Debug.Log("Left State Start Anim");
             break;
             case Direction.Right:
             anim.SetBool("chickenRight", true);
-            Debug.Log("Right State Start Anim");
             break; 
             default:
-            Debug.Log("Default State Start Anim");
             break;
         }
     }
