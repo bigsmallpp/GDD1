@@ -46,7 +46,7 @@ public class LightManager : MonoBehaviour
         _global_light.color = Color.Lerp(_global_light.color, color_target, Time.deltaTime / _seconds_left_current_transition);
 
         _seconds_left_current_transition -= Time.deltaTime;
-        if (_seconds_left_current_transition < 0)
+        if (_seconds_left_current_transition < 0.1f)
         {
             _seconds_left_current_transition = 0.0f;
         }
@@ -56,6 +56,6 @@ public class LightManager : MonoBehaviour
 
     public void SetLightToDaytime()
     {
-        _global_light.color = Color.white;
+        _global_light.color = _default_lighting;
     }
 }

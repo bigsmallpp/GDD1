@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     public UIInteract uiInteract;
 
 
-    
+    private Animator anim;
 
     
     private void Awake()
@@ -43,11 +43,17 @@ public class PlayerController : MonoBehaviour
         //uiMerchant.SetInventory(inventory);
     }
 
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
+
     private void Update()
     {
         CheckMovement();
         ToolSelection();
         CheckAction();
+        updateAnim();
 
         //Show Hide Inventory UI
         if (inventorykey.action.WasPressedThisFrame())
@@ -202,7 +208,36 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    
+    void updateAnim()
+    {
+        
+        anim.SetBool("directionDown", false);
+        anim.SetBool("directionUp", false);
+        anim.SetBool("directionLeft", false);
+        anim.SetBool("directionRight", false);
+        
+        if(Input.GetKey(KeyCode.S))
+        {
+            anim.SetBool("directionDown", true);
+        }
+        
+        if(Input.GetKey(KeyCode.W))
+        {
+            anim.SetBool("directionUp", true);
+        }
+        
+        if(Input.GetKey(KeyCode.A))
+        {
+            anim.SetBool("directionLeft", true);
+        }
+        
+        if(Input.GetKey(KeyCode.D))
+        {
+            anim.SetBool("directionRight", true);
+        }
+        
+       
+    }
 
 
 
