@@ -6,13 +6,16 @@ using System;
 public class Inventory 
 {
     private List<Item> itemList;
+    private List<Item> merchantItemList;
 
     public event EventHandler OnItemListChanged;
     public Inventory()
     {
         itemList = new List<Item>();
+        merchantItemList = new List<Item>();
     }
 
+    
     public void AddItem(Item item)
     {
         if (item.isStackable())
@@ -76,6 +79,14 @@ public class Inventory
     {
         return itemList;
     }
+
+    public List<Item> GetMerchantItemList()
+    {
+        return merchantItemList;
+    }
+    
+
     
 }
+
 

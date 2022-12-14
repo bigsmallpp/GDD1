@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log(inventory.GetItemList());
-            inventory.RemoveItem(new Item { itemType = Item.ItemType.tomato, amount = 1 , prize = 10});
+            inventory.RemoveItem(new Item { itemType = Item.ItemType.tomato, amount = 1 , price = 10});
         }
         
         
@@ -96,8 +96,6 @@ public class PlayerController : MonoBehaviour
                 if (collider.TryGetComponent(out PlantWorld plantWorld))
                 {
                 plantInteractableList.Add(plantWorld);
-                
-
                 }
             }
 

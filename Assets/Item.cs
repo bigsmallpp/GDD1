@@ -15,18 +15,20 @@ public class Item
 
     public ItemType itemType;
     public int amount;
-    public int prize;
+    public int price;
 
     public Sprite GetSprite()
     {
         switch (itemType)
         {
             default:
-            case ItemType.potato: return ItemAssets.Instance.potato;
-            case ItemType.tomato: return ItemAssets.Instance.tomato;
-            case ItemType.tomato_seed: return ItemAssets.Instance.tomato_seed;
+            case ItemType.potato:       return ItemAssets.Instance.potato;
+            case ItemType.tomato:       return ItemAssets.Instance.tomato;
+            case ItemType.tomato_seed:  return ItemAssets.Instance.tomato_seed;
         }
     }
+
+
 
     public bool isStackable()
     {
@@ -39,6 +41,17 @@ public class Item
 
                 return true;
                 
+        }
+    }
+
+    public static int ItemCost(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            default:
+            case ItemType.potato:       return 10;
+            case ItemType.tomato:       return 15;
+            case ItemType.tomato_seed:  return 5;
         }
     }
 }
