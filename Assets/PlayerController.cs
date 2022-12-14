@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 
@@ -14,7 +15,6 @@ public class PlayerController : MonoBehaviour
     private float horizontal;
     private float vertical;
     public Rigidbody2D rb;
-    Vector2 movement;
     public float movementSpeed = 10f;
 
     
@@ -26,8 +26,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private UIInventory uiInventory;
     [SerializeField] private PlayerEnergy playerEnergy;
     [SerializeField] private UIMerchant uiMerchant;
+    [SerializeField] private InputActionReference movementkey, interactionkey, inventorykey, hotbarkey1, hotbarkey2, hotbarkey3, hotbarkey4, hotbarkey5, hotbarkey6, hotbarCycle;
 
     private Inventory inventory;
+    private Vector2 movement;
     public UIInteract uiInteract;
 
 
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour
         CheckAction();
 
         //Show Hide Inventory UI
-        if (Input.GetKeyDown(KeyCode.I))
+        if (inventorykey.action.WasPressedThisFrame())
         {
             uiInventory.SetActiveAlternativly();
         }
@@ -74,20 +76,17 @@ public class PlayerController : MonoBehaviour
 
     void CheckMovement()
     {
-        float inputX = Input.GetAxis("Horizontal");
-        float inputY = Input.GetAxis("Vertical");
-        movement = new Vector2(movementSpeed * inputX, movementSpeed * inputY);
+        Vector2 input = movementkey.action.ReadValue<Vector2>();
+        movement = new Vector2(movementSpeed * input.x, movementSpeed * input.y);
     }
 
     void CheckAction()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (interactionkey.action.WasPressedThisFrame())
         {
             //Face the Direction clicked
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.nearClipPlane;
-            // Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-            // transform.LookAt(worldPosition, Vector3.up);
             
             //ToDo: Check which Item is active and change Behavior according to it (No Item requirement for harvesting)
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -107,11 +106,6 @@ public class PlayerController : MonoBehaviour
     {
         //ToDo: Implement Harvestable Tag
         //if(gameObject.tag == "harvestable")
-        //{
-        //float interactRange = 1f;
-        //Collider2D[] colliderArray = Physics2D.OverlapCircleAll(transform.position, interactRange);
-        //foreach (Collider2D collider in colliderArray)
-        //{
         if (obj.TryGetComponent(out PlantBaseClass plant))
         { 
             if(plant.getClickable() && plant.isRipe())
@@ -121,8 +115,7 @@ public class PlayerController : MonoBehaviour
                 Destroy(plant.gameObject);
             }
         }
-        //}
-        //}
+
     }
 
     public PlantBaseClass GetInteractableObject()
@@ -163,7 +156,7 @@ public class PlayerController : MonoBehaviour
     private void ToolSelection()
     {
         
-        if(currentToolNumb >= 0 && (int)Input.mouseScrollDelta.y > 0)
+        if(currentToolNumb >= 0 && hotbarCycle.action.ReadValue<float>() > 0)
         {
             currentToolNumb += 1;
             if (currentToolNumb == 6)
@@ -172,7 +165,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(currentToolNumb <= 5 && (int)Input.mouseScrollDelta.y < 0)
+        if(currentToolNumb <= 5 && hotbarCycle.action.ReadValue<float>() < 0)
         {
             currentToolNumb -= 1;
             if (currentToolNumb == -1)
@@ -181,27 +174,27 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if(hotbarkey1.action.WasPressedThisFrame())
         { 
             currentToolNumb = 0;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (hotbarkey2.action.WasPressedThisFrame())
         {
             currentToolNumb = 1;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (hotbarkey3.action.WasPressedThisFrame())
         {
             currentToolNumb = 2;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        if (hotbarkey4.action.WasPressedThisFrame())
         {
             currentToolNumb = 3;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
+        if (hotbarkey5.action.WasPressedThisFrame())
         {
             currentToolNumb = 4;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
+        if (hotbarkey6.action.WasPressedThisFrame())
         {
             currentToolNumb = 5;
         }
