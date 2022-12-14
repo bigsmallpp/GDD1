@@ -62,8 +62,10 @@ public class Weed : PlantBaseClass
         {
             return false;
         }
-            
-        float cycle_length = _required_time_to_grow / 2.0f;
+
+        int divider = _sprites_growing_stages.Count - 1;
+        
+        float cycle_length = _required_time_to_grow / divider;
         return _current_time_spent_growing >= (cycle_length * ((int)_current_plant_stage + 1));
     }
 
