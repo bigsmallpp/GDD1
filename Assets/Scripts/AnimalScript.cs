@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AnimalScript : MonoBehaviour
 {
+
+    private Animator anim;
+
     // Start is called before the first frame update
     public float movementSpeed = 2f;
     public bool bought = false;
@@ -16,6 +19,7 @@ public class AnimalScript : MonoBehaviour
     //public TimeManager tManager;
     private bool isMoving = false;
     private bool isWaiting = false;
+    private bool startedMoving = false;
     private Direction direction = 0;
     public float moveDuration = 2f;
     public float waitDuration = 2f;
@@ -32,7 +36,7 @@ public class AnimalScript : MonoBehaviour
 
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -55,6 +59,13 @@ public class AnimalScript : MonoBehaviour
         }
         if(isMoving)
         {
+            if(!startedMoving)
+            {
+                startMovingAnim(direction);
+                Debug.Log("Start Anim");
+                Debug.Log(direction);
+                startedMoving = true;
+            }
             move(direction);
 
             movingTimer += Time.deltaTime;
@@ -64,6 +75,11 @@ public class AnimalScript : MonoBehaviour
                 movingTimer = 0;
                 direction = 0;
                 isWaiting = true;
+                startedMoving = false;
+
+                anim.SetBool("chickenLeft", false);
+                anim.SetBool("chickenRight", false);
+                anim.SetBool("chickenDown", false);
             }
         }
     }
@@ -90,6 +106,32 @@ public class AnimalScript : MonoBehaviour
             return Direction.Up;
         }
         return dir;
+    }
+
+    void startMovingAnim(Direction randDirection)
+    {
+        switch (randDirection)
+        {
+            case Direction.Up:
+            anim.SetBool("chickenLeft", true);
+            Debug.Log("Up State Start Anim");
+            break;
+            case Direction.Down:
+            anim.SetBool("chickenDown", true);
+            Debug.Log("Down State Start Anim");
+            break;
+            case Direction.Left:
+            anim.SetBool("chickenLeft", true);
+            Debug.Log("Left State Start Anim");
+            break;
+            case Direction.Right:
+            anim.SetBool("chickenRight", true);
+            Debug.Log("Right State Start Anim");
+            break; 
+            default:
+            Debug.Log("Default State Start Anim");
+            break;
+        }
     }
 
     void move(Direction randDirection)
@@ -125,17 +167,21 @@ public class AnimalScript : MonoBehaviour
         if(position.x <= leftBoundary)
         {
             position.x = leftBoundary;
+            anim.SetBool("chickenLeft", false);
         }
         if(position.x >= rightBoundary)
         {
+            anim.SetBool("chickenRight", false);
             position.x = rightBoundary;
         }
         if(position.y >= topBoundary)
         {
+            anim.SetBool("chickenLeft", false);
             position.y = topBoundary;
         }
         if(position.y <= bottomBoundary)
         {
+            anim.SetBool("chickenDown", false);
             position.y = bottomBoundary;
         }
 
