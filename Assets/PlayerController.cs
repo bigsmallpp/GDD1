@@ -16,11 +16,9 @@ public class PlayerController : MonoBehaviour
     private float vertical;
     public Rigidbody2D rb;
     public float movementSpeed = 10f;
-
     
     public int totalToolNumb = 6;
     public int currentToolNumb;
-
 
 
     [SerializeField] private UIInventory uiInventory;
@@ -29,14 +27,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionReference movementkey, interactionkey, inventorykey, hotbarkey1, hotbarkey2, hotbarkey3, hotbarkey4, hotbarkey5, hotbarkey6, hotbarCycle;
     [SerializeField] MarkerManager markerManager;
     [SerializeField] TileMapController tileMapController;
+    [SerializeField] float maxInteractDistance = 1f;
+    [SerializeField] Fieldmanager fieldManager;
 
     private Inventory inventory;
     private Vector2 movement;
     public UIInteract uiInteract;
-
-
-    
-
+    Vector3Int selectedTilePos;
+    bool selectable;
     
     private void Awake()
     {
@@ -47,18 +45,17 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Marker();
         CheckMovement();
-        ToolSelection();
+        ToolSelection(); // -- Maybe Outsource to different Obj
+        Marker();
         CheckAction();
-
-        //Show Hide Inventory UI
+        //Show Hide Inventory UI -- Maybe Outsource to different Obj
         if (inventorykey.action.WasPressedThisFrame())
         {
             uiInventory.SetActiveAlternativly();
         }
-        
-        //Remove one Tomato from Inventory on Key Q
+
+        //Remove one Tomato from Inventory on Key Q -- Maybe Outsource to different Obj
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log(inventory.GetItemList());
@@ -96,16 +93,50 @@ public class PlayerController : MonoBehaviour
             RaycastHit2D raycastHit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
             if (raycastHit.collider != null)
             {
-                //Our custom method. 
                 SelectedPlant(raycastHit.collider.gameObject);
             }
             else
             {
-
+                if(currentToolNumb == 0)
+                {
+                    PlowGrid();
+                }
+                if(currentToolNumb == 1)
+                {
+                    SeedGrid();
+                }
             }
-
         }
         return;
+    }
+
+    private void PlowGrid()
+    {
+        if(selectable)
+        {
+            if(fieldManager.CheckStatus(selectedTilePos) == 0)
+            {
+                fieldManager.Plow(selectedTilePos);
+                return;
+            }
+        }
+    }
+
+    private void SeedGrid()
+    {
+        if(selectable && fieldManager.CheckStatus(selectedTilePos) == 1)
+        {
+            fieldManager.Seed(selectedTilePos);
+            return;
+        }
+    }
+
+    void SelectableCheck()
+    {
+        Vector2 playerPos = transform.position;
+        Vector2 camPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        selectable = Vector2.Distance(playerPos, camPos) < maxInteractDistance;
+        markerManager.Show(selectable);
     }
 
     void SelectedPlant(GameObject obj)
@@ -210,7 +241,9 @@ public class PlayerController : MonoBehaviour
 
     private void Marker()
     {
-        Vector3Int gridPos = tileMapController.GetGridPosition(Input.mousePosition);
+        selectedTilePos = tileMapController.GetGridPosition(Input.mousePosition);
+        SelectableCheck();
+        Vector3Int gridPos = selectedTilePos;
         markerManager.markedCellPos = gridPos;
     }
 
