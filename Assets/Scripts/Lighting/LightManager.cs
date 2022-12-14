@@ -18,6 +18,7 @@ public class LightManager : MonoBehaviour
 
     private float _seconds_per_transition = 0.0f;
     private float _seconds_left_current_transition = 0.0f;
+    private bool _lanterns_turned_on;
 
     private void Start()
     {
@@ -30,6 +31,11 @@ public class LightManager : MonoBehaviour
         if (target == Utils.LightingTransition.Day)
         {
             return;
+        }
+
+        if (CheckTransitionNight(target) && !_lanterns_turned_on)
+        {
+            TurnOnLanterns();
         }
 
         if (_seconds_per_transition == 0.0f)
@@ -57,5 +63,30 @@ public class LightManager : MonoBehaviour
     public void SetLightToDaytime()
     {
         _global_light.color = _default_lighting;
+    }
+
+    public void TurnOffLanterns()
+    {
+        foreach (Light2D light in _lanterns)
+        {
+            light.enabled = false;
+        }
+
+        _lanterns_turned_on = false;
+    }
+    
+    public void TurnOnLanterns()
+    {
+        foreach (Light2D light in _lanterns)
+        {
+            light.enabled = true;
+        }
+
+        _lanterns_turned_on = true;
+    }
+
+    private bool CheckTransitionNight(Utils.LightingTransition transition)
+    {
+        return transition == Utils.LightingTransition.Night;
     }
 }

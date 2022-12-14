@@ -94,6 +94,7 @@ public class TimeManager : MonoBehaviour
 
     public void StartDay()
     {
+        _light_manager.TurnOffLanterns();
         _light_manager.SetLightToDaytime();
         _time_enabled = true;
     }
