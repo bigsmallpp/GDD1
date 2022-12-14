@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerEnergy playerEnergy;
     [SerializeField] private UIMerchant uiMerchant;
     [SerializeField] private InputActionReference movementkey, interactionkey, inventorykey, hotbarkey1, hotbarkey2, hotbarkey3, hotbarkey4, hotbarkey5, hotbarkey6, hotbarCycle;
+    [SerializeField] MarkerManager markerManager;
+    [SerializeField] TileMapController tileMapController;
 
     private Inventory inventory;
     private Vector2 movement;
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        Marker();
         CheckMovement();
         ToolSelection();
         CheckAction();
@@ -83,7 +86,7 @@ public class PlayerController : MonoBehaviour
     void CheckAction()
     {
         if (interactionkey.action.WasPressedThisFrame())
-        {
+        { 
             //Face the Direction clicked
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.nearClipPlane;
@@ -96,7 +99,10 @@ public class PlayerController : MonoBehaviour
                 //Our custom method. 
                 SelectedPlant(raycastHit.collider.gameObject);
             }
+            else
+            {
 
+            }
 
         }
         return;
@@ -202,12 +208,10 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    
-
-
-
-
-
-
+    private void Marker()
+    {
+        Vector3Int gridPos = tileMapController.GetGridPosition(Input.mousePosition);
+        markerManager.markedCellPos = gridPos;
+    }
 
 }
