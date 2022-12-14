@@ -41,11 +41,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Map
+    uniqueID: 967790799
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Player
     uniqueID: 863094793
+    locked: 0
+  - name: Layer Above
+    uniqueID: 1708493165
     locked: 0
   - name: UI
     uniqueID: 77112507
