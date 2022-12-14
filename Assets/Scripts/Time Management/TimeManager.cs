@@ -17,6 +17,9 @@ public class TimeManager : MonoBehaviour
     [Header("Manager For Plant Growing Progress etc.")]
     // Manages stuff for plants
     [SerializeField] private PlantManager _plant_manager;
+
+    [Header("Manager For All Light Sources In The Scene")]
+    [SerializeField] private LightManager _light_manager;
     
     [Header("Timer In Our HUD")]
     // Timer in HUD
@@ -60,6 +63,7 @@ public class TimeManager : MonoBehaviour
     {
         _game_data._current_seconds += Time.deltaTime;
         updateHUD(true);
+        _light_manager.UpdateLighting(Utils.GetTransition(_game_data._current_seconds, _seconds_per_day));
         if (_game_data._current_seconds >= _seconds_per_day)
         {
             EndDay();
@@ -90,6 +94,7 @@ public class TimeManager : MonoBehaviour
 
     public void StartDay()
     {
+        _light_manager.SetLightToDaytime();
         _time_enabled = true;
     }
 
@@ -165,5 +170,10 @@ public class TimeManager : MonoBehaviour
             adjustDay();
             adjustSeason();
         }
+    }
+
+    public float GetSecondsPerDay()
+    {
+        return _seconds_per_day;
     }
 }
