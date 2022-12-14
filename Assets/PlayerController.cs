@@ -86,8 +86,8 @@ public class PlayerController : MonoBehaviour
             //Face the Direction clicked
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.nearClipPlane;
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-            transform.LookAt(worldPosition, Vector3.up);
+            // Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
+            // transform.LookAt(worldPosition, Vector3.up);
             
             //ToDo: Check which Item is active and change Behavior according to it (No Item requirement for harvesting)
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
