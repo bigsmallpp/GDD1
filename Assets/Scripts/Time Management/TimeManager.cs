@@ -17,9 +17,11 @@ public class TimeManager : MonoBehaviour
     [Header("Manager For Plant Growing Progress etc.")]
     // Manages stuff for plants
     [SerializeField] private PlantManager _plant_manager;
+    [SerializeField] private Fieldmanager _field_manager;
 
     [Header("Manager For All Light Sources In The Scene")]
     [SerializeField] private LightManager _light_manager;
+    
     
     [Header("Timer In Our HUD")]
     // Timer in HUD
@@ -79,6 +81,8 @@ public class TimeManager : MonoBehaviour
         ++_game_data._current_day_in_season;
         AdjustSeason();
         updateHUD(false);
+        _field_manager.UpdateSeeds();
+        StartDay();
     }
 
     private void AdjustSeason()
@@ -89,7 +93,6 @@ public class TimeManager : MonoBehaviour
             ++_game_data._current_season;
             _game_data._current_season = (Utils.Season)((int)_game_data._current_season % 4);
         }
-        
     }
 
     public void StartDay()

@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b101687681fbbc43ac6387e697eacf3, type: 3}
-  m_Name: Wheatseed
+  m_Script: {fileID: 11500000, guid: 169e00eba51f61d45b8588fc5e46a1fd, type: 3}
+  m_Name: Seedable
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Wheat seed
-  <tile>k__BackingField: {fileID: 0}
+  tiles_:
+  - {fileID: 11400000, guid: fd1833fe5b29ad14895f4a5b1e96c559, type: 2}
+  plowable: 0
+  seedable: 1

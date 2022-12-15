@@ -27,6 +27,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerEnergy playerEnergy;
     [SerializeField] private UIMerchant uiMerchant;
     [SerializeField] private InputActionReference movementkey, interactionkey, inventorykey, hotbarkey1, hotbarkey2, hotbarkey3, hotbarkey4, hotbarkey5, hotbarkey6, hotbarCycle;
+    [SerializeField] MarkerManager markerManager;
+    [SerializeField] TileMapController tileMapController;
+    [SerializeField] float maxInteractDistance = 1f;
+    [SerializeField] Fieldmanager fieldManager;
 
     private Inventory inventory;
     private Vector2 movement;
@@ -35,6 +39,8 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
 
+    Vector3Int selectedTilePos;
+    bool selectable;
     
     private void Awake()
     {
@@ -51,8 +57,10 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckMovement();
-        ToolSelection();
+        ToolSelection(); // -- Maybe Outsource to different Obj
+        Marker();
         CheckAction();
+        //Show Hide Inventory UI -- Maybe Outsource to different Obj
         updateAnim();
 
         //Show Hide Inventory UI
@@ -60,8 +68,8 @@ public class PlayerController : MonoBehaviour
         {
             uiInventory.SetActiveAlternativly();
         }
-        
-        //Remove one Tomato from Inventory on Key Q
+
+        //Remove one Tomato from Inventory on Key Q -- Maybe Outsource to different Obj
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log(inventory.GetItemList());
@@ -89,7 +97,7 @@ public class PlayerController : MonoBehaviour
     void CheckAction()
     {
         if (interactionkey.action.WasPressedThisFrame())
-        {
+        { 
             //Face the Direction clicked
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.nearClipPlane;
@@ -102,10 +110,48 @@ public class PlayerController : MonoBehaviour
                 //Our custom method. 
                 SelectedPlant(raycastHit.collider.gameObject);
             }
-
-
+            else
+            {
+                if(currentToolNumb == 0)
+                {
+                    PlowGrid();
+                }
+                if(currentToolNumb == 1)
+                {
+                    SeedGrid();
+                }
+            }
         }
         return;
+    }
+
+    private void PlowGrid()
+    {
+        if(selectable)
+        {
+            if(fieldManager.CheckStatus(selectedTilePos) == 0)
+            {
+                fieldManager.Plow(selectedTilePos);
+                return;
+            }
+        }
+    }
+
+    private void SeedGrid()
+    {
+        if(selectable && fieldManager.CheckStatus(selectedTilePos) == 1)
+        {
+            fieldManager.Seed(selectedTilePos);
+            return;
+        }
+    }
+
+    void SelectableCheck()
+    {
+        Vector2 playerPos = transform.position;
+        Vector2 camPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        selectable = Vector2.Distance(playerPos, camPos) < maxInteractDistance;
+        markerManager.Show(selectable);
     }
 
     void SelectedPlant(GameObject obj)
@@ -208,6 +254,13 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void Marker()
+    {
+        selectedTilePos = tileMapController.GetGridPosition(Input.mousePosition);
+        SelectableCheck();
+        Vector3Int gridPos = selectedTilePos;
+        markerManager.markedCellPos = gridPos;
+    }
     void updateAnim()
     {
         
@@ -235,14 +288,5 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("directionRight", true);
         }
-        
-       
     }
-
-
-
-
-
-
-
 }
