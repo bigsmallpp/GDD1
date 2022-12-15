@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
 
     [SerializeField] private UIInventory uiInventory;
+    [SerializeField] private Store _store;
     [SerializeField] private PlayerEnergy playerEnergy;
     [SerializeField] private UIMerchant uiMerchant;
     [SerializeField] private InputActionReference movementkey, interactionkey, inventorykey, hotbarkey1, hotbarkey2, hotbarkey3, hotbarkey4, hotbarkey5, hotbarkey6, hotbarCycle;
@@ -108,7 +109,7 @@ public class PlayerController : MonoBehaviour
             if (raycastHit.collider != null)
             {
                 //Our custom method. 
-                SelectedPlant(raycastHit.collider.gameObject);
+                Interact(raycastHit.collider.gameObject);
             }
             else
             {
@@ -154,7 +155,7 @@ public class PlayerController : MonoBehaviour
         markerManager.Show(selectable);
     }
 
-    void SelectedPlant(GameObject obj)
+    void Interact(GameObject obj)
     {
         //ToDo: Implement Harvestable Tag
         //if(gameObject.tag == "harvestable")
@@ -167,7 +168,15 @@ public class PlayerController : MonoBehaviour
                 Destroy(plant.gameObject);
             }
         }
+        else if (obj.tag == "Chest")
+        {
+            _store.OpenOrClose();
+        }
+    }
 
+    public Inventory GetPlayerInventory()
+    {
+        return inventory;
     }
 
     public PlantBaseClass GetInteractableObject()

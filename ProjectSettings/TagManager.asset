@@ -7,6 +7,7 @@ TagManager:
   - GeldUI
   - EnergySlider
   - Plant
+  - Chest
   layers:
   - Default
   - TransparentFX

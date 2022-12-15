@@ -24,7 +24,6 @@ public class UIInventory : MonoBehaviour
     private void Inventory_OnItemListChanged(object sender, System.EventArgs e)
     {
         RefreshInventoryItems();
-        
     }
 
     private void Awake ()
@@ -56,8 +55,6 @@ public class UIInventory : MonoBehaviour
 
             foreach (Item item in inventory.GetItemList())
             {
-
-
                 RectTransform itemsSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
                 itemsSlotRectTransform.gameObject.SetActive(true);
                 itemsSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -y * itemSlotCellSize);
@@ -73,39 +70,28 @@ public class UIInventory : MonoBehaviour
                 {
                     uiText.SetText("");
                 }
-
                 
-
                 x++;
                 if (x > 3)
                 {
                     x = 0;
                     y++;
                 }
-
             }
-        
-
-
         }
     }
 
     public void SetActiveAlternativly()
     {
-        
-        
-        if (UIisActive == true)
+        if (UIisActive)
         {
             gameObject.SetActive(false);
             UIisActive = false;
-        } else
+        }
+        else
         {
             gameObject.SetActive(true);
             UIisActive = true;
         }
-        
-
-
     }
-
 }
