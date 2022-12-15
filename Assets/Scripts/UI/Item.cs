@@ -41,4 +41,11 @@ public class Item
                 
         }
     }
+
+    public void Duplicate(Item item)
+    {
+        itemType = item.itemType;
+        amount = item.amount;
+        prize = item.prize;
+    }
 }

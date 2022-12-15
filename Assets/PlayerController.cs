@@ -179,6 +179,11 @@ public class PlayerController : MonoBehaviour
         return inventory;
     }
 
+    public Store GetStore()
+    {
+        return _store;
+    }
+
     public PlantBaseClass GetInteractableObject()
     {
         List<PlantBaseClass> plantInteractableList = new List<PlantBaseClass>();

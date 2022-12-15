@@ -18,7 +18,6 @@ public class UIInventory : MonoBehaviour
 
         inventory.OnItemListChanged += Inventory_OnItemListChanged;
         RefreshInventoryItems();
-        
     }
 
     private void Inventory_OnItemListChanged(object sender, System.EventArgs e)
@@ -55,7 +54,10 @@ public class UIInventory : MonoBehaviour
 
             foreach (Item item in inventory.GetItemList())
             {
-                RectTransform itemsSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
+                GameObject new_item = Instantiate(itemSlotTemplate, itemSlotContainer).gameObject;
+                new_item.GetComponent<InventoryStoreInteraction>().SetItem(item);
+                
+                RectTransform itemsSlotRectTransform = new_item.GetComponent<RectTransform>();
                 itemsSlotRectTransform.gameObject.SetActive(true);
                 itemsSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -y * itemSlotCellSize);
                 Image image = itemsSlotRectTransform.Find("Image").GetComponent<Image>();

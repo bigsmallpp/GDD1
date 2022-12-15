@@ -47,23 +47,16 @@ public class Inventory
             Item itemInInventory = null;
             foreach (Item inventoryItem in itemList)
             {
-                
                 if (inventoryItem.itemType == item.itemType)
                 {
                     inventoryItem.amount -= item.amount;
                     itemInInventory = inventoryItem;
-
                 }
-                
-                
             }
-            if(itemInInventory.amount <= 0 && itemInInventory != null)
+            if(itemInInventory != null && itemInInventory.amount <= 0)
             {
                 itemList.Remove(itemInInventory);
-                
             }
-            
-            
         } else
         {
             itemList.Remove(item);

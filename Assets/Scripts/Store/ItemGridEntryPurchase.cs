@@ -38,10 +38,7 @@ public class ItemGridEntryPurchase : MonoBehaviour
     public Item DuplicateItem()
     {
         Item new_item = new Item();
-        
-        new_item.amount = _item.amount;
-        new_item.prize = _item.prize;
-        new_item.itemType = _item.itemType;
+        new_item.Duplicate(_item);
 
         return new_item;
     }
