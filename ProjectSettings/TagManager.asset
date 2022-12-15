@@ -50,17 +50,17 @@ TagManager:
   - name: Map
     uniqueID: 2558999329
     locked: 0
-  - name: Player
-    uniqueID: 863094793
-    locked: 0
-  - name: Animal
-    uniqueID: 751302245
-    locked: 0
   - name: Layer Above
     uniqueID: 1708493165
     locked: 0
   - name: Tilemap
     uniqueID: 816134015
+    locked: 0
+  - name: Animal
+    uniqueID: 751302245
+    locked: 0
+  - name: Player
+    uniqueID: 863094793
     locked: 0
   - name: UI
     uniqueID: 77112507
