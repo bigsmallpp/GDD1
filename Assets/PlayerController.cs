@@ -7,7 +7,6 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    
     public EnergySlider energySlider;
 
     public int currentMoney = 100;
@@ -17,11 +16,8 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public float movementSpeed = 10f;
 
-    
     public int totalToolNumb = 6;
     public int currentToolNumb;
-
-
 
     [SerializeField] private UIInventory uiInventory;
     [SerializeField] private PlayerEnergy playerEnergy;
@@ -35,7 +31,6 @@ public class PlayerController : MonoBehaviour
     private Inventory inventory;
     private Vector2 movement;
     public UIInteract uiInteract;
-
 
     private Animator anim;
 
@@ -98,28 +93,14 @@ public class PlayerController : MonoBehaviour
     {
         if (interactionkey.action.WasPressedThisFrame())
         { 
-            //Face the Direction clicked
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = Camera.main.nearClipPlane;
-            
-            //ToDo: Check which Item is active and change Behavior according to it (No Item requirement for harvesting)
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D raycastHit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
-            if (raycastHit.collider != null)
+            SelectedPlant();
+            if (currentToolNumb == 0)
             {
-                //Our custom method. 
-                SelectedPlant(raycastHit.collider.gameObject);
+                PlowGrid();
             }
-            else
+            if(currentToolNumb == 1)
             {
-                if(currentToolNumb == 0)
-                {
-                    PlowGrid();
-                }
-                if(currentToolNumb == 1)
-                {
-                    SeedGrid();
-                }
+                SeedGrid();
             }
         }
         return;
@@ -154,16 +135,23 @@ public class PlayerController : MonoBehaviour
         markerManager.Show(selectable);
     }
 
-    void SelectedPlant(GameObject obj)
+    void SelectedPlant()
     {
         //ToDo: Implement Harvestable Tag
         //if(gameObject.tag == "harvestable")
-        if (obj.TryGetComponent(out PlantBaseClass plant))
-        { 
-            if(plant.getClickable() && plant.isRipe())
+        if(fieldManager.CheckStatus(selectedTilePos) == 2)
+        {
+            GameObject plantObj = fieldManager.GetPlantObj(selectedTilePos);
+            if(plantObj == null)
+            {
+                return;
+            }
+            plantObj.TryGetComponent(out PlantBaseClass plant);
+            if(plant != null && plant.isRipe())
             {
                 inventory.AddItem(plant.getItem());
                 playerEnergy.EnergyChange();
+                fieldManager.deleteEntry(selectedTilePos);
                 Destroy(plant.gameObject);
             }
         }

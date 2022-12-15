@@ -57,6 +57,11 @@ public class Fieldmanager : MonoBehaviour
         return 0;
     }
 
+    public GameObject GetPlantObj(Vector3Int pos)
+    {
+        return plants_[(Vector2Int)pos];
+    }
+
     public void UpdateSeeds()
     {
         Dictionary<Vector2Int, GameObject> plants_current = plants_;
@@ -65,12 +70,21 @@ public class Fieldmanager : MonoBehaviour
             if(tile.Value == null)
             {
                 Vector3Int pos = new Vector3Int(tile.Key.x, tile.Key.y, 0);
-                Vector3 posWorld = tilemap_.CellToWorld(pos);
+                Vector3 poscenter = tilemap_.GetCellCenterWorld(pos);
+                //Vector3 posWorld = tilemap_.CellToWorld(pos);
+                
+                Debug.Log("PosWorld x: " + poscenter.x + " y: " + poscenter.y + "\n");
                 tilemap_.SetTile(pos, null);
-                GameObject val = Instantiate(plantPrefab, posWorld, Quaternion.identity);
+                GameObject val = Instantiate(plantPrefab, poscenter, Quaternion.identity);
+                Debug.Log("GameObject x: " + val.transform.position.x + " y: " + val.transform.position.y + "\n");
                 plants_current[tile.Key] = val;
             }
         }
         plants_ = plants_current;
+    }
+
+    public void deleteEntry(Vector3Int key)
+    {
+        plants_.Remove((Vector2Int)key);
     }
 }
