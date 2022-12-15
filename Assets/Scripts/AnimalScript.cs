@@ -16,7 +16,6 @@ public class AnimalScript : MonoBehaviour
     public float topBoundary = -1.5f;
     public float bottomBoundary = -4f;
 
-    //public TimeManager tManager;
     private bool isMoving = false;
     private bool isWaiting = false;
     private bool startedMoving = false;
@@ -25,6 +24,8 @@ public class AnimalScript : MonoBehaviour
     public float waitDuration = 2f;
     private float movingTimer = 0f;
     private float waitingTimer = 0f;
+
+    private bool stopMovement = false;
 
     enum Direction{
         Up = 1,
@@ -42,6 +43,17 @@ public class AnimalScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(stopMovement)
+        {
+            stopMovement = false;
+            isMoving = false;
+            movingTimer = 0;
+            direction = 0;
+            isWaiting = true;
+            startedMoving = false;
+            StopAnimation();
+        }
+
         if(direction == 0)
         {
             direction = getDirection();
@@ -75,9 +87,7 @@ public class AnimalScript : MonoBehaviour
                 isWaiting = true;
                 startedMoving = false;
 
-                anim.SetBool("chickenLeft", false);
-                anim.SetBool("chickenRight", false);
-                anim.SetBool("chickenDown", false);
+                StopAnimation();
             }
         }
     }
@@ -179,5 +189,17 @@ public class AnimalScript : MonoBehaviour
         }
 
         transform.position = position;
+    }
+
+    private void StopAnimation()
+    {
+        anim.SetBool("chickenLeft", false);
+        anim.SetBool("chickenRight", false);
+        anim.SetBool("chickenDown", false);
+    }
+
+    public void StopChicken()
+    {
+        stopMovement = true;
     }
 }
