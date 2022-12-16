@@ -27,7 +27,7 @@ public class TimeManager : MonoBehaviour
     // Timer in HUD
     [SerializeField] private GameObject _timer;
     [SerializeField] private GameObject _day;
-    [SerializeField] private GameObject _season;
+    [SerializeField] private SeasonSpriteHolder _season;
     
     [Header("Enable/Disable Time Progression")]
     public bool _time_enabled = false;
@@ -87,9 +87,9 @@ public class TimeManager : MonoBehaviour
 
     private void AdjustSeason()
     {
-        if (_game_data._current_day_in_season == _days_per_season)
+        if (_game_data._current_day_in_season > _days_per_season)
         {
-            _game_data._current_day_in_season = 0;
+            _game_data._current_day_in_season = 1;
             ++_game_data._current_season;
             _game_data._current_season = (Utils.Season)((int)_game_data._current_season % 4);
         }
@@ -132,7 +132,7 @@ public class TimeManager : MonoBehaviour
     private void CreateNewData()
     {
         DataStore new_data = new DataStore();
-        new_data._current_day_in_season = 0;
+        new_data._current_day_in_season = 1;
         new_data._current_season = Utils.Season.Spring;
 
         _game_data = new_data;
@@ -150,14 +150,13 @@ public class TimeManager : MonoBehaviour
 
     private void adjustDay()
     {
-        String day = "Day " + _game_data._current_day_in_season.ToString() + "/" + _days_per_season;
+        String day = _game_data._current_day_in_season.ToString();
         _day.GetComponent<TextMeshProUGUI>().text = day;
     }
 
     private void adjustSeason()
     {
-        String season = Utils.Constants.SEASONS[(int)_game_data._current_season];
-        _season.GetComponent<TextMeshProUGUI>().text = season;
+        _season.SetSeasonSprite(_game_data._current_season);
     }
 
     private void adjustTime()
