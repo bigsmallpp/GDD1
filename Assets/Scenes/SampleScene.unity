@@ -2203,7 +2203,7 @@ MonoBehaviour:
     amount: 0
     prize: 100
   - itemType: 3
-    amount: 1
+    amount: 0
     prize: 100
   _purchase_handler: {fileID: 1471781183}
   _selling_handler: {fileID: 749795176}
