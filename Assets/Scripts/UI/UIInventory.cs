@@ -62,6 +62,12 @@ public class UIInventory : MonoBehaviour
                 itemsSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -y * itemSlotCellSize);
                 Image image = itemsSlotRectTransform.Find("Image").GetComponent<Image>();
                 image.sprite = item.GetSprite();
+                
+                // TODO Pls change this
+                if (item.itemType == Item.ItemType.egg)
+                {
+                    image.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 40);
+                }
 
                 TextMeshProUGUI uiText = itemsSlotRectTransform.Find("Text").GetComponent<TextMeshProUGUI>();
                 if (item.amount > 1)
