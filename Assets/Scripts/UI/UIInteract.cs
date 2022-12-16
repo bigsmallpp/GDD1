@@ -9,13 +9,13 @@ public class UIInteract : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private TextMeshProUGUI interactText;
 
-    private void Show(PlantBaseClass plant)
+    public void Show(PlantBaseClass plant)
     {
         containerGameObject.SetActive(true);
         interactText.text = plant.getInteractText();
     }
 
-    private void Hide()
+    public void Hide()
     {
         containerGameObject.SetActive(false);
     }

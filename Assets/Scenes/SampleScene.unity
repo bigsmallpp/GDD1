@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a20b50e268888409a7fae00fbb3275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _seconds_per_day: 20
+  _seconds_per_day: 5
   _days_per_season: 5
   _plant_manager: {fileID: 1623013177}
   _field_manager: {fileID: 532562874}

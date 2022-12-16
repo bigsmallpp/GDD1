@@ -21,7 +21,7 @@ public abstract class PlantBaseClass : MonoBehaviour
 
     [Header("The Item And Its Stats")]
     public Item _item;
-    
+
     protected float _current_time_spent_growing;
     protected bool _clickable = false;
     
