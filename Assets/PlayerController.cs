@@ -29,6 +29,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float maxInteractDistance = 1f;
     [SerializeField] Fieldmanager fieldManager;
 
+    //Boundaries
+    public float leftBoundary = -8.621f;
+    public float rightBoundary = 8.622f;
+    public float topBoundary = 4.594f;
+    public float bottomBoundary = -4.594f;
+
     private Inventory inventory;
     private Vector2 movement;
     public UIInteract uiInteract;
@@ -87,7 +93,14 @@ public class PlayerController : MonoBehaviour
     void CheckMovement()
     {
         Vector2 input = movementkey.action.ReadValue<Vector2>();
-        movement = new Vector2(movementSpeed * input.x, movementSpeed * input.y);
+        float moveX = movementSpeed * input.x;
+        float moveY = movementSpeed * input.y;
+        /*Vector2 playerPos = gameObject.transform.position;
+        bool leftB = leftBoundary < playerPos.x;
+        bool rightB = playerPos.x < rightBoundary;
+        bool topB = playerPos.y < topBoundary;
+        bool botB = bottomBoundary < playerPos.y;*/
+        movement = new Vector2(moveX, moveY);
     }
 
     void CheckAction()
