@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Egg : MonoBehaviour
 {
-    public int value = 5;
+    public int value = 10;
 
     // Start is called before the first frame update
     void Start()

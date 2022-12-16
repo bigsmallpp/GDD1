@@ -9,7 +9,6 @@ public class AnimalScript : MonoBehaviour
 
     // Start is called before the first frame update
     public float movementSpeed = 2f;
-    public bool bought = false;
     public bool hasLayed = false;
     public float leftBoundary = -4f;
     public float rightBoundary = 4f;
@@ -25,7 +24,12 @@ public class AnimalScript : MonoBehaviour
     private float movingTimer = 0f;
     private float waitingTimer = 0f;
 
+    public float startPositionX = -2.0f;
+    public float startPositionY = -3.0f;
+
     private bool stopMovement = false;
+
+    //Startposition at x=-2, y=-3
 
     enum Direction{
         Up = 1,

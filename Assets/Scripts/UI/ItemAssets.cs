@@ -19,5 +19,6 @@ public class ItemAssets : MonoBehaviour
     public Sprite potato;
     public Sprite tomato_seed;
     public Sprite tomato_plant;
+    public Sprite chicken_upgrade;
     
 }

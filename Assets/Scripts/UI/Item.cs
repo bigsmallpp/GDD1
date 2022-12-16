@@ -11,6 +11,7 @@ public class Item
         tomato,
         potato,
         tomato_seed,
+        chicken_upgrade
     }
 
     public ItemType itemType;
@@ -25,6 +26,7 @@ public class Item
             case ItemType.potato: return ItemAssets.Instance.potato;
             case ItemType.tomato: return ItemAssets.Instance.tomato;
             case ItemType.tomato_seed: return ItemAssets.Instance.tomato_seed;
+            case ItemType.chicken_upgrade: return ItemAssets.Instance.chicken_upgrade;
         }
     }
 

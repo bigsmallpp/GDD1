@@ -7,6 +7,7 @@ public class ButtonPurchase : MonoBehaviour
     [SerializeField] private PurchaseHandler _purchase_handler;
     [SerializeField] private GameObject _grid_view;
     [SerializeField] private PlayerController _player_inventory;
+    public AnimalScript chickenPrefab;
 
     public void PurchaseSelection()
     {
@@ -16,7 +17,15 @@ public class ButtonPurchase : MonoBehaviour
             if (entry.GetItem().amount > 0)
             {
                 // _items_to_add.Add(entry.GetItem());
-                _player_inventory.GetPlayerInventory().AddItem(entry.DuplicateItem());
+                if(entry.GetItem().itemType != Item.ItemType.chicken_upgrade)
+                {
+                    _player_inventory.GetPlayerInventory().AddItem(entry.DuplicateItem());
+                }
+                else
+                {
+                    Vector2 position = new Vector2(chickenPrefab.startPositionX,chickenPrefab.startPositionY);
+                    Instantiate(chickenPrefab, position, Quaternion.identity);
+                }
                 entry.Reset();
             }
         }
