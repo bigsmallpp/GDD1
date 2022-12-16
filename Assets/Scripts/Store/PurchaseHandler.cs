@@ -9,6 +9,7 @@ public class PurchaseHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _text_total_price;
     [SerializeField] private GameObject _prefab_grid_entry;
     [SerializeField] private GameObject _grid_view;
+    [SerializeField] private Store _store;
 
     public void IncreaseTotalPrice(int amount)
     {
@@ -32,7 +33,7 @@ public class PurchaseHandler : MonoBehaviour
     public void SpawnItemEntry(Item item)
     {
         GameObject obj = Instantiate(_prefab_grid_entry, _grid_view.transform);
-        obj.GetComponent<ItemGridEntryPurchase>().SetItemEntry(item);
+        obj.GetComponent<ItemGridEntryPurchase>().SetItemEntry(item, _store);
         foreach (ItemAddRemoveHandler handler in obj.GetComponentsInChildren<ItemAddRemoveHandler>())
         {
             handler.SetParent(this);

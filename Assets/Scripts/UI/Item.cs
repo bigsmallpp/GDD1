@@ -34,13 +34,13 @@ public class Item
     {
         switch (itemType)
         {
-            default:
             case ItemType.tomato:
             case ItemType.potato:
             case ItemType.tomato_seed:
-
                 return true;
-                
+            
+            default:
+                return false;
         }
     }
 

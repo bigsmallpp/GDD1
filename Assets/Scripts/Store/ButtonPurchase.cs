@@ -16,17 +16,20 @@ public class ButtonPurchase : MonoBehaviour
         {
             if (entry.GetItem().amount > 0)
             {
-                // _items_to_add.Add(entry.GetItem());
+                // Pop Item from store in case it's a single purchase
+                entry.CheckAndRemoveFromStore();
+                
                 if(entry.GetItem().itemType != Item.ItemType.chicken_upgrade)
                 {
                     _player_inventory.GetPlayerInventory().AddItem(entry.DuplicateItem());
+                    entry.Reset();
                 }
                 else
                 {
                     Vector2 position = new Vector2(chickenPrefab.startPositionX,chickenPrefab.startPositionY);
                     Instantiate(chickenPrefab, position, Quaternion.identity);
+                    Destroy(entry.gameObject);
                 }
-                entry.Reset();
             }
         }
         

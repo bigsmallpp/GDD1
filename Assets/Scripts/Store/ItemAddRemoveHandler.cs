@@ -15,7 +15,7 @@ public class ItemAddRemoveHandler : MonoBehaviour
     public void IncreaseAmount()
     {
         int current_amount = int.Parse(_amount.text);
-        if (current_amount == 9)
+        if (CheckSinglePurchaseMaximum(current_amount) || current_amount == 9)
         {
             return;
         }
@@ -43,5 +43,10 @@ public class ItemAddRemoveHandler : MonoBehaviour
     {
         _parent = handler;
         _grid_entry = transform.parent.GetComponent<ItemGridEntryPurchase>();
+    }
+
+    private bool CheckSinglePurchaseMaximum(int current_amount)
+    {
+        return _grid_entry._is_single_purchase && current_amount == 1;
     }
 }

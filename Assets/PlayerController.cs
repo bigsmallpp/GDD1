@@ -135,9 +135,7 @@ public class PlayerController : MonoBehaviour
 
     void SelectableCheck()
     {
-        Vector2 playerPos = transform.position;
-        Vector2 camPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        selectable = Vector2.Distance(playerPos, camPos) < maxInteractDistance;
+        selectable = DistanceToObject() < maxInteractDistance;
         markerManager.Show(selectable);
     }
 
@@ -166,7 +164,7 @@ public class PlayerController : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D raycastHit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
-            if (raycastHit.collider != null)
+            if (raycastHit.collider != null && DistanceToObject() <= maxInteractDistance)
             {
                 GameObject obj = raycastHit.collider.gameObject;
                 if (obj.tag == "Chest")
@@ -177,6 +175,13 @@ public class PlayerController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private float DistanceToObject()
+    {
+        Vector2 playerPos = transform.position;
+        Vector2 camPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return Vector2.Distance(playerPos, camPos);
     }
 
     public Inventory GetPlayerInventory()

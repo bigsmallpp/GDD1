@@ -9,7 +9,7 @@ public class EggMachine : MonoBehaviour
     private AnimalScript chicken;
     public bool layEgg_debug = false;
 
-    public float secondsPerDay;
+    private float secondsPerDay;
     public float pointInTime;
     public bool layedEgg = false;
     public float waitingTimer = 0f;

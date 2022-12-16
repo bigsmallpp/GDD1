@@ -4717,6 +4717,7 @@ MonoBehaviour:
   _text_total_price: {fileID: 826833024}
   _prefab_grid_entry: {fileID: 7605301216424922178, guid: a191249729494f145b588aff361919b2, type: 3}
   _grid_view: {fileID: 1820369120}
+  _store: {fileID: 704619138}
 --- !u!1 &1503115424
 GameObject:
   m_ObjectHideFlags: 0

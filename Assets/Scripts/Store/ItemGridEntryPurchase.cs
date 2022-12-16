@@ -16,18 +16,25 @@ public class ItemGridEntryPurchase : MonoBehaviour
     [Header("The Sprite To Display")]
     [SerializeField] private Image _sprite;
 
+    [Header("Item Types")]
+    public bool _is_single_purchase;
+
     private Item _item;
+    private Store _store;
 
     private void Start()
     {
         _text_amount.text = "0";
     }
 
-    public void SetItemEntry(Item item)
+    public void SetItemEntry(Item item, Store store)
     {
+        _store = store;
         _text_price.text = item.prize.ToString() + Utils.Constants.SHOP_PRICE_POSTFIX;
         _sprite.sprite = item.GetSprite();
         _item = item;
+        
+        _is_single_purchase = !item.isStackable();
     }
 
     public Item GetItem()
@@ -47,5 +54,13 @@ public class ItemGridEntryPurchase : MonoBehaviour
     {
         _item.amount = 0;
         _text_amount.text = "0";
+    }
+
+    public void CheckAndRemoveFromStore()
+    {
+        if (_is_single_purchase)
+        {
+            _store.RemoveItem(_item);
+        }
     }
 }

@@ -41,4 +41,9 @@ public class Store : MonoBehaviour
             _purchase_handler.SpawnItemEntry(item);
         }
     }
+
+    public void RemoveItem(Item item)
+    {
+        _items_in_store.Remove(item);
+    }
 }
