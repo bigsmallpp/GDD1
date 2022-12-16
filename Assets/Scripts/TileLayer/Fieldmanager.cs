@@ -87,4 +87,10 @@ public class Fieldmanager : MonoBehaviour
     {
         plants_.Remove((Vector2Int)key);
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+    }
+
 }

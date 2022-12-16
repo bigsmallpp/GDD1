@@ -94,19 +94,14 @@ public class PlayerController : MonoBehaviour
     {
         if (interactionkey.action.WasPressedThisFrame())
         { 
-            if(Interact())
-            {
-                return;
-            }
+            SelectedPlant();
             if (currentToolNumb == 0)
             {
                 PlowGrid();
-                return;
             }
             if(currentToolNumb == 1)
             {
                 SeedGrid();
-                return;
             }
         }
         return;
@@ -141,42 +136,30 @@ public class PlayerController : MonoBehaviour
         markerManager.Show(selectable);
     }
 
-    bool Interact()
+    void SelectedPlant()
     {
         //ToDo: Implement Harvestable Tag
         //if(gameObject.tag == "harvestable")
-        if (fieldManager.CheckStatus(selectedTilePos) == 2)
+        if(fieldManager.CheckStatus(selectedTilePos) == 2)
         {
             GameObject plantObj = fieldManager.GetPlantObj(selectedTilePos);
-            if (plantObj == null)
+            if(plantObj == null)
             {
-                return false;
+                return;
             }
             plantObj.TryGetComponent(out PlantBaseClass plant);
-            if (plant != null && plant.isRipe())
+            if(plant != null && plant.isRipe())
             {
                 inventory.AddItem(plant.getItem());
                 playerEnergy.EnergyChange();
                 fieldManager.deleteEntry(selectedTilePos);
                 Destroy(plant.gameObject);
-                return true;
             }
         }
-        else
+        else if (obj.tag == "Chest")
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D raycastHit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
-            if (raycastHit.collider != null)
-            {
-                GameObject obj = raycastHit.collider.gameObject;
-                if (obj.tag == "Chest")
-                {
-                    _store.OpenOrClose();
-                    return true;
-                }
-            }
+            _store.OpenOrClose();
         }
-        return false;
     }
 
     public Inventory GetPlayerInventory()

@@ -42,6 +42,7 @@ public static class Utils
         public static String SAVEFILE_NAME = "save.json";
         public static String PLANT_NOT_RIPE_YET = "Plant is not ripe yet ";
         public static String PLANT_HARVEST = "Click to harvest";
+        public static String SHOP_PRICE_POSTFIX = " $";
         public static String[] SEASONS = new string[]{ "Spring", "Summer", "Autumn", "Winter" };
 
         public static int PLAYABLE_HOURS_PER_DAY_DEFAULT = 12;

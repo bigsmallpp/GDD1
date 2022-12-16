@@ -1491,7 +1491,6 @@ GameObject:
   - component: {fileID: 537577836}
   - component: {fileID: 537577835}
   - component: {fileID: 537577837}
-  - component: {fileID: 537577838}
   m_Layer: 0
   m_Name: Chicken
   m_TagString: Untagged
@@ -1530,7 +1529,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.39, y: -3.45, z: -20.810438}
   m_LocalScale: {x: 2, y: 2, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2011980401}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1630,24 +1630,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2987051, y: 0.2480669}
   m_EdgeRadius: 0
---- !u!114 &537577838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537577832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ef0307ade90d1c4b9bdd1ed837298e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eggPrefab: {fileID: 62636019778509602, guid: 55527c3b31ecdee46beab86d65f1fd68, type: 3}
-  layEgg_debug: 0
-  secondsPerDay: 20
-  pointInTime: 0
-  layedEgg: 0
-  waitingTimer: 0
 --- !u!1 &548280885
 GameObject:
   m_ObjectHideFlags: 0
@@ -6550,7 +6532,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1971236513}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
+--- !u!1 &2011980400
+=======
 --- !u!1 &2005400851
+>>>>>>> e0b9a79a6f0214ff0855caf542150683b46ad7df
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6558,22 +6544,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD
+  - component: {fileID: 2011980401}
+  - component: {fileID: 2011980402}
+  m_Layer: 0
+  m_Name: EggMachine
+=======
   - component: {fileID: 2005400852}
   - component: {fileID: 2005400854}
   - component: {fileID: 2005400853}
   m_Layer: 0
   m_Name: CurrentTotal
+>>>>>>> e0b9a79a6f0214ff0855caf542150683b46ad7df
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
+--- !u!4 &2011980401
+Transform:
+=======
 --- !u!224 &2005400852
 RectTransform:
+>>>>>>> e0b9a79a6f0214ff0855caf542150683b46ad7df
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
+  m_GameObject: {fileID: 2011980400}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.15, y: -0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 537577834}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2011980402
+=======
   m_GameObject: {fileID: 2005400851}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -6588,11 +6597,26 @@ RectTransform:
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2005400853
+>>>>>>> e0b9a79a6f0214ff0855caf542150683b46ad7df
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
+  m_GameObject: {fileID: 2011980400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ef0307ade90d1c4b9bdd1ed837298e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eggPrefab: {fileID: 62636019778509602, guid: 55527c3b31ecdee46beab86d65f1fd68, type: 3}
+  layEgg_debug: 0
+  secondsPerDay: 20
+  pointInTime: 0
+  layedEgg: 0
+  waitingTimer: 0
+=======
   m_GameObject: {fileID: 2005400851}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -6684,6 +6708,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2005400851}
   m_CullTransparentMesh: 1
+>>>>>>> e0b9a79a6f0214ff0855caf542150683b46ad7df
 --- !u!1 &2070686367
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 95a8a30bd9647ca40b93f8899e153e75
 TextureImporter:
   internalIDToNameTable:
@@ -146,6 +147,11 @@ TextureImporter:
   - first:
       213: -4538721963172107103
     second: clock_47
+=======
+guid: 1d59926a2356ed743a09fca297708fee
+TextureImporter:
+  internalIDToNameTable: []
+>>>>>>> e0b9a79a6f0214ff0855caf542150683b46ad7df
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -177,10 +183,10 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
 <<<<<<< HEAD
-    filterMode: 1
-=======
     filterMode: 0
->>>>>>> 9c835adf749b09ffdd00b14f4738a979b2ad32b8
+=======
+    filterMode: 1
+>>>>>>> e0b9a79a6f0214ff0855caf542150683b46ad7df
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -190,14 +196,14 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
 <<<<<<< HEAD
-  spriteMode: 1
-  spriteExtrude: 1
-  spriteMeshType: 1
-=======
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 0
->>>>>>> 9c835adf749b09ffdd00b14f4738a979b2ad32b8
+=======
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+>>>>>>> e0b9a79a6f0214ff0855caf542150683b46ad7df
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -223,8 +229,6 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
 <<<<<<< HEAD
-    textureCompression: 1
-=======
     textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
@@ -238,7 +242,9 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
->>>>>>> 9c835adf749b09ffdd00b14f4738a979b2ad32b8
+=======
+    textureCompression: 1
+>>>>>>> e0b9a79a6f0214ff0855caf542150683b46ad7df
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -248,8 +254,6 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
 <<<<<<< HEAD
-    sprites: []
-=======
     sprites:
     - serializedVersion: 2
       name: clock_0
@@ -1259,7 +1263,9 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
->>>>>>> 9c835adf749b09ffdd00b14f4738a979b2ad32b8
+=======
+    sprites: []
+>>>>>>> e0b9a79a6f0214ff0855caf542150683b46ad7df
     outline: []
     physicsShape: []
     bones: []
