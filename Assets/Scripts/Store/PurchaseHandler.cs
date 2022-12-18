@@ -23,7 +23,7 @@ public class PurchaseHandler : MonoBehaviour
         _text_total_price.text = (current_price - amount).ToString() + Utils.Constants.SHOP_PRICE_POSTFIX;
     }
 
-    private int ParseCurrentPrice()
+    public int ParseCurrentPrice()
     {
         String price = _text_total_price.text.Split(' ')[0];
 
