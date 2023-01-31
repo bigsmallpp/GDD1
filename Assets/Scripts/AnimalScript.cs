@@ -29,6 +29,8 @@ public class AnimalScript : MonoBehaviour
 
     private bool stopMovement = false;
 
+    private bool pause = false;
+
     //Startposition at x=-2, y=-3
 
     enum Direction{
@@ -47,51 +49,54 @@ public class AnimalScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(stopMovement)
+        if(!pause)
         {
-            stopMovement = false;
-            isMoving = false;
-            movingTimer = 0;
-            direction = 0;
-            isWaiting = true;
-            startedMoving = false;
-            StopAnimation();
-        }
-
-        if(direction == 0)
-        {
-            direction = getDirection();
-            isWaiting = true;
-        }
-        if(isWaiting)
-        {
-            waitingTimer += Time.deltaTime;
-            if(waitingTimer >= waitDuration)
+            if(stopMovement)
             {
-                isWaiting = false;
-                waitingTimer = 0;
-                isMoving = true;
-            }
-        }
-        if(isMoving)
-        {
-            if(!startedMoving)
-            {
-                startMovingAnim(direction);
-                startedMoving = true;
-            }
-            move(direction);
-
-            movingTimer += Time.deltaTime;
-            if(movingTimer >= moveDuration)
-            {
+                stopMovement = false;
                 isMoving = false;
                 movingTimer = 0;
                 direction = 0;
                 isWaiting = true;
                 startedMoving = false;
-
                 StopAnimation();
+            }
+
+            if(direction == 0)
+            {
+                direction = getDirection();
+                isWaiting = true;
+            }
+            if(isWaiting)
+            {
+                waitingTimer += Time.deltaTime;
+                if(waitingTimer >= waitDuration)
+                {
+                    isWaiting = false;
+                    waitingTimer = 0;
+                    isMoving = true;
+                }
+            }
+            if(isMoving)
+            {
+                if(!startedMoving)
+                {
+                    startMovingAnim(direction);
+                    startedMoving = true;
+                }
+                move(direction);
+
+                movingTimer += Time.deltaTime;
+                if(movingTimer >= moveDuration)
+                {
+                    isMoving = false;
+                    movingTimer = 0;
+                    direction = 0;
+                    isWaiting = true;
+                    startedMoving = false;
+
+                    StopAnimation();
+                }
             }
         }
     }
@@ -205,5 +210,10 @@ public class AnimalScript : MonoBehaviour
     public void StopChicken()
     {
         stopMovement = true;
+    }
+
+    public void freezeChicken(bool pausing)
+    {
+        pause = pausing;
     }
 }

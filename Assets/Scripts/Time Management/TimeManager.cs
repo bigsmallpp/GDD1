@@ -179,4 +179,9 @@ public class TimeManager : MonoBehaviour
     {
         return _seconds_per_day;
     }
+
+    public void pauseTime(bool pausing)
+    {
+        _time_enabled = pausing;
+    }
 }

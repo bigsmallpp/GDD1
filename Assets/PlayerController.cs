@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
             gamePaused = !gamePaused;
             pauseMenu.SetActive(gamePaused);
             //Freeze Game
+            TimeManager.Instance.pauseTime(!gamePaused);
         }
 
         if(!gamePaused)
