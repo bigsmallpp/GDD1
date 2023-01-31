@@ -9,7 +9,6 @@ public class SelectedToolHighlighted : MonoBehaviour
 
     private int currentTool;
     private int currentToolOld;
-
     
     private Image childImage;
 
@@ -20,10 +19,9 @@ public class SelectedToolHighlighted : MonoBehaviour
     void Start()
     {
         currentTool = player.GetComponent<PlayerController>().currentToolNumb;
-
         childImage = transform.GetChild(currentTool).gameObject.GetComponent<Image>();
-
         currentToolOld = 0;
+        HighlightTool(currentTool); //Highlight first tool
     }
 
     private void Update()
@@ -40,12 +38,11 @@ public class SelectedToolHighlighted : MonoBehaviour
 
     private void HighlightTool(int ToolNumb)
     {
-        childImage.color = colorIdle;
+        childImage.color = colorIdle; //Old childImage color
+
         childImage = transform.GetChild(ToolNumb).gameObject.GetComponent<Image>();
-        
         childImage.color = colorSelected;
 
     }
 
-    
 }

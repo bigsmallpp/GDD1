@@ -14,6 +14,7 @@ public class ButtonSell : MonoBehaviour
         foreach (ItemGridEntrySelling item_slot in _grid_view.GetComponentsInChildren<ItemGridEntrySelling>())
         {
             // TODO Add profit here
+            _player_controller.increaseCurrentMoney(item_slot.GetItem().prize, item_slot.GetItem().amount);
             // _player_controller.GetPlayerInventory().AddItem(item_slot.GetItem());
             Destroy(item_slot.gameObject);
         }

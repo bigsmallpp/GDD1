@@ -326,4 +326,19 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("directionRight", true);
         }
     }
+
+    public int getCurrentMoney()
+    {
+        return currentMoney;
+    }
+
+    public void decreaseCurrentMoney(int amount, int quantity)
+    {
+        currentMoney -= amount * quantity;
+    }
+
+    public void increaseCurrentMoney(int amount, int quantity)
+    {
+        currentMoney += amount * quantity;
+    }
 }
