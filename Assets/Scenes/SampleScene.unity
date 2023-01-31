@@ -1306,6 +1306,7 @@ MonoBehaviour:
   tileMapController: {fileID: 987468647}
   maxInteractDistance: 1
   fieldManager: {fileID: 532562874}
+  pauseMenu: {fileID: 0}
   leftBoundary: -8.621
   rightBoundary: 8.622
   topBoundary: 4.594
