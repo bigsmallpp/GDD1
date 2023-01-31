@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] TileMapController tileMapController;
     [SerializeField] float maxInteractDistance = 1f;
     [SerializeField] Fieldmanager fieldManager;
+    [SerializeField] GameObject pauseMenu;
 
     //Boundaries
     public float leftBoundary = -8.621f;
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3Int selectedTilePos;
     bool selectable;
+    private bool gamePaused = false;
     
     private void Awake()
     {
@@ -58,27 +60,35 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        CheckMovement();
-        ToolSelection(); // -- Maybe Outsource to different Obj
-        Marker();
-        CheckAction();
-        //Show Hide Inventory UI -- Maybe Outsource to different Obj
-        updateAnim();
-
-        //Show Hide Inventory UI
-        if (inventorykey.action.WasPressedThisFrame())
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            uiInventory.SetActiveAlternativly();
+            gamePaused = !gamePaused;
+            pauseMenu.SetActive(gamePaused);
+            //Freeze Game
         }
 
-        //Remove one Tomato from Inventory on Key Q -- Maybe Outsource to different Obj
-        if (Input.GetKeyDown(KeyCode.Q))
+        if(!gamePaused)
         {
-            Debug.Log(inventory.GetItemList());
-            inventory.RemoveItem(new Item { itemType = Item.ItemType.tomato, amount = 1 , prize = 10});
+            CheckMovement();
+            ToolSelection(); // -- Maybe Outsource to different Obj
+            Marker();
+            CheckAction();
+            //Show Hide Inventory UI -- Maybe Outsource to different Obj
+            updateAnim();
+
+            //Show Hide Inventory UI
+            if (inventorykey.action.WasPressedThisFrame())
+            {
+                uiInventory.SetActiveAlternativly();
+            }
+
+            //Remove one Tomato from Inventory on Key Q -- Maybe Outsource to different Obj
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Debug.Log(inventory.GetItemList());
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.tomato, amount = 1 , prize = 10});
+            }
         }
-        
-        
     }
     private void FixedUpdate()
     {
