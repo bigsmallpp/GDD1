@@ -67,6 +67,9 @@ TagManager:
   - name: Layer Above
     uniqueID: 1708493165
     locked: 0
+  - name: Objects
+    uniqueID: 254743581
+    locked: 0
   - name: UI
     uniqueID: 77112507
     locked: 0

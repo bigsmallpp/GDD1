@@ -9,10 +9,18 @@ public class FoodContainer : MonoBehaviour
     protected Sprite _current_sprite;
     protected bool _filled;
     protected int _stage = 0;
+    public int index;
 
     //TODO: needs to save state
     void Start()
     {
+        //Get safed state
+        int try_get_state = SceneLoader.Instance.getContainerStateByIndex(index);
+        if (try_get_state == 1)
+        {
+            switchState();
+        }
+
         _current_sprite = _sprites_fill_stages[_stage];
     }
 
@@ -34,13 +42,14 @@ public class FoodContainer : MonoBehaviour
         _current_sprite = _sprites_fill_stages[_stage];
         GetComponent<SpriteRenderer>().sprite = _current_sprite;
         _filled = !_filled;
+        SceneLoader.Instance.safeContainerState(index, _stage);
     }
 
     public void fillContainer()
     {
         if(_stage == 0)
         {
-            Debug.Log("Container filled");
+            //Debug.Log("Container filled");
             switchState();
         }
     }
@@ -49,7 +58,7 @@ public class FoodContainer : MonoBehaviour
     {
         if(_stage == 1)
         {
-            Debug.Log("Empty Container");
+            //Debug.Log("Empty Container");
             switchState();
         }
     }

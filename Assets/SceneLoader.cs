@@ -13,6 +13,8 @@ public class SceneLoader : MonoBehaviour
     private Vector2 _leave_stable_pos;
     public Vector2 current_position;
 
+    private Dictionary<int, int> _container_states;
+
     void Awake()
     {
         current_position = new Vector2(-0.79f, -2.34f); //Start
@@ -30,7 +32,7 @@ public class SceneLoader : MonoBehaviour
 
     void Start()
     {
-        
+        _container_states = new Dictionary<int, int>();
     }
 
     private void updateCurrentPosition(Vector2 pos)
@@ -48,16 +50,45 @@ public class SceneLoader : MonoBehaviour
             break;
             
             case 1:
-            Debug.Log("Load Outside");
+            //Debug.Log("Load Outside");
             updateCurrentPosition(_leave_stable_pos);
             SceneManager.LoadScene("SampleScene");
             break;
             
             case 2:
-            Debug.Log("Load Stable");
+            //Debug.Log("Load Stable");
             updateCurrentPosition(_enter_stable_pos);
             SceneManager.LoadScene("Stable");
             break;
         }
+    }
+
+    public void safeContainerState(int index, int state)
+    {
+        int value = 0;
+        bool hasValue = _container_states.TryGetValue(index, out value);
+        if (hasValue)
+        {
+            _container_states[index] = state;
+        }
+        else
+        {
+            _container_states.Add(index, state);
+        }
+    }
+
+    public int getContainerStateByIndex(int index)
+    {
+        int state;
+        if(_container_states != null && _container_states.TryGetValue(index, out state))
+        {
+            return state;
+        }
+        return 2; //return invalid state
+        /*else
+        {
+            //Debug.Log("No value to index found");
+            return 2;
+        }*/
     }
 }
