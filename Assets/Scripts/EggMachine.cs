@@ -25,24 +25,28 @@ public class EggMachine : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        waitingTimer += Time.deltaTime;
-        if(waitingTimer >= pointInTime && !layedEgg) // Lay Egg after a random time
+        if(TimeManager.Instance._time_enabled)
         {
-            LayEgg();
-            layedEgg = true;
-        }
-        if(waitingTimer >= secondsPerDay) // Wait remaining daytime
-        {
-            getRandomPointInTime();
-            layedEgg = false;
-            waitingTimer = 0;
-        }
+            waitingTimer += Time.deltaTime;
+            if(waitingTimer >= pointInTime && !layedEgg) // Lay Egg after a random time
+            {
+                LayEgg();
+                layedEgg = true;
+            }
+            if(waitingTimer >= secondsPerDay) // Wait remaining daytime
+            {
+                getRandomPointInTime();
+                layedEgg = false;
+                waitingTimer = 0;
+            }
 
-        if(layEgg_debug) // For debug purpose
-        {
-            LayEgg();
-            layEgg_debug = false;
+            if(layEgg_debug) // For debug purpose
+            {
+                LayEgg();
+                layEgg_debug = false;
+            }
         }
+        
     }
 
     void LayEgg()

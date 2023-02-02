@@ -29,7 +29,6 @@ public class AnimalScript : MonoBehaviour
 
     private bool stopMovement = false;
 
-    private bool pause = false;
 
     //Startposition at x=-2, y=-3
 
@@ -49,8 +48,8 @@ public class AnimalScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(!pause)
-        {
+        if(TimeManager.Instance._time_enabled)
+        { 
             if(stopMovement)
             {
                 stopMovement = false;
@@ -98,6 +97,11 @@ public class AnimalScript : MonoBehaviour
                     StopAnimation();
                 }
             }
+        }
+        else
+        {
+            StopAnimation();
+            //TODO: Freeze Animation
         }
     }
 
@@ -210,10 +214,5 @@ public class AnimalScript : MonoBehaviour
     public void StopChicken()
     {
         stopMovement = true;
-    }
-
-    public void freezeChicken(bool pausing)
-    {
-        pause = pausing;
     }
 }

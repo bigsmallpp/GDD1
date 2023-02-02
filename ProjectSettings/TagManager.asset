@@ -8,6 +8,8 @@ TagManager:
   - EnergySlider
   - Plant
   - Chest
+  - StableDoorInside
+  - StableDoorOutside
   layers:
   - Default
   - TransparentFX

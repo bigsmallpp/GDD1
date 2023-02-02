@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        transform.position = SceneLoader.Instance.current_position;
     }
 
     private void Update()
@@ -351,5 +352,18 @@ public class PlayerController : MonoBehaviour
     public void increaseCurrentMoney(int amount, int quantity)
     {
         currentMoney += amount * quantity;
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "StableDoorInside")
+        {
+            SceneLoader.Instance.loadScene(1);
+        }
+        if(collision.gameObject.tag == "StableDoorOutside")
+        {
+            SceneLoader.Instance.loadScene(2);
+        }
+        //transform.position = SceneLoader.Instance.current_position;
     }
 }
