@@ -10,6 +10,8 @@ TagManager:
   - Chest
   - StableDoorInside
   - StableDoorOutside
+  - Stable
+  - Food Container
   layers:
   - Default
   - TransparentFX

@@ -364,6 +364,14 @@ public class PlayerController : MonoBehaviour
         {
             SceneLoader.Instance.loadScene(2);
         }
+        if(collision.gameObject.tag == "Food Container")
+        {
+            if (currentToolNumb == 1)
+            {
+                FoodContainer container = collision.gameObject.GetComponent<FoodContainer>();
+                container.fillContainer();
+            }
+        }
         //transform.position = SceneLoader.Instance.current_position;
     }
 }

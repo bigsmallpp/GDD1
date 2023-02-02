@@ -40,6 +40,7 @@ public class SceneLoader : MonoBehaviour
 
     public void loadScene(int scene)
     {
+        //TODO: Make instances of TimeManager etc and save stuff of player, states of plants
         switch(scene)
         {
             case 0:
