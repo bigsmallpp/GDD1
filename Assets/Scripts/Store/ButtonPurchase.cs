@@ -8,7 +8,6 @@ public class ButtonPurchase : MonoBehaviour
     [SerializeField] private GameObject _grid_view;
     [SerializeField] private PlayerController _player_inventory;
     [SerializeField] private PlayerController _player_controller;
-    public AnimalScript chickenPrefab;
 
     public void PurchaseSelection()
     {
@@ -31,8 +30,9 @@ public class ButtonPurchase : MonoBehaviour
                 }
                 else
                 {
-                    Vector2 position = new Vector2(chickenPrefab.startPositionX,chickenPrefab.startPositionY);
-                    Instantiate(chickenPrefab, position, Quaternion.identity);
+                    //Vector2 position = new Vector2(chickenPrefab.startPositionX,chickenPrefab.startPositionY);
+                    //Instantiate(chickenPrefab, position, Quaternion.identity);
+                    SceneLoader.Instance.setChickenState(true);
                     Destroy(entry.gameObject);
                     _player_controller.decreaseCurrentMoney(entry.GetItem().prize, entry.GetItem().amount);
                 }

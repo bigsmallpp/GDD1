@@ -6,20 +6,27 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance;
+    public AnimalScript chickenPrefab;
 
     //pos inside stable: 0, -4.31
     //pos outside stable: 0.967, -0.609
     private Vector2 _enter_stable_pos;
     private Vector2 _leave_stable_pos;
     public Vector2 current_position;
+    private Vector2 _chicken_start_pos;
 
+    //Saving states
     private Dictionary<int, int> _container_states;
+    public bool _chicken_state = false;
+    private Vector2 _chicken_pos;
 
     void Awake()
     {
         current_position = new Vector2(-0.79f, -2.34f); //Start
         _enter_stable_pos = new Vector2(0.0f, -4.31f);
         _leave_stable_pos = new Vector2(0.967f, -0.609f);
+        _chicken_start_pos = new Vector2(chickenPrefab.startPositionX,chickenPrefab.startPositionY);
+        _chicken_pos = _chicken_start_pos;
 
         if(Instance != null && Instance != this)
         {
@@ -91,4 +98,26 @@ public class SceneLoader : MonoBehaviour
             return 2;
         }*/
     }
+
+    //Chicken bought/alive
+    public void setChickenState(bool state)
+    {
+        _chicken_state = state;
+    }
+
+    public bool getChickenState()
+    {
+        return _chicken_state;
+    }
+
+    public void saveChickenPos(Vector2 position)
+    {
+        _chicken_pos = position;
+    }
+
+    public Vector2 getChickenPos()
+    {
+        return _chicken_pos;
+    }
+    //TODO: Safe Egg state
 }

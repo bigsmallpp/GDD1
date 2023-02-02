@@ -10,10 +10,10 @@ public class AnimalScript : MonoBehaviour
     // Start is called before the first frame update
     public float movementSpeed = 2f;
     public bool hasLayed = false;
-    public float leftBoundary = -4f;
-    public float rightBoundary = 4f;
-    public float topBoundary = -1.5f;
-    public float bottomBoundary = -4f;
+    private float leftBoundary = -5.2f;
+    private float rightBoundary = -2.1f;
+    private float topBoundary = 4.6f;
+    private float bottomBoundary = 1.45f;
 
     private bool isMoving = false;
     private bool isWaiting = false;
@@ -24,8 +24,8 @@ public class AnimalScript : MonoBehaviour
     private float movingTimer = 0f;
     private float waitingTimer = 0f;
 
-    public float startPositionX = -2.0f;
-    public float startPositionY = -3.0f;
+    public float startPositionX = -3.5f;
+    public float startPositionY = 3f;
 
     private bool stopMovement = false;
 
@@ -43,6 +43,11 @@ public class AnimalScript : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        Vector2 getPos = SceneLoader.Instance.getChickenPos();
+        if(getPos != null)
+        {
+            transform.position = getPos;
+        }
     }
 
     // Update is called once per frame
@@ -202,6 +207,7 @@ public class AnimalScript : MonoBehaviour
         }
 
         transform.position = position;
+        SceneLoader.Instance.saveChickenPos(position);
     }
 
     private void StopAnimation()

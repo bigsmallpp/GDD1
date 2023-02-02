@@ -54,10 +54,12 @@ public class EggMachine : MonoBehaviour
         Vector2 position = transform.position;
         chicken.StopChicken();
         Instantiate(eggPrefab, position, Quaternion.identity);
+        //TODO: Safe position
     }
 
     void getTimeToLayEgg()
     {
+        //TODO: Check if time saved
         if(TimeManager.Instance != null)
         {
             Debug.Log("Seconds per day");

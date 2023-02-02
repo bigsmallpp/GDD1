@@ -55,8 +55,8 @@ MonoBehaviour:
   bottomBoundary: -4.5
   moveDuration: 1
   waitDuration: 2
-  startPositionX: -2
-  startPositionY: -3
+  startPositionX: -3.5
+  startPositionY: 3
 --- !u!95 &2489688550124121583
 Animator:
   serializedVersion: 3
@@ -114,7 +114,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 751302245
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 4211399048214100251, guid: a81c0520082276e46b4be28f77830d5c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -167,7 +167,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eggPrefab: {fileID: 62636019778509602, guid: 55527c3b31ecdee46beab86d65f1fd68, type: 3}
   layEgg_debug: 0
-  secondsPerDay: 5
   pointInTime: 0
   layedEgg: 0
   waitingTimer: 0
