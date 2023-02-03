@@ -158,7 +158,7 @@ public class AnimalManager : MonoBehaviour
     private void layEggOutOfSight()
     {
         Vector2 newPos = Vector2.zero;
-        //TODO: calc random position
+        //calc random position
         float new_x = Random.Range(leftBoundary, rightBoundary);
         float new_y = Random.Range(topBoundary, bottomBoundary);
         newPos.x = new_x;
