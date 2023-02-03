@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2489688550124121581}
   m_Layer: 0
   m_Name: Chicken
-  m_TagString: Untagged
+  m_TagString: Chicken
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,10 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 1
   hasLayed: 0
-  leftBoundary: -4.5
-  rightBoundary: 4.5
-  topBoundary: -1.4
-  bottomBoundary: -4.5
   moveDuration: 1
   waitDuration: 2
   startPositionX: -3.5

@@ -44,9 +44,16 @@ public class AnimalScript : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         Vector2 getPos = SceneLoader.Instance.getChickenPos();
-        if(getPos != null)
+        //Signal chicken new spawned
+        AnimalManager.Instance.setChickenRespawned();
+        if (getPos != null)
         {
             transform.position = getPos;
+        }
+        //Restore eggs if layed before
+        if(AnimalManager.Instance.egg_counter > 0)
+        {
+            AnimalManager.Instance.restoreEggs();
         }
     }
 

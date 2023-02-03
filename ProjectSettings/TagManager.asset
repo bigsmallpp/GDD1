@@ -12,6 +12,7 @@ TagManager:
   - StableDoorOutside
   - Stable
   - Food Container
+  - Chicken
   layers:
   - Default
   - TransparentFX
