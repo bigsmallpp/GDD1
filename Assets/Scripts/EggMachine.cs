@@ -27,7 +27,6 @@ public class EggMachine : MonoBehaviour
         Vector2 position = transform.position;
         chicken.StopChicken();
         Instantiate(eggPrefab, position, Quaternion.identity);
-        //TODO: Safe position
         int counter = AnimalManager.Instance.egg_counter++;
         AnimalManager.Instance.safeEggPosition(counter, position);
     }

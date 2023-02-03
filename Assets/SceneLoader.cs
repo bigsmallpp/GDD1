@@ -119,5 +119,4 @@ public class SceneLoader : MonoBehaviour
     {
         return _chicken_pos;
     }
-    //TODO: Safe Egg state
 }

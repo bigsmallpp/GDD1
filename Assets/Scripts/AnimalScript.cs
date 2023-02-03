@@ -10,6 +10,7 @@ public class AnimalScript : MonoBehaviour
     // Start is called before the first frame update
     public float movementSpeed = 2f;
     public bool hasLayed = false;
+    //TODO put boundaries only one time anywhere
     private float leftBoundary = -5.2f;
     private float rightBoundary = -2.1f;
     private float topBoundary = 4.6f;

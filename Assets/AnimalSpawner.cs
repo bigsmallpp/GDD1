@@ -16,7 +16,6 @@ public class AnimalSpawner : MonoBehaviour
             Debug.Log("Init Chicken");
             Instantiate(chickenPrefab.gameObject, chicknePos, Quaternion.identity);
         }
-        //TODO: Restore Egg
     }
 
     // Update is called once per frame

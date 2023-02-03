@@ -9,6 +9,11 @@ public class AnimalManager : MonoBehaviour
     private EggMachine eggMachine;
     public Egg egg_prefab;
 
+    private float leftBoundary = -5.2f;
+    private float rightBoundary = -2.1f;
+    private float topBoundary = 4.6f;
+    private float bottomBoundary = 1.45f;
+
     public bool layEgg_debug = false;
     public bool chickenAlive = false;
     public bool chickenInit = false;
@@ -111,7 +116,6 @@ public class AnimalManager : MonoBehaviour
     void getTimeToLayEgg()
     {
         Debug.Log("Get Time to Lay Egg");
-        //TODO: Check if time saved
         if (TimeManager.Instance != null)
         {
             Debug.Log("Seconds per day");
@@ -155,6 +159,10 @@ public class AnimalManager : MonoBehaviour
     {
         Vector2 newPos = Vector2.zero;
         //TODO: calc random position
+        float new_x = Random.Range(leftBoundary, rightBoundary);
+        float new_y = Random.Range(topBoundary, bottomBoundary);
+        newPos.x = new_x;
+        newPos.y = new_y;
         egg_counter++;
         _egg_positions.Add(egg_counter, newPos);
     }
