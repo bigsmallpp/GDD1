@@ -259,19 +259,31 @@ public class PlayerController : MonoBehaviour
         
         if(currentToolNumb >= 0 && hotbarCycle.action.ReadValue<float>() > 0)
         {
-            currentToolNumb += 1;
+            /*currentToolNumb += 1;
             if (currentToolNumb == 6)
             {
                 currentToolNumb = 0;
+            }*/
+
+            currentToolNumb -= 1;
+            if (currentToolNumb == -1)
+            {
+                currentToolNumb = 5;
             }
         }
 
         if(currentToolNumb <= 5 && hotbarCycle.action.ReadValue<float>() < 0)
         {
-            currentToolNumb -= 1;
+            /*currentToolNumb -= 1;
             if (currentToolNumb == -1)
             {
                 currentToolNumb = 5;
+            }*/
+
+            currentToolNumb += 1;
+            if (currentToolNumb == 6)
+            {
+                currentToolNumb = 0;
             }
         }
 
