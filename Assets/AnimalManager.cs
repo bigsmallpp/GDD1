@@ -17,13 +17,16 @@ public class AnimalManager : MonoBehaviour
     public bool layEgg_debug = false;
     public bool chickenAlive = false;
     public bool chickenInit = false;
+    //private bool hasFood_chicken = false;
 
-    private float secondsPerDay;
+    public float secondsPerDay;
     public float pointInTime;
     public bool layedEgg = false;
     public float waitingTimer = 0f;
 
     public int egg_counter = 0;
+
+    public bool checkForFood_Debug = false;
 
     //Save egg position
     private Dictionary<int, Vector2> _egg_positions;
@@ -64,6 +67,11 @@ public class AnimalManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(checkForFood_Debug)
+        {
+            checkAnimalsHaveFood();
+            checkForFood_Debug = false;
+        }
         chickenAlive = SceneLoader.Instance.getChickenState();
         if(chickenInit)
         {
@@ -107,7 +115,7 @@ public class AnimalManager : MonoBehaviour
                 else
                 {
                     layEggOutOfSight();
-                    Debug.Log("Save egg in store and calc position");
+                    //Debug.Log("Save egg in store and calc position");
                     layedEgg = true;
                 }
             }
@@ -165,5 +173,47 @@ public class AnimalManager : MonoBehaviour
         newPos.y = new_y;
         egg_counter++;
         _egg_positions.Add(egg_counter, newPos);
+    }
+
+    /*public void setFoodState(bool state, AnimalScript.AnimalType type)
+    { 
+        switch(type)
+        {
+            case AnimalScript.AnimalType.chicken:
+                hasFood_chicken = state;
+                break;
+            case AnimalScript.AnimalType.cow:
+                break;
+            case AnimalScript.AnimalType.sheep:
+                break;
+        }
+    }*/
+
+    public void checkAnimalsHaveFood()
+    {
+        //TODO: For all animals
+
+        //check if chicken alive
+        if(chickenAlive)
+        {
+            int chicken_food_state = SceneLoader.Instance.getContainerStateByType(AnimalScript.AnimalType.chicken);
+            if (chicken_food_state != 1) //check if animal has food to eat at night
+            {
+                //Animal dies
+                SceneLoader.Instance._chicken_state = false;
+                //make death sprite :(
+                if (SceneLoader.Instance.currentScene == SceneLoader.Scene.stable && chicken != null)
+                {
+                    chicken.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                if (!SceneLoader.Instance.tryToEmptyContainer(AnimalScript.AnimalType.chicken))
+                {
+                    Debug.Log("Try to empty container: [FAILED]");
+                }
+            }
+        }
     }
 }

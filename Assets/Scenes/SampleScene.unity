@@ -8521,57 +8521,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774296321}
   m_CullTransparentMesh: 1
---- !u!1 &1796748271
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1796748273}
-  - component: {fileID: 1796748272}
-  m_Layer: 0
-  m_Name: AnimalManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1796748272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1796748271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e3b6e65554e21548ba726206f3538b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  egg_prefab: {fileID: 62636019778509602, guid: 55527c3b31ecdee46beab86d65f1fd68, type: 3}
-  layEgg_debug: 0
-  chickenAlive: 0
-  chickenInit: 0
-  pointInTime: 0
-  layedEgg: 0
-  waitingTimer: 0
-  egg_counter: 0
---- !u!4 &1796748273
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1796748271}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 992.08856, y: 21.706907, z: -61.00544}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1809415148
 GameObject:
   m_ObjectHideFlags: 0
@@ -9856,6 +9805,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132394937}
   m_CullTransparentMesh: 1
+--- !u!1001 &315969438423253097
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 315969438841123718, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_Name
+      value: AnimalManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123736, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123736, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 992.08856
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123736, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 21.706907
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123736, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -61.00544
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123736, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123736, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123736, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123736, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123736, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123736, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123736, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315969438841123737, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
+      propertyPath: secondsPerDay
+      value: 60
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
 --- !u!1001 &5246762109800521343
 PrefabInstance:
   m_ObjectHideFlags: 0

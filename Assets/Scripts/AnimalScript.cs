@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimalScript : MonoBehaviour
 {
-
+    public enum AnimalType { chicken, cow, sheep };
     private Animator anim;
 
     // Start is called before the first frame update
@@ -29,7 +29,6 @@ public class AnimalScript : MonoBehaviour
     public float startPositionY = 3f;
 
     private bool stopMovement = false;
-
 
     //Startposition at x=-2, y=-3
 
@@ -224,7 +223,6 @@ public class AnimalScript : MonoBehaviour
         anim.SetBool("chickenRight", false);
         anim.SetBool("chickenDown", false);
     }
-
     public void StopChicken()
     {
         stopMovement = true;

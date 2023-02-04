@@ -9,13 +9,14 @@ public class FoodContainer : MonoBehaviour
     protected Sprite _current_sprite;
     protected bool _filled;
     protected int _stage = 0;
-    public int index;
+    //public int index;
+    public AnimalScript.AnimalType type;
 
     //TODO: needs to save state
     void Start()
     {
         //Get safed state
-        int try_get_state = SceneLoader.Instance.getContainerStateByIndex(index);
+        int try_get_state = SceneLoader.Instance.getContainerStateByType(type);
         if (try_get_state == 1)
         {
             switchState();
@@ -42,7 +43,7 @@ public class FoodContainer : MonoBehaviour
         _current_sprite = _sprites_fill_stages[_stage];
         GetComponent<SpriteRenderer>().sprite = _current_sprite;
         _filled = !_filled;
-        SceneLoader.Instance.safeContainerState(index, _stage);
+        SceneLoader.Instance.safeContainerState(type, _stage);
     }
 
     public void fillContainer()
@@ -51,15 +52,19 @@ public class FoodContainer : MonoBehaviour
         {
             //Debug.Log("Container filled");
             switchState();
+            //AnimalManager.Instance.setFoodState(true, type);
         }
     }
 
-    public void emptyContainer()
+    public bool emptyContainer()
     {
         if(_stage == 1)
         {
             //Debug.Log("Empty Container");
             switchState();
+            //AnimalManager.Instance.setFoodState(false, type);
+            return true;
         }
+        return false;
     }
 }

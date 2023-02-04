@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    string start = "StartScene";
+    string outside = "SampleScene";
+    string stable = "Stable";
+    public enum Scene {start, outside, stable};
+    public Scene currentScene;
     public static SceneLoader Instance;
     public AnimalScript chickenPrefab;
 
@@ -16,7 +21,7 @@ public class SceneLoader : MonoBehaviour
     private Vector2 _chicken_start_pos;
 
     //Saving states
-    private Dictionary<int, int> _container_states;
+    private Dictionary<AnimalScript.AnimalType, int> _container_states;
     public bool _chicken_state = false;
     private Vector2 _chicken_pos;
 
@@ -39,7 +44,7 @@ public class SceneLoader : MonoBehaviour
 
     void Start()
     {
-        _container_states = new Dictionary<int, int>();
+        _container_states = new Dictionary<AnimalScript.AnimalType, int>();
     }
 
     private void updateCurrentPosition(Vector2 pos)
@@ -54,40 +59,57 @@ public class SceneLoader : MonoBehaviour
         {
             case 0:
             SceneManager.LoadScene("StartScene");
+            currentScene = Scene.start;
             break;
             
             case 1:
             //Debug.Log("Load Outside");
             updateCurrentPosition(_leave_stable_pos);
             SceneManager.LoadScene("SampleScene");
+            AnimalManager.Instance.setChickenRespawned();
+            currentScene = Scene.outside;
             break;
             
             case 2:
             //Debug.Log("Load Stable");
             updateCurrentPosition(_enter_stable_pos);
             SceneManager.LoadScene("Stable");
+            currentScene = Scene.stable;
+            //AnimalManager.Instance.setChickenRespawned();
             break;
         }
     }
 
-    public void safeContainerState(int index, int state)
+    public void safeContainerState(AnimalScript.AnimalType type, int state)
     {
         int value = 0;
-        bool hasValue = _container_states.TryGetValue(index, out value);
+        bool hasValue = _container_states.TryGetValue(type, out value);
         if (hasValue)
         {
-            _container_states[index] = state;
+            _container_states[type] = state;
         }
         else
         {
-            _container_states.Add(index, state);
+            _container_states.Add(type, state);
         }
     }
 
-    public int getContainerStateByIndex(int index)
+    public bool updateContainerState(AnimalScript.AnimalType type, int state)
+    {
+        int value = 0;
+        bool hasValue = _container_states.TryGetValue(type, out value);
+        if (hasValue)
+        {
+            _container_states[type] = state;
+            return true;
+        }
+        return false;
+    }
+
+    public int getContainerStateByType(AnimalScript.AnimalType type)
     {
         int state;
-        if(_container_states != null && _container_states.TryGetValue(index, out state))
+        if(_container_states != null && _container_states.TryGetValue(type, out state))
         {
             return state;
         }
@@ -118,5 +140,25 @@ public class SceneLoader : MonoBehaviour
     public Vector2 getChickenPos()
     {
         return _chicken_pos;
+    }
+
+    public bool tryToEmptyContainer(AnimalScript.AnimalType type)
+    {
+        bool returnState = false;
+        GameObject[] container = GameObject.FindGameObjectsWithTag("Food Container");
+        foreach (GameObject item in container)
+        {
+            FoodContainer foodContainer = item.GetComponent<FoodContainer>();
+            if (foodContainer.type == AnimalScript.AnimalType.chicken)
+            {
+                foodContainer.emptyContainer();
+                return true;
+            }
+        }
+        if(getContainerStateByType(type) == 1)
+        {
+            returnState = updateContainerState(type, 0);
+        }
+        return returnState;
     }
 }
