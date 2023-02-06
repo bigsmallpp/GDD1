@@ -13,6 +13,8 @@ TagManager:
   - Stable
   - Food Container
   - Chicken
+  - StableEnterChicken
+  - StableLeaveChicken
   layers:
   - Default
   - TransparentFX

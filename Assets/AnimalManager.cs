@@ -9,6 +9,7 @@ public class AnimalManager : MonoBehaviour
     private EggMachine eggMachine;
     public Egg egg_prefab;
 
+    //Chicken boundaries
     private float leftBoundary = -5.2f;
     private float rightBoundary = -2.1f;
     private float topBoundary = 4.6f;
@@ -17,19 +18,20 @@ public class AnimalManager : MonoBehaviour
     public bool layEgg_debug = false;
     public bool chickenAlive = false;
     public bool chickenInit = false;
+    public bool layedEgg = false;
+    public int egg_counter = 0;
     //private bool hasFood_chicken = false;
 
     public float secondsPerDay;
     public float pointInTime;
-    public bool layedEgg = false;
+    
     public float waitingTimer = 0f;
-
-    public int egg_counter = 0;
 
     public bool checkForFood_Debug = false;
 
     //Save egg position
     private Dictionary<int, Vector2> _egg_positions;
+    public 
     void Awake()
     {
         if (Instance != null && Instance != this)

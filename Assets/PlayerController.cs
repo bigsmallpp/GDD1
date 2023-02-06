@@ -376,7 +376,17 @@ public class PlayerController : MonoBehaviour
         {
             SceneLoader.Instance.loadScene(2);
         }
-        if(collision.gameObject.tag == "Food Container")
+        if (collision.gameObject.tag == "StableEnterChicken")
+        {
+            //SceneLoader.Instance.loadScene(2);
+            transform.position = SceneLoader.Instance.chicken_cage_position;
+        }
+        if (collision.gameObject.tag == "StableLeaveChicken")
+        {
+            //SceneLoader.Instance.loadScene(2);
+            transform.position = SceneLoader.Instance.chicken_door_position;
+        }
+        if (collision.gameObject.tag == "Food Container")
         {
             if (currentToolNumb == 1)
             {

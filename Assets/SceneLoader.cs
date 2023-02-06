@@ -19,6 +19,8 @@ public class SceneLoader : MonoBehaviour
     private Vector2 _leave_stable_pos;
     public Vector2 current_position;
     private Vector2 _chicken_start_pos;
+    public Vector2 chicken_door_position;
+    public Vector2 chicken_cage_position;
 
     //Saving states
     private Dictionary<AnimalScript.AnimalType, int> _container_states;
@@ -32,6 +34,8 @@ public class SceneLoader : MonoBehaviour
         _leave_stable_pos = new Vector2(0.967f, -0.609f);
         _chicken_start_pos = new Vector2(chickenPrefab.startPositionX,chickenPrefab.startPositionY);
         _chicken_pos = _chicken_start_pos;
+        chicken_cage_position = new Vector2(-3.7f, 4.5f);
+        chicken_door_position = new Vector2(0.0f, 4.5f);
 
         if(Instance != null && Instance != this)
         {
