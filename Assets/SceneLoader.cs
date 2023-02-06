@@ -8,8 +8,10 @@ public class SceneLoader : MonoBehaviour
     string start = "StartScene";
     string outside = "SampleScene";
     string stable = "Stable";
-    public enum Scene {start, outside, stable};
+    public enum SceneString {start, outside, stable};
+    public enum Scene {Start = 0, Outside = 1, Stable = 2};
     public Scene currentScene;
+    public SceneString currentSceneString;
     public static SceneLoader Instance;
     public AnimalScript chickenPrefab;
 
@@ -21,6 +23,7 @@ public class SceneLoader : MonoBehaviour
     private Vector2 _chicken_start_pos;
     public Vector2 chicken_door_position;
     public Vector2 chicken_cage_position;
+    public bool enterStable = false;
 
     //Saving states
     private Dictionary<AnimalScript.AnimalType, int> _container_states;
@@ -34,8 +37,8 @@ public class SceneLoader : MonoBehaviour
         _leave_stable_pos = new Vector2(0.967f, -0.609f);
         _chicken_start_pos = new Vector2(chickenPrefab.startPositionX,chickenPrefab.startPositionY);
         _chicken_pos = _chicken_start_pos;
-        chicken_cage_position = new Vector2(-3.7f, 4.5f);
-        chicken_door_position = new Vector2(0.0f, 4.5f);
+        chicken_cage_position = new Vector2(-3.7f, 5.4f);
+        chicken_door_position = new Vector2(0.0f, 5.4f);
 
         if(Instance != null && Instance != this)
         {
@@ -62,23 +65,28 @@ public class SceneLoader : MonoBehaviour
         switch(scene)
         {
             case 0:
+            currentScene = Scene.Start;
+            currentSceneString = SceneString.start;
             SceneManager.LoadScene("StartScene");
-            currentScene = Scene.start;
             break;
             
             case 1:
             //Debug.Log("Load Outside");
+            currentScene = Scene.Outside;
+            currentSceneString = SceneString.outside;
             updateCurrentPosition(_leave_stable_pos);
             SceneManager.LoadScene("SampleScene");
             AnimalManager.Instance.setChickenRespawned();
-            currentScene = Scene.outside;
+            
             break;
             
             case 2:
             //Debug.Log("Load Stable");
+            currentScene = Scene.Stable;
+            currentSceneString = SceneString.stable;
             updateCurrentPosition(_enter_stable_pos);
             SceneManager.LoadScene("Stable");
-            currentScene = Scene.stable;
+            
             //AnimalManager.Instance.setChickenRespawned();
             break;
         }

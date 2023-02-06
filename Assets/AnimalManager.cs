@@ -204,7 +204,7 @@ public class AnimalManager : MonoBehaviour
                 //Animal dies
                 SceneLoader.Instance._chicken_state = false;
                 //make death sprite :(
-                if (SceneLoader.Instance.currentScene == SceneLoader.Scene.stable && chicken != null)
+                if (SceneLoader.Instance.currentScene == SceneLoader.Scene.Stable && chicken != null)
                 {
                     chicken.gameObject.SetActive(false);
                 }

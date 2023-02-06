@@ -42,10 +42,25 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
 
+    public enum Direction{
+        Up = 1,
+        Down = 2,
+        Left = 3,
+        Right = 4
+    }
+
     Vector3Int selectedTilePos;
     bool selectable;
     private bool gamePaused = false;
-    
+    private bool blockControlling = false;
+    private bool isAutoMoving = false;
+    private bool startedMoving = false;
+    private float movingTimer = 0.0f;
+    public float autoMoveDuration = 0.55f;
+    public float autoMoveSpeedScaling = 0.35f;
+    private Direction _moving_direction = 0;
+
+
     private void Awake()
     {
         inventory = new Inventory();
@@ -57,6 +72,7 @@ public class PlayerController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         transform.position = SceneLoader.Instance.current_position;
+        //Check if Stable entered
     }
 
     private void Update()
@@ -69,7 +85,7 @@ public class PlayerController : MonoBehaviour
             TimeManager.Instance.pauseTime(!gamePaused);
         }
 
-        if(!gamePaused)
+        if(!gamePaused && !blockControlling)
         {
             CheckMovement();
             ToolSelection(); // -- Maybe Outsource to different Obj
@@ -99,6 +115,27 @@ public class PlayerController : MonoBehaviour
             rb = GetComponent<Rigidbody2D>();
         }
         rb.velocity = movement;
+
+        if(isAutoMoving)
+            {
+                if(!startedMoving)
+                {
+                    startMovingAnim();
+                    startedMoving = true;
+                }
+                AutoMovePlayer();
+
+                movingTimer += Time.deltaTime;
+                if(movingTimer >= autoMoveDuration)
+                {
+                    isAutoMoving = false;
+                    movingTimer = 0.0f;
+                    startedMoving = false;
+                    stopMovingAnim();
+                    blockControlling = false;
+                    _moving_direction = 0;
+                }
+            }
 
     }
 
@@ -368,23 +405,28 @@ public class PlayerController : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "StableDoorInside")
+        if(collision.gameObject.tag == "StableDoorInside" && !blockControlling)
         {
             SceneLoader.Instance.loadScene(1);
         }
-        if(collision.gameObject.tag == "StableDoorOutside")
+        if(collision.gameObject.tag == "StableDoorOutside" && !blockControlling)
         {
             SceneLoader.Instance.loadScene(2);
+            SceneLoader.Instance.enterStable = true;
         }
-        if (collision.gameObject.tag == "StableEnterChicken")
+        if (collision.gameObject.tag == "StableEnterChicken" && !blockControlling)
         {
             //SceneLoader.Instance.loadScene(2);
             transform.position = SceneLoader.Instance.chicken_cage_position;
+            //Make Enter animation
+            enterAutoMovementAnim(Direction.Down);
         }
-        if (collision.gameObject.tag == "StableLeaveChicken")
+        if (collision.gameObject.tag == "StableLeaveChicken" && !blockControlling)
         {
             //SceneLoader.Instance.loadScene(2);
             transform.position = SceneLoader.Instance.chicken_door_position;
+            //Make Enter animation
+            enterAutoMovementAnim(Direction.Down);
         }
         if (collision.gameObject.tag == "Food Container")
         {
@@ -395,5 +437,77 @@ public class PlayerController : MonoBehaviour
             }
         }
         //transform.position = SceneLoader.Instance.current_position;
+    }
+
+    public void enterAutoMovementAnim(Direction direction)
+    {
+        _moving_direction = direction;
+        blockControlling = true;
+        SceneLoader.Instance.enterStable = false;
+        movement = Vector2.zero;
+        stopMovingAnim();
+
+        isAutoMoving = true;
+    }
+
+    private void AutoMovePlayer()
+    {
+        Vector2 position = transform.position;
+        float deltaMove = (movementSpeed * autoMoveSpeedScaling) * Time.fixedDeltaTime;
+        Vector2 move = Vector2.zero;
+
+        switch (_moving_direction)
+        {
+            case Direction.Up:
+            //Move up
+            move.y += deltaMove;
+            break;
+            case Direction.Down:
+            //Move down
+            move.y -= deltaMove;
+            break;
+            case Direction.Left:
+            //Move left
+            move.x -= deltaMove;
+            break;
+            case Direction.Right:
+            //Move right
+            move.x += deltaMove;
+            break; 
+            default:
+            break;
+        }
+
+        position += move;
+        transform.position = position;
+    }
+
+    private void startMovingAnim()
+    {
+        switch (_moving_direction)
+        {
+            case Direction.Up:
+            anim.SetBool("directionUp", true);
+            break;
+            case Direction.Down:
+            anim.SetBool("directionDown", true);
+            break;
+            case Direction.Left:
+            anim.SetBool("directionLeft", true);
+            break;
+            case Direction.Right:
+            anim.SetBool("directionRight", true);
+            break; 
+            default:
+            break;
+        }
+    }
+
+    private void stopMovingAnim()
+    {
+        anim.SetBool("directionDown", false);
+        anim.SetBool("directionUp", false);
+        anim.SetBool("directionLeft", false);
+        anim.SetBool("directionRight", false);
     }
 }
