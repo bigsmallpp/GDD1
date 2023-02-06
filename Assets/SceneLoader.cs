@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    public int player_variant = 1;
+
     string start = "StartScene";
     string outside = "SampleScene";
     string stable = "Stable";
@@ -172,5 +174,10 @@ public class SceneLoader : MonoBehaviour
             returnState = updateContainerState(type, 0);
         }
         return returnState;
+    }
+
+    public void setPlayerVariant(int variant)
+    {
+        player_variant = variant;
     }
 }

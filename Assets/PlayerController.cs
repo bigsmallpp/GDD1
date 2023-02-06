@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 {
     public EnergySlider energySlider;
 
+    [SerializeField] protected List<Sprite> _sprites_player_variants;
+
     public int currentMoney = 100;
 
     private float horizontal;
@@ -73,6 +75,9 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         transform.position = SceneLoader.Instance.current_position;
         //Check if Stable entered
+
+        //Set Player variant
+        setPlayerVariant();
     }
 
     private void Update()
@@ -509,5 +514,23 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("directionUp", false);
         anim.SetBool("directionLeft", false);
         anim.SetBool("directionRight", false);
+    }
+
+    private void setPlayerVariant()
+    {
+        int variant = SceneLoader.Instance.player_variant;
+        switch (variant)
+        {
+            case 1:
+            Debug.Log("Variant A");
+            break;
+            case 2:
+            Debug.Log("Variant B");
+            //swap playerAnim
+            break;
+            break; 
+            default:
+            break;
+        }
     }
 }

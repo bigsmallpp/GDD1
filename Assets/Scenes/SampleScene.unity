@@ -1697,6 +1697,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energySlider: {fileID: 1121413586}
+  _sprites_player_variants:
+  - {fileID: -284627385986098231, guid: 99f71d079cf78b1429d57eaac07165e3, type: 3}
+  - {fileID: 6034268554113673496, guid: adccf0555c2ac2444b4ccb93a23ebf6a, type: 3}
   currentMoney: 1000
   rb: {fileID: 0}
   movementSpeed: 4.5
@@ -1726,6 +1729,8 @@ MonoBehaviour:
   topBoundary: 4.594
   bottomBoundary: -4.594
   uiInteract: {fileID: 1027266770}
+  autoMoveDuration: 0.55
+  autoMoveSpeedScaling: 0.35
 --- !u!50 &487090406
 Rigidbody2D:
   serializedVersion: 4
@@ -9916,6 +9921,18 @@ PrefabInstance:
     - target: {fileID: 5246762109900384496, guid: c1a79a7792212fd4d93f89034081523e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246762109900384497, guid: c1a79a7792212fd4d93f89034081523e, type: 3}
+      propertyPath: currentScene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246762109900384497, guid: c1a79a7792212fd4d93f89034081523e, type: 3}
+      propertyPath: player_variant
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246762109900384497, guid: c1a79a7792212fd4d93f89034081523e, type: 3}
+      propertyPath: currentSceneString
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5246762109900384498, guid: c1a79a7792212fd4d93f89034081523e, type: 3}
       propertyPath: m_Name
