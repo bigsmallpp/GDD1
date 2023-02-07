@@ -69,7 +69,10 @@ public class SceneLoader : MonoBehaviour
             case 0:
             currentScene = Scene.Start;
             currentSceneString = SceneString.start;
-            SceneManager.LoadScene("StartScene");
+            SceneManager.LoadScene("StartScreen");
+            //Destroy all shit
+            Destroy(gameObject);
+            Destroy(AnimalManager.Instance.gameObject);
             break;
             
             case 1:

@@ -1697,10 +1697,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energySlider: {fileID: 1121413586}
-  _player_variants:
-  - {fileID: 6034268554113673496, guid: adccf0555c2ac2444b4ccb93a23ebf6a, type: 3}
-  - {fileID: 6034268554113673496, guid: adccf0555c2ac2444b4ccb93a23ebf6a, type: 3}
-  _variant_b: {fileID: 6034268554113673496, guid: adccf0555c2ac2444b4ccb93a23ebf6a, type: 3}
   currentMoney: 1000
   rb: {fileID: 0}
   movementSpeed: 4.5

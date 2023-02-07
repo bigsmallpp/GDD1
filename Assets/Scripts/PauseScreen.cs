@@ -8,7 +8,8 @@ public class PauseScreen : MonoBehaviour
   public void BackToMenu()
   {
     //TODO: Cleanup Scene before loading Main Menu
-    SceneManager.LoadScene("StartScreen");
+    //SceneManager.LoadScene("StartScreen");
+    SceneLoader.Instance.loadScene(0);
   }
 
   public void CheckControls()
