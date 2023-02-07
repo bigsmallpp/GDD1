@@ -793,6 +793,18 @@ PrefabInstance:
       value: Portrait Frame (1)
       objectReference: {fileID: 0}
     - target: {fileID: 3271292239189077184, guid: 8bea2dae7a9993e4a9cbcb2aaea4233a, type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0.4716981
+      objectReference: {fileID: 0}
+    - target: {fileID: 3271292239189077184, guid: 8bea2dae7a9993e4a9cbcb2aaea4233a, type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 0.4716981
+      objectReference: {fileID: 0}
+    - target: {fileID: 3271292239189077184, guid: 8bea2dae7a9993e4a9cbcb2aaea4233a, type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.4716981
+      objectReference: {fileID: 0}
+    - target: {fileID: 3271292239189077184, guid: 8bea2dae7a9993e4a9cbcb2aaea4233a, type: 3}
       propertyPath: m_Colors.m_PressedColor.b
       value: 1
       objectReference: {fileID: 0}
@@ -3881,6 +3893,18 @@ PrefabInstance:
     - target: {fileID: 3112280085769139728, guid: 8bea2dae7a9993e4a9cbcb2aaea4233a, type: 3}
       propertyPath: m_Name
       value: Portrait Frame
+      objectReference: {fileID: 0}
+    - target: {fileID: 3271292239189077184, guid: 8bea2dae7a9993e4a9cbcb2aaea4233a, type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0.4716981
+      objectReference: {fileID: 0}
+    - target: {fileID: 3271292239189077184, guid: 8bea2dae7a9993e4a9cbcb2aaea4233a, type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 0.4716981
+      objectReference: {fileID: 0}
+    - target: {fileID: 3271292239189077184, guid: 8bea2dae7a9993e4a9cbcb2aaea4233a, type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.4716981
       objectReference: {fileID: 0}
     - target: {fileID: 3271292239189077184, guid: 8bea2dae7a9993e4a9cbcb2aaea4233a, type: 3}
       propertyPath: m_Colors.m_PressedColor.b

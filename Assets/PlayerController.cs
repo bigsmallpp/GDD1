@@ -9,8 +9,6 @@ public class PlayerController : MonoBehaviour
 {
     public EnergySlider energySlider;
 
-    [SerializeField] protected List<Sprite> _sprites_player_variants;
-
     public int currentMoney = 100;
 
     private float horizontal;
@@ -43,6 +41,7 @@ public class PlayerController : MonoBehaviour
     public UIInteract uiInteract;
 
     private Animator anim;
+    private Sprite _current_sprite;
 
     public enum Direction{
         Up = 1,
@@ -74,7 +73,7 @@ public class PlayerController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         transform.position = SceneLoader.Instance.current_position;
-        //Check if Stable entered
+        //TODO: Check if Stable entered
 
         //Set Player variant
         setPlayerVariant();
@@ -522,11 +521,10 @@ public class PlayerController : MonoBehaviour
         switch (variant)
         {
             case 1:
-            Debug.Log("Variant A");
+            anim.SetInteger("variant", 1);
             break;
             case 2:
-            Debug.Log("Variant B");
-            //swap playerAnim
+            anim.SetInteger("variant", 2);
             break;
             break; 
             default:
