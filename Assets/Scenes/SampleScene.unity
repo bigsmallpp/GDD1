@@ -9925,7 +9925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5246762109900384497, guid: c1a79a7792212fd4d93f89034081523e, type: 3}
       propertyPath: player_variant
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5246762109900384497, guid: c1a79a7792212fd4d93f89034081523e, type: 3}
       propertyPath: currentSceneString
