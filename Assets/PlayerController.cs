@@ -441,6 +441,27 @@ public class PlayerController : MonoBehaviour
             }
         }
         //transform.position = SceneLoader.Instance.current_position;
+
+        if (collision.gameObject.tag == "GotToField")
+        {
+            StartCoroutine(TransitionToNextScene(Direction.Down, 3));
+        }
+
+        if (collision.gameObject.tag == "GoHome")
+        {
+            StartCoroutine(TransitionToNextScene(Direction.Up, 4));
+        }
+    }
+
+    IEnumerator TransitionToNextScene(Direction direction, int scene)
+    {
+        //Set duration longer
+        autoMoveDuration = 1f;
+        enterAutoMovementAnim(direction);
+        yield return new WaitForSeconds(1.2f);
+        //Load Scene
+        //transform.position = Vector2.zero;
+        SceneLoader.Instance.loadScene(scene);
     }
 
     public void enterAutoMovementAnim(Direction direction)

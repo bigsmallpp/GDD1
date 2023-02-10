@@ -10,8 +10,9 @@ public class SceneLoader : MonoBehaviour
     string start = "StartScene";
     string outside = "SampleScene";
     string stable = "Stable";
-    public enum SceneString {start, outside, stable};
-    public enum Scene {Start = 0, Outside = 1, Stable = 2};
+    string field = "Field";
+    public enum SceneString {start, outside, stable, field};
+    public enum Scene {Start = 0, Outside = 1, Stable = 2, Field = 3};
     public Scene currentScene;
     public SceneString currentSceneString;
     public static SceneLoader Instance;
@@ -21,6 +22,8 @@ public class SceneLoader : MonoBehaviour
     //pos outside stable: 0.967, -0.609
     private Vector2 _enter_stable_pos;
     private Vector2 _leave_stable_pos;
+    private Vector2 _enter_field_pos;
+    private Vector2 _leave_field_pos;
     public Vector2 current_position;
     private Vector2 _chicken_start_pos;
     public Vector2 chicken_door_position;
@@ -41,6 +44,8 @@ public class SceneLoader : MonoBehaviour
         _chicken_pos = _chicken_start_pos;
         chicken_cage_position = new Vector2(-3.7f, 5.4f);
         chicken_door_position = new Vector2(0.0f, 5.4f);
+        _enter_field_pos = new Vector2(-2.949f, 4.6f);
+        _leave_field_pos = new Vector2(-2.949f, -4.576f);
 
         if(Instance != null && Instance != this)
         {
@@ -93,6 +98,26 @@ public class SceneLoader : MonoBehaviour
             SceneManager.LoadScene("Stable");
             
             //AnimalManager.Instance.setChickenRespawned();
+            break;
+
+            case 3:
+            //Debug.Log("Load Outside");
+            currentScene = Scene.Field;
+            currentSceneString = SceneString.field;
+            updateCurrentPosition(_enter_field_pos);
+            SceneManager.LoadScene("Field");
+            
+            break;
+
+            case 4:
+            //Leave Field and load scene with different position
+            //Debug.Log("Load Outside");
+            currentScene = Scene.Outside;
+            currentSceneString = SceneString.outside;
+            updateCurrentPosition(_leave_field_pos);
+            SceneManager.LoadScene("SampleScene");
+            AnimalManager.Instance.setChickenRespawned();
+            
             break;
         }
     }
