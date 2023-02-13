@@ -423,6 +423,7 @@ public class PlayerController : MonoBehaviour
             //SceneLoader.Instance.loadScene(2);
             transform.position = SceneLoader.Instance.chicken_cage_position;
             //Make Enter animation
+            stopMovingAnim();
             enterAutoMovementAnim(Direction.Down);
         }
         if (collision.gameObject.tag == "StableLeaveChicken" && !blockControlling)
@@ -430,6 +431,7 @@ public class PlayerController : MonoBehaviour
             //SceneLoader.Instance.loadScene(2);
             transform.position = SceneLoader.Instance.chicken_door_position;
             //Make Enter animation
+            stopMovingAnim();
             enterAutoMovementAnim(Direction.Down);
         }
         if (collision.gameObject.tag == "Food Container")
@@ -442,12 +444,12 @@ public class PlayerController : MonoBehaviour
         }
         //transform.position = SceneLoader.Instance.current_position;
 
-        if (collision.gameObject.tag == "GotToField")
+        if (collision.gameObject.tag == "GotToField" && !blockControlling)
         {
             StartCoroutine(TransitionToNextScene(Direction.Down, 3));
         }
 
-        if (collision.gameObject.tag == "GoHome")
+        if (collision.gameObject.tag == "GoHome" && !blockControlling)
         {
             StartCoroutine(TransitionToNextScene(Direction.Up, 4));
         }
@@ -464,13 +466,25 @@ public class PlayerController : MonoBehaviour
         SceneLoader.Instance.loadScene(scene);
     }
 
+    public void TransitionWhenEnterScene(Direction direction, float duration)
+    {
+        StartCoroutine(AnimationOnEnterScene(direction, duration, 1f));
+    }
+
+    IEnumerator AnimationOnEnterScene(Direction direction, float duration, float waitingTime)
+    {
+        autoMoveDuration = duration;
+        enterAutoMovementAnim(direction);
+        yield return new WaitForSeconds(waitingTime);
+    }
+
     public void enterAutoMovementAnim(Direction direction)
     {
         _moving_direction = direction;
         blockControlling = true;
         SceneLoader.Instance.enterStable = false;
         movement = Vector2.zero;
-        stopMovingAnim();
+        //stopMovingAnim(); //TODO: Fix Nullreference to anim bools
 
         isAutoMoving = true;
     }
@@ -528,7 +542,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void stopMovingAnim()
+    public void stopMovingAnim()
     {
         anim.SetBool("directionDown", false);
         anim.SetBool("directionUp", false);

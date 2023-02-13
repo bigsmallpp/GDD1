@@ -12,8 +12,14 @@ public class SceneLoader : MonoBehaviour
     string stable = "Stable";
     string field = "Field";
     public enum SceneString {start, outside, stable, field};
+
+    //I know this enum is a bit unnecessary
+    public enum actualPosition { Enter_stable_pos = 0, Leave_stable_pos = 1, Enter_field_pos = 2, Leave_field_pos = 3 };
+
     public enum Scene {Start = 0, Outside = 1, Stable = 2, Field = 3};
     public Scene currentScene;
+    public actualPosition actualPos;
+    public Scene previousScene = 0;
     public SceneString currentSceneString;
     public static SceneLoader Instance;
     public AnimalScript chickenPrefab;
@@ -21,10 +27,11 @@ public class SceneLoader : MonoBehaviour
     //pos inside stable: 0, -4.31
     //pos outside stable: 0.967, -0.609
     private Vector2 _enter_stable_pos;
-    private Vector2 _leave_stable_pos;
+    public Vector2 _leave_stable_pos;
     private Vector2 _enter_field_pos;
-    private Vector2 _leave_field_pos;
+    public Vector2 _leave_field_pos;
     public Vector2 current_position;
+    public Vector2 previous_position = Vector2.zero;
     private Vector2 _chicken_start_pos;
     public Vector2 chicken_door_position;
     public Vector2 chicken_cage_position;
@@ -37,15 +44,15 @@ public class SceneLoader : MonoBehaviour
 
     void Awake()
     {
-        current_position = new Vector2(-0.79f, -2.34f); //Start
-        _enter_stable_pos = new Vector2(0.0f, -4.31f);
-        _leave_stable_pos = new Vector2(0.967f, -0.609f);
+        current_position = new Vector2(-0.79f, -2.34f); //Startzz
+        _enter_stable_pos = new Vector2(0.0f, -5.4f);
+        _leave_stable_pos = new Vector2(1f, -0.55f);
         _chicken_start_pos = new Vector2(chickenPrefab.startPositionX,chickenPrefab.startPositionY);
         _chicken_pos = _chicken_start_pos;
         chicken_cage_position = new Vector2(-3.7f, 5.4f);
         chicken_door_position = new Vector2(0.0f, 5.4f);
-        _enter_field_pos = new Vector2(-2.949f, 4.6f);
-        _leave_field_pos = new Vector2(-2.949f, -4.576f);
+        _enter_field_pos = new Vector2(-3f, 5.4f);
+        _leave_field_pos = new Vector2(-3f, -5.5f);
 
         if(Instance != null && Instance != this)
         {
@@ -61,8 +68,10 @@ public class SceneLoader : MonoBehaviour
         _container_states = new Dictionary<AnimalScript.AnimalType, int>();
     }
 
-    private void updateCurrentPosition(Vector2 pos)
+    private void updateCurrentPosition(Vector2 pos, actualPosition actual)
     {
+        actualPos = actual;
+        previous_position = current_position;
         current_position = pos;
     }
 
@@ -82,9 +91,10 @@ public class SceneLoader : MonoBehaviour
             
             case 1:
             //Debug.Log("Load Outside");
+            previousScene = currentScene;
             currentScene = Scene.Outside;
             currentSceneString = SceneString.outside;
-            updateCurrentPosition(_leave_stable_pos);
+            updateCurrentPosition(_leave_stable_pos, actualPosition.Leave_stable_pos);
             SceneManager.LoadScene("SampleScene");
             AnimalManager.Instance.setChickenRespawned();
             
@@ -92,9 +102,10 @@ public class SceneLoader : MonoBehaviour
             
             case 2:
             //Debug.Log("Load Stable");
+            previousScene = currentScene;
             currentScene = Scene.Stable;
             currentSceneString = SceneString.stable;
-            updateCurrentPosition(_enter_stable_pos);
+            updateCurrentPosition(_enter_stable_pos, actualPosition.Enter_stable_pos);
             SceneManager.LoadScene("Stable");
             
             //AnimalManager.Instance.setChickenRespawned();
@@ -102,9 +113,10 @@ public class SceneLoader : MonoBehaviour
 
             case 3:
             //Debug.Log("Load Outside");
+            previousScene = currentScene;
             currentScene = Scene.Field;
             currentSceneString = SceneString.field;
-            updateCurrentPosition(_enter_field_pos);
+            updateCurrentPosition(_enter_field_pos, actualPosition.Enter_field_pos);
             SceneManager.LoadScene("Field");
             
             break;
@@ -112,9 +124,10 @@ public class SceneLoader : MonoBehaviour
             case 4:
             //Leave Field and load scene with different position
             //Debug.Log("Load Outside");
+            previousScene = currentScene;
             currentScene = Scene.Outside;
             currentSceneString = SceneString.outside;
-            updateCurrentPosition(_leave_field_pos);
+            updateCurrentPosition(_leave_field_pos, actualPosition.Leave_field_pos);
             SceneManager.LoadScene("SampleScene");
             AnimalManager.Instance.setChickenRespawned();
             
