@@ -446,11 +446,13 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "GotToField" && !blockControlling)
         {
+            stopMovingAnim();
             StartCoroutine(TransitionToNextScene(Direction.Down, 3));
         }
 
         if (collision.gameObject.tag == "GoHome" && !blockControlling)
         {
+            stopMovingAnim();
             StartCoroutine(TransitionToNextScene(Direction.Up, 4));
         }
     }
@@ -484,7 +486,6 @@ public class PlayerController : MonoBehaviour
         blockControlling = true;
         SceneLoader.Instance.enterStable = false;
         movement = Vector2.zero;
-        //stopMovingAnim(); //TODO: Fix Nullreference to anim bools
 
         isAutoMoving = true;
     }
