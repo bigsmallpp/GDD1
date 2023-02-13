@@ -455,6 +455,11 @@ public class PlayerController : MonoBehaviour
             stopMovingAnim();
             StartCoroutine(TransitionToNextScene(Direction.Up, 4));
         }
+
+        if(collision.gameObject.tag == "HouseDoor")
+        {
+            TimeManager.Instance.skipToNextDay();
+        }
     }
 
     IEnumerator TransitionToNextScene(Direction direction, int scene)

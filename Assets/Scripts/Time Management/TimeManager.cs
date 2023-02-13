@@ -76,14 +76,14 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    private void EndDay()
+    public void EndDay()
     {
         _time_enabled = false;
         ++_game_data._current_day_in_season;
         AdjustSeason();
         updateHUD(false);
         _field_manager.UpdateSeeds();
-        StartDay();
+        //StartDay(); //Start Day when collision with House Door
     }
 
     private void AdjustSeason()
@@ -184,5 +184,16 @@ public class TimeManager : MonoBehaviour
     public void pauseTime(bool pausing)
     {
         _time_enabled = pausing;
+    }
+
+    public void skipToNextDay()
+    {
+        if (_time_enabled)
+        {
+            EndDay();
+        }
+        Debug.Log("You went to sleep. Starting a new Day!");
+        StartDay(); //Start new Day
+        _game_data._current_seconds = 0.0f;
     }
 }
