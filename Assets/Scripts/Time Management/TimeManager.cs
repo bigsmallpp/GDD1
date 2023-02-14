@@ -68,7 +68,6 @@ public class TimeManager : MonoBehaviour
         _light_manager.UpdateLighting(Utils.GetTransition(_game_data._current_seconds, _seconds_per_day));
         if (_game_data._current_seconds >= _seconds_per_day)
         {
-            AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
             EndDay();
             _game_data._current_seconds = 0.0f;
             
@@ -83,6 +82,7 @@ public class TimeManager : MonoBehaviour
         AdjustSeason();
         updateHUD(false);
         _field_manager.UpdateSeeds();
+        AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
         //StartDay(); //Start Day when collision with House Door
     }
 
