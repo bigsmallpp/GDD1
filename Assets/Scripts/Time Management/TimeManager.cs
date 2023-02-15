@@ -84,6 +84,7 @@ public class TimeManager : MonoBehaviour
         _field_manager.UpdateSeeds();
         AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
         //StartDay(); //Start Day when collision with House Door
+        SaveDataToFile(true);
     }
 
     private void AdjustSeason()
@@ -117,10 +118,17 @@ public class TimeManager : MonoBehaviour
     {
         try
         {
-            DataStore loaded_data = JsonUtility.FromJson<DataStore>(Utils.Constants.SAVEFILE_NAME);
+            if (!Directory.Exists("saves"))
+            {
+                Directory.CreateDirectory("saves");
+            }
+            
+            string json_text = File.ReadAllText("saves/" + Utils.Constants.SAVEFILE_NAME);
+            // Debug.Log(json_text);
+            DataStore loaded_data = JsonUtility.FromJson<DataStore>(json_text);
             _game_data = loaded_data;
         }
-        catch (ArgumentException a)
+        catch (Exception a)
         {
             Debug.Log(a);
             CreateNewData();
@@ -139,9 +147,26 @@ public class TimeManager : MonoBehaviour
         _game_data = new_data;
     }
 
-    private void SaveDataToFile()
+    private void SaveDataToFile(bool reset_seconds = false)
     {
-        // TODO
+        if (reset_seconds)
+        {
+            _game_data._current_seconds = 0.0f;
+        }
+        
+        Debug.Log("Trying to save data");
+
+        try
+        {
+            string data = JsonUtility.ToJson(_game_data);
+            File.WriteAllText("saves/" + Utils.Constants.SAVEFILE_NAME, data);
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Couldn't save data to file\n" + e);
+            throw;
+        }
+
     }
 
     public PlantManager PlantManagerInstance()
