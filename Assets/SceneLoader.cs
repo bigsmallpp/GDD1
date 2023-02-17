@@ -65,6 +65,7 @@ public class SceneLoader : MonoBehaviour
 
     void Start()
     {
+        SaveManager.Instance.SetSceneLoader(this);
         _container_states = new Dictionary<AnimalScript.AnimalType, int>();
     }
 

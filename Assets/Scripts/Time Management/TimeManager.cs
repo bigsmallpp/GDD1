@@ -39,11 +39,12 @@ public class TimeManager : MonoBehaviour
     void Start()
     {
         TryLoadSaveFile();
-
+        
         if (!_instance)
         {
             _instance = this;
             DontDestroyOnLoad(this);
+            SaveManager.Instance.SetTimeManager(this);
         }
         else
         {
@@ -84,6 +85,8 @@ public class TimeManager : MonoBehaviour
         _field_manager.UpdateSeeds();
         AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
         //StartDay(); //Start Day when collision with House Door
+        
+        // TODO Update as needed
         SaveDataToFile(true);
     }
 
@@ -149,6 +152,7 @@ public class TimeManager : MonoBehaviour
 
     private void SaveDataToFile(bool reset_seconds = false)
     {
+        SaveManager.Instance.Save();
         if (reset_seconds)
         {
             _game_data._current_seconds = 0.0f;

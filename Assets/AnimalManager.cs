@@ -45,6 +45,8 @@ public class AnimalManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SaveManager.Instance.SetAnimalManager(this);
+        
         _egg_positions = new Dictionary<int, Vector2>();
         //Get chicken
         initChicken();
@@ -217,5 +219,10 @@ public class AnimalManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public Vector3 GetChickenPos()
+    {
+        return SceneLoader.Instance.getChickenPos();
     }
 }

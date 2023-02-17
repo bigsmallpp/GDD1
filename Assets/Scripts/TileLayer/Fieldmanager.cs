@@ -16,6 +16,8 @@ public class Fieldmanager : MonoBehaviour
 
     private void Start()
     {
+        SaveManager.Instance.SetFieldManager(this);
+        
         tiles_ = new Dictionary<Vector2Int, TileBase>();
         plants_ = new Dictionary<Vector2Int, GameObject>();
     }
