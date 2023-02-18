@@ -77,6 +77,8 @@ public class PlayerController : MonoBehaviour
 
         //Set Player variant
         setPlayerVariant();
+        SaveManager.Instance.SetPlayer(this);
+        SaveManager.Instance.LoadPlayerData();
     }
 
     private void Update()
@@ -108,7 +110,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 Debug.Log(inventory.GetItemList());
-                inventory.RemoveItem(new Item { itemType = Item.ItemType.tomato, amount = 1 , prize = 10});
+                inventory.RemoveItem(new Item( (int) Item.ItemType.tomato, 1, 10));
             }
         }
     }
@@ -573,5 +575,16 @@ public class PlayerController : MonoBehaviour
             default:
             break;
         }
+    }
+
+    public void LoadPlayerData(PlayerDataStore data)
+    {
+        foreach(ItemsDataStore item_store in data._items)
+        {
+            inventory.AddItem(new Item(item_store._type, item_store._amount, item_store._price));            
+        }
+
+        currentMoney = data._money;
+        transform.position = new Vector3(data._pos_x, data._pos_y);
     }
 }

@@ -10,10 +10,7 @@ public class Egg : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _egg = new Item();
-        _egg.amount = 1;
-        _egg.prize = 300;
-        _egg.itemType = Item.ItemType.egg;
+        _egg = new Item(Item.ItemType.egg, 1, 300);
     }
 
     // Update is called once per frame

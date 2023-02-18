@@ -6,6 +6,26 @@ using System;
 [Serializable]
 public class Item 
 {
+
+    public Item(int type, int amount, int price)
+    {
+        itemType = (ItemType) type;
+        this.amount = amount;
+        prize = price;
+    }
+    
+    public Item(ItemType type, int amount, int price)
+    {
+        itemType = type;
+        this.amount = amount;
+        prize = price;
+    }
+
+    public Item()
+    {
+        
+    }
+    
     public enum ItemType
     {
         tomato,

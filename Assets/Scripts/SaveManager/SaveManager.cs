@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using ImmersiveVRTools.Runtime.Common.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,15 +15,21 @@ public class SaveManager : MonoBehaviour
     private AnimalManager _animal_manager = null;
     private Fieldmanager _field_manager = null;
     private SceneLoader _scene_loader_ = null;
+    private PlayerController _player = null;
     
     private bool _save_file_present = false;
 
     private AnimalsDataStoreWrapper _animals = new AnimalsDataStoreWrapper();
+    private EggDataStoreWrapper _eggs = new EggDataStoreWrapper();
+    private PlayerDataStore _player_data = new PlayerDataStore();
     private SceneLoaderDataStore _loader_store = new SceneLoaderDataStore();
 
+    private string SAVE_DIR = "saves";
     private string SAVE_PATH = "saves/GameData";
     private string ANIMALS = "Animals.json";
     private string LOADER = "Loader.json";
+    private string EGGS = "Eggs.json";
+    private string PLAYER = "Player.json";
     
     // Start is called before the first frame update
     void Start()
@@ -30,7 +37,6 @@ public class SaveManager : MonoBehaviour
         if (!_instance)
         {
             _instance = this;
-            LoadData();
             DontDestroyOnLoad(this);
         }
         else
@@ -58,6 +64,11 @@ public class SaveManager : MonoBehaviour
     {
         _scene_loader_ = loader;
     }
+
+    public void SetPlayer(PlayerController player)
+    {
+        _player = player;
+    }
     
     public void Save()
     {
@@ -70,6 +81,32 @@ public class SaveManager : MonoBehaviour
             _animals.animals_ = new List<AnimalsDataStore>();
             _animals.animals_.Add(chicken);
             Debug.Log(_animals);
+        }
+        
+        // Save eggs
+        if (_animal_manager.egg_counter > 0)
+        {
+            _eggs.eggs_ = new List<EggDataStore>();
+            
+            foreach(Vector2 egg in _animal_manager.GetEggs())
+            {
+                _eggs.eggs_.Add(new EggDataStore(egg.x, egg.y));    
+            }
+            Debug.Log("Eggs: " + _eggs.eggs_);
+        }
+        
+        // Save Player Stuff
+        if (_player != null)
+        {
+            foreach (Item item in _player.GetPlayerInventory().GetItemList())
+            {
+                Vector3 player_pos = _player.gameObject.transform.position;
+                ItemsDataStore item_save = new ItemsDataStore((int) item.itemType, item.amount, item.prize);
+                _player_data._items.Add(item_save);
+                _player_data._money = _player.currentMoney;
+                _player_data._pos_x = player_pos.x;
+                _player_data._pos_y = player_pos.y;
+            }
         }
         
         try
@@ -85,6 +122,12 @@ public class SaveManager : MonoBehaviour
             _loader_store._player_variant = _scene_loader_.player_variant;
             data = JsonUtility.ToJson(_loader_store);
             WriteToFile(data, SAVE_PATH + LOADER);
+
+            data = JsonUtility.ToJson(_eggs);
+            WriteToFile(data, SAVE_PATH + EGGS);
+            
+            data = JsonUtility.ToJson(_player_data);
+            WriteToFile(data, SAVE_PATH + PLAYER);
         }
         catch (Exception e)
         {
@@ -99,6 +142,7 @@ public class SaveManager : MonoBehaviour
     private void ResetBuffers()
     {
         _animals.animals_.Clear();
+        _eggs.eggs_.Clear();
     }
 
     private void WriteToFile(string data, string file)
@@ -109,6 +153,7 @@ public class SaveManager : MonoBehaviour
 
     private void LoadData()
     {
+        // Exists before SampleScene is loaded
         try
         {
             string json_text = "";
@@ -138,7 +183,6 @@ public class SaveManager : MonoBehaviour
                     }
                 }
             }
-
         }
         catch (Exception a)
         {
@@ -148,7 +192,67 @@ public class SaveManager : MonoBehaviour
 
     public void LoadDataAndStartGame()
     {
-        LoadData();
         SceneManager.LoadScene("SampleScene");
+        LoadData();
+    }
+
+    public void LoadEggs()
+    {
+        // Exists after SampleScene was loaded
+        try
+        {
+            // Load Eggs
+            if (File.Exists(SAVE_PATH + EGGS))
+            {
+                string json_text = File.ReadAllText(SAVE_PATH + EGGS);
+                EggDataStoreWrapper loaded_data = JsonUtility.FromJson<EggDataStoreWrapper>(json_text);
+                _eggs = loaded_data;
+                _animal_manager.LoadEggPositions(_eggs.eggs_);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            throw;
+        }
+    }
+
+    public void LoadPlayerData()
+    {
+        // Exists after SampleScene was loaded
+        try
+        {
+            // Load Player
+            if (File.Exists(SAVE_PATH + PLAYER))
+            {
+                string json_text = File.ReadAllText(SAVE_PATH + PLAYER);
+                PlayerDataStore loaded_data = JsonUtility.FromJson<PlayerDataStore>(json_text);
+                _player_data = loaded_data;
+                _player.LoadPlayerData(_player_data);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            throw;
+        }
+    }
+
+    public void ResetSaves()
+    {
+        try
+        {
+            if (Directory.Exists(SAVE_DIR))
+            {
+                Directory.Delete(SAVE_DIR, true);
+                Directory.CreateDirectory(SAVE_DIR);
+                Debug.Log("Deleted Directory");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            throw;
+        }
     }
 }
