@@ -6,10 +6,11 @@ public class MapChangeScript : MonoBehaviour
 {
     public Sprite defaultMap;
     public Sprite[] mapSeasons;
-    public int choose_test;
+    public int current_season = 1;
     private SpriteRenderer _sprite_renderer;
     void Awake()
     {
+        current_season = SceneLoader.Instance.current_season;
         _sprite_renderer = GetComponent<SpriteRenderer>();
         chooseMap();
     }
@@ -27,16 +28,19 @@ public class MapChangeScript : MonoBehaviour
 
     void chooseMap()
     {
-        switch (choose_test)
+        switch (current_season)
         {
             case 1:
             _sprite_renderer.sprite = mapSeasons[0];
             break;
             case 2:
+            _sprite_renderer.sprite = mapSeasons[1];
             break;
             case 3:
+            _sprite_renderer.sprite = mapSeasons[2];
             break;
             case 4:
+            _sprite_renderer.sprite = mapSeasons[3];
             break;
             default:
             _sprite_renderer.sprite = defaultMap;

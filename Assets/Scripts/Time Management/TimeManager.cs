@@ -84,6 +84,7 @@ public class TimeManager : MonoBehaviour
         _field_manager.UpdateSeeds();
         AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
         //StartDay(); //Start Day when collision with House Door
+        //TODO: Reload scene and update season to change map
     }
 
     private void AdjustSeason()

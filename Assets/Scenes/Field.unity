@@ -260,6 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 34366525}
   - component: {fileID: 34366524}
+  - component: {fileID: 34366526}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -332,6 +333,25 @@ Transform:
   m_Father: {fileID: 1652919535}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &34366526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34366523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 969183fc366c78a4c91cd45b12f6a884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMap: {fileID: 21300000, guid: 00bbdcb436512f44b82df80f594b6d58, type: 3}
+  mapSeasons:
+  - {fileID: 21300000, guid: d14d134de29108d418e01638dc245c43, type: 3}
+  - {fileID: 21300000, guid: 21d98cbfacfc71d4a9c3675838f440a0, type: 3}
+  - {fileID: 21300000, guid: 615f1d0c7e817cd4e975ccdc62e169dc, type: 3}
+  - {fileID: 21300000, guid: b8897ff9d28ffb94a8fbb92d7343d04f, type: 3}
+  current_season: 1
 --- !u!1 &48844103
 GameObject:
   m_ObjectHideFlags: 0

@@ -37,6 +37,9 @@ public class SceneLoader : MonoBehaviour
     public Vector2 chicken_cage_position;
     public bool enterStable = false;
 
+    //Season stuff
+    public int current_season;
+
     //Saving states
     private Dictionary<AnimalScript.AnimalType, int> _container_states;
     public bool _chicken_state = false;
@@ -53,6 +56,7 @@ public class SceneLoader : MonoBehaviour
         chicken_door_position = new Vector2(0.0f, 5.4f);
         _enter_field_pos = new Vector2(-3f, 5.4f);
         _leave_field_pos = new Vector2(-3f, -5.5f);
+        current_season = 1;
 
         if(Instance != null && Instance != this)
         {

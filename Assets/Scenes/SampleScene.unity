@@ -260,6 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 34366525}
   - component: {fileID: 34366524}
+  - component: {fileID: 34366526}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -332,6 +333,25 @@ Transform:
   m_Father: {fileID: 1652919535}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &34366526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34366523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 969183fc366c78a4c91cd45b12f6a884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMap: {fileID: 4252748633159075524, guid: 7ae07457dc945d74ea582ac9258045b9, type: 3}
+  mapSeasons:
+  - {fileID: 2242939498756691080, guid: 57dd2cdcaa6fdc54292fc8399b2a387c, type: 3}
+  - {fileID: -998969488264210264, guid: a8d61599a5ea6fc4ea52b233da3131e4, type: 3}
+  - {fileID: -5373317811874388999, guid: 37bd92addab0ecc41a369809629e8705, type: 3}
+  - {fileID: -3857383486096750890, guid: 7bccfe93fba685e4e8c9322c18563fd0, type: 3}
+  current_season: 0
 --- !u!1 &48844103
 GameObject:
   m_ObjectHideFlags: 0
@@ -4127,6 +4147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 786175204}
   - component: {fileID: 786175205}
+  - component: {fileID: 786175206}
   m_Layer: 0
   m_Name: Layer Above
   m_TagString: Untagged
@@ -4199,6 +4220,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &786175206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786175203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 969183fc366c78a4c91cd45b12f6a884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMap: {fileID: 7397420953521887846, guid: 7ae07457dc945d74ea582ac9258045b9, type: 3}
+  mapSeasons:
+  - {fileID: -1066928177329490606, guid: 57dd2cdcaa6fdc54292fc8399b2a387c, type: 3}
+  - {fileID: 3179672495614115551, guid: a8d61599a5ea6fc4ea52b233da3131e4, type: 3}
+  - {fileID: 4502239804263133281, guid: 37bd92addab0ecc41a369809629e8705, type: 3}
+  - {fileID: -8170500404966511151, guid: 7bccfe93fba685e4e8c9322c18563fd0, type: 3}
+  current_season: 1
 --- !u!1 &826833022
 GameObject:
   m_ObjectHideFlags: 0
@@ -10353,6 +10393,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5246762109900384497, guid: c1a79a7792212fd4d93f89034081523e, type: 3}
       propertyPath: currentScene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246762109900384497, guid: c1a79a7792212fd4d93f89034081523e, type: 3}
+      propertyPath: current_season
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5246762109900384497, guid: c1a79a7792212fd4d93f89034081523e, type: 3}
