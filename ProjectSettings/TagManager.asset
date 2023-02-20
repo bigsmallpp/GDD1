@@ -18,6 +18,7 @@ TagManager:
   - GotToField
   - GoHome
   - HouseDoor
+  - UICam
   layers:
   - Default
   - TransparentFX

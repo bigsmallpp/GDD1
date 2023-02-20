@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
     bool selectable;
     private bool gamePaused = false;
     private bool blockControlling = false;
+    private bool blockMovementOnly = false;
     private bool isAutoMoving = false;
     private bool startedMoving = false;
     private float movingTimer = 0.0f;
@@ -66,6 +67,7 @@ public class PlayerController : MonoBehaviour
     {
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
+        uiInventory.SetPlayer(this);
         //uiMerchant.SetInventory(inventory);
     }
 
@@ -147,6 +149,12 @@ public class PlayerController : MonoBehaviour
 
     void CheckMovement()
     {
+        if (blockMovementOnly)
+        {
+            movement = new Vector2(0.0f, 0.0f);
+            return;
+        }
+        
         Vector2 input = movementkey.action.ReadValue<Vector2>();
         float moveX = movementSpeed * input.x;
         float moveY = movementSpeed * input.y;
@@ -238,6 +246,18 @@ public class PlayerController : MonoBehaviour
                 if (obj.tag == "Chest")
                 {
                     _store.OpenOrClose();
+
+                    if (_store.gameObject.activeSelf)
+                    {
+                        uiInventory.SetActive(true);
+                        blockMovementOnly = true;
+                    }
+                    else
+                    {
+                        uiInventory.SetActive(false);
+                        blockMovementOnly = false;
+                    }
+                    
                     return true;
                 }
             }
@@ -367,11 +387,15 @@ public class PlayerController : MonoBehaviour
     }
     void updateAnim()
     {
-        
         anim.SetBool("directionDown", false);
         anim.SetBool("directionUp", false);
         anim.SetBool("directionLeft", false);
         anim.SetBool("directionRight", false);
+        
+        if (blockMovementOnly)
+        {
+            return;
+        }
         
         if(Input.GetKey(KeyCode.S))
         {

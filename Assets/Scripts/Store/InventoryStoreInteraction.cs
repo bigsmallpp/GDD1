@@ -21,6 +21,7 @@ public class InventoryStoreInteraction : MonoBehaviour
 
     public void SendItemToStore()
     {
+        return;
         if (GameObject.Find("UIStore") == null)
         {
             return;

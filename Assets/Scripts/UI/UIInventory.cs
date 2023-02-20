@@ -11,6 +11,7 @@ public class UIInventory : MonoBehaviour
     private Transform itemSlotTemplate;
 
     private bool UIisActive;
+    private PlayerController _player;
 
     public void SetInventory(Inventory inventory)
     {
@@ -18,6 +19,11 @@ public class UIInventory : MonoBehaviour
 
         inventory.OnItemListChanged += Inventory_OnItemListChanged;
         RefreshInventoryItems();
+    }
+
+    public void SetPlayer(PlayerController player)
+    {
+        _player = player;
     }
 
     private void Inventory_OnItemListChanged(object sender, System.EventArgs e)
@@ -56,6 +62,7 @@ public class UIInventory : MonoBehaviour
             {
                 GameObject new_item = Instantiate(itemSlotTemplate, itemSlotContainer).gameObject;
                 new_item.GetComponent<InventoryStoreInteraction>().SetItem(item);
+                new_item.GetComponent<ItemDrag>().SetPlayer(_player);
                 
                 RectTransform itemsSlotRectTransform = new_item.GetComponent<RectTransform>();
                 itemsSlotRectTransform.gameObject.SetActive(true);
@@ -101,5 +108,16 @@ public class UIInventory : MonoBehaviour
             gameObject.SetActive(true);
             UIisActive = true;
         }
+    }
+
+    public void SetActive(bool state)
+    {
+        if (UIisActive == state)
+        {
+            return;
+        }
+        
+        gameObject.SetActive(state);
+        UIisActive = state;
     }
 }
