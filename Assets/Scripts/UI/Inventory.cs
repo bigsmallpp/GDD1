@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Inventory 
+public class Inventory
 {
     private List<Item> itemList;
 

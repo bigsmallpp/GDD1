@@ -84,10 +84,6 @@ public class TimeManager : MonoBehaviour
         updateHUD(false);
         _field_manager.UpdateSeeds();
         AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
-        //StartDay(); //Start Day when collision with House Door
-        
-        // TODO Update as needed
-        SaveDataToFile(true);
     }
 
     private void AdjustSeason()
@@ -223,6 +219,9 @@ public class TimeManager : MonoBehaviour
         }
         Debug.Log("You went to sleep. Starting a new Day!");
         StartDay(); //Start new Day
+        
+        Chest.Instance.SellItemsInChest();
+        SaveDataToFile(true);
         _game_data._current_seconds = 0.0f;
     }
 }

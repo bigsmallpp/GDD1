@@ -18,11 +18,10 @@ public class PlayerController : MonoBehaviour
 
     public int totalToolNumb = 6;
     public int currentToolNumb;
-
-    [SerializeField] private UIInventory uiInventory;
-    [SerializeField] private Store _store;
+    
+    [SerializeField] private PlayerInventory _playerInventory;
+    [SerializeField] private Chest _chest;
     [SerializeField] private PlayerEnergy playerEnergy;
-    [SerializeField] private UIMerchant uiMerchant;
     [SerializeField] private InputActionReference movementkey, interactionkey, inventorykey, hotbarkey1, hotbarkey2, hotbarkey3, hotbarkey4, hotbarkey5, hotbarkey6, hotbarCycle;
     [SerializeField] MarkerManager markerManager;
     [SerializeField] TileMapController tileMapController;
@@ -35,8 +34,7 @@ public class PlayerController : MonoBehaviour
     public float rightBoundary = 8.622f;
     public float topBoundary = 4.594f;
     public float bottomBoundary = -4.594f;
-
-    private Inventory inventory;
+    
     private Vector2 movement;
     public UIInteract uiInteract;
 
@@ -65,10 +63,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        inventory = new Inventory();
-        uiInventory.SetInventory(inventory);
-        uiInventory.SetPlayer(this);
-        //uiMerchant.SetInventory(inventory);
     }
 
     void Start()
@@ -105,14 +99,14 @@ public class PlayerController : MonoBehaviour
             //Show Hide Inventory UI
             if (inventorykey.action.WasPressedThisFrame())
             {
-                uiInventory.SetActiveAlternativly();
+                _playerInventory.SetActiveAlternativly();
             }
 
             //Remove one Tomato from Inventory on Key Q -- Maybe Outsource to different Obj
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                Debug.Log(inventory.GetItemList());
-                inventory.RemoveItem(new Item( (int) Item.ItemType.tomato, 1, 10));
+                Debug.Log(_playerInventory.GetItems());
+                _playerInventory.DecreaseItem(new Item( (int) Item.ItemType.tomato, 0, 0), 1);
             }
         }
     }
@@ -229,7 +223,7 @@ public class PlayerController : MonoBehaviour
             plantObj.TryGetComponent(out PlantBaseClass plant);
             if (plant != null && plant.isRipe())
             {
-                inventory.AddItem(plant.getItem());
+                _playerInventory.AddItem(plant.getItem());
                 playerEnergy.EnergyChange();
                 fieldManager.deleteEntry(selectedTilePos);
                 Destroy(plant.gameObject);
@@ -245,16 +239,16 @@ public class PlayerController : MonoBehaviour
                 GameObject obj = raycastHit.collider.gameObject;
                 if (obj.tag == "Chest")
                 {
-                    _store.OpenOrClose();
+                    _chest.OpenOrCloseChestUI();
 
-                    if (_store.gameObject.activeSelf)
+                    if (_chest.gameObject.activeSelf)
                     {
-                        uiInventory.SetActive(true);
+                        _playerInventory.SetActive(true);
                         blockMovementOnly = true;
                     }
                     else
                     {
-                        uiInventory.SetActive(false);
+                        _playerInventory.SetActive(false);
                         blockMovementOnly = false;
                     }
                     
@@ -272,14 +266,9 @@ public class PlayerController : MonoBehaviour
         return Vector2.Distance(playerPos, camPos);
     }
 
-    public Inventory GetPlayerInventory()
+    public PlayerInventory GetPlayerInventory()
     {
-        return inventory;
-    }
-
-    public Store GetStore()
-    {
-        return _store;
+        return _playerInventory;
     }
 
     public PlantBaseClass GetInteractableObject()
@@ -605,10 +594,20 @@ public class PlayerController : MonoBehaviour
     {
         foreach(ItemsDataStore item_store in data._items)
         {
-            inventory.AddItem(new Item(item_store._type, item_store._amount, item_store._price));            
+            _playerInventory.AddItem(new Item(item_store._type, item_store._amount, item_store._price));            
         }
 
         currentMoney = data._money;
         transform.position = new Vector3(data._pos_x, data._pos_y);
+    }
+
+    public Chest GetChest()
+    {
+        return _chest;
+    }
+
+    public void AddProfit(int profit)
+    {
+        currentMoney += profit;
     }
 }

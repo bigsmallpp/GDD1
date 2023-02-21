@@ -7,15 +7,16 @@ public class Chest : MonoBehaviour
 {
     private static Chest _instance = null;
     public static Chest Instance => _instance;
-    
-    [SerializeField] private Inventory _inventory;
-    [SerializeField] private List<Item> _items_in_store;
+
+    [SerializeField] private ChestInventoryHandler _chestInventory;
+    private PlayerController _player;
 
     private void Start()
     {
         if (!_instance)
         {
             _instance = this;
+            _player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             DontDestroyOnLoad(this);
         }
         else
@@ -26,16 +27,23 @@ public class Chest : MonoBehaviour
 
     public void OpenOrCloseChestUI()
     {
-        if (SceneLoader.Instance.currentScene != SceneLoader.Scene.Outside)
-        {
-            return;
-        }
-        
         gameObject.SetActive(!gameObject.activeSelf);
+    }
 
-        if (gameObject.activeSelf)
-        {
-            
-        }
+    public void AddItem(GameObject obj)
+    {
+        _chestInventory.AddItemToChest(obj);
+    }
+    
+    public void RemoveItem(GameObject obj)
+    {
+        _chestInventory.RemoveItemFromChest(obj);
+    }
+
+    public void SellItemsInChest()
+    {
+        int profit = _chestInventory.SellItems();
+        _player.AddProfit(profit);
+        Debug.Log("Made a profit of " + profit);
     }
 }

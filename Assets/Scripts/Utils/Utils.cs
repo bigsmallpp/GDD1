@@ -46,6 +46,7 @@ public static class Utils
         public static String[] SEASONS = new string[]{ "Spring", "Summer", "Autumn", "Winter" };
 
         public static int PLAYABLE_HOURS_PER_DAY_DEFAULT = 12;
+        public static int MAX_STACKS = 64;
     }
 
     public static String ConvertSecondsToDaytime(float current_seconds, float max_seconds)

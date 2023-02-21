@@ -98,7 +98,7 @@ public class SaveManager : MonoBehaviour
         // Save Player Stuff
         if (_player != null)
         {
-            foreach (Item item in _player.GetPlayerInventory().GetItemList())
+            foreach (Item item in _player.GetPlayerInventory().GetItems())
             {
                 Vector3 player_pos = _player.gameObject.transform.position;
                 ItemsDataStore item_save = new ItemsDataStore((int) item.itemType, item.amount, item.prize);
@@ -142,6 +142,7 @@ public class SaveManager : MonoBehaviour
     private void ResetBuffers()
     {
         _animals.animals_.Clear();
+        _player_data._items.Clear();
         _eggs.eggs_.Clear();
     }
 

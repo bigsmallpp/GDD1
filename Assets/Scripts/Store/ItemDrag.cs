@@ -13,7 +13,7 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     private Transform previousParent = null;
 
-    private PlayerController _player = null;
+    [SerializeField] private PlayerController _player = null;
 
     [SerializeField] private bool _isInInventory = true;
 
@@ -24,15 +24,13 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     private float _inventoryPosX = 1090.0f;
     private float _inventoryPosY = 85.0f;
-    private float _inventoryHeight = 80.0f;
+    private float _inventoryHeight = 100.0f;
     private float _inventoryWidth = 110.0f;
-
-    public void SetPlayer(PlayerController player)
-    {
-        _player = player;
-    }
+    
     private void Start()
     {
+        _player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        
         if (_isInInventory)
         {
             initial_pos = gameObject.transform.position;
@@ -77,19 +75,29 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
         if (_isInInventory && CheckInChest())
         {
-            // TODO Transfer Item To Chest
-            // TODO Set previousParent transform to Inventory
+            Debug.Log("Item dropped in Chest Area");
+            Item item = GetComponent<InventoryInteraction>().GetItem();
+            _player.GetPlayerInventory().RemoveItem(item);
+            _player.GetChest().AddItem(gameObject);
+            
+            // Parent is updated in function above
+            previousParent = gameObject.transform.parent;
+            _isInInventory = false;
         }
         else if (!_isInInventory && CheckInInventory())
         {
-            // TODO Transfer Item To Inventory
-            // TODO Set previousParent transform to Inventory
+            Debug.Log("Item dropped in Inventory Area");
+            _player.GetChest().RemoveItem(gameObject);
+            _player.GetPlayerInventory().TransferItem(gameObject);
+            
+            // Parent is updated in function above
+            previousParent = gameObject.transform.parent;
+            _isInInventory = true;
         }
         else
         {
             transform.parent = previousParent;
             gameObject.transform.position = initial_pos;
-            _isInInventory = true;
         }
     }
 
@@ -129,5 +137,15 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         }
 
         return false;
+    }
+
+    public void SetPreviousParent(Transform parent)
+    {
+        previousParent = parent;
+    }
+
+    public void SetInInventory(bool value)
+    {
+        _isInInventory = value;
     }
 }

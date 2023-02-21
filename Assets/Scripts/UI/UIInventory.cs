@@ -61,8 +61,7 @@ public class UIInventory : MonoBehaviour
             foreach (Item item in inventory.GetItemList())
             {
                 GameObject new_item = Instantiate(itemSlotTemplate, itemSlotContainer).gameObject;
-                new_item.GetComponent<InventoryStoreInteraction>().SetItem(item);
-                new_item.GetComponent<ItemDrag>().SetPlayer(_player);
+                new_item.GetComponent<InventoryInteraction>().SetItem(item);
                 
                 RectTransform itemsSlotRectTransform = new_item.GetComponent<RectTransform>();
                 itemsSlotRectTransform.gameObject.SetActive(true);
