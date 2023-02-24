@@ -22,7 +22,8 @@ public class AnimalManager : MonoBehaviour
     public int egg_counter = 0;
     //private bool hasFood_chicken = false;
 
-    public bool cowHasMilk = false;
+    public bool cowHasMilk = true;
+    public bool sheepHasWool = true;
 
     public float secondsPerDay;
     public float pointInTime;
@@ -236,6 +237,22 @@ public class AnimalManager : MonoBehaviour
             else
             {
                 if (!SceneLoader.Instance.tryToEmptyContainer(AnimalScript.AnimalType.cow))
+                {
+                    Debug.Log("Try to empty container: [FAILED]");
+                }
+            }
+        }
+
+        if(SceneLoader.Instance.sheepAlive)
+        {
+            int cow_food_state = SceneLoader.Instance.getContainerStateByType(AnimalScript.AnimalType.sheep);
+            if (cow_food_state != 1) //check if animal has food to eat at night
+            {
+                SceneLoader.Instance.sheepAlive = false;
+            }
+            else
+            {
+                if (!SceneLoader.Instance.tryToEmptyContainer(AnimalScript.AnimalType.sheep))
                 {
                     Debug.Log("Try to empty container: [FAILED]");
                 }

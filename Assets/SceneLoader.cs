@@ -62,6 +62,7 @@ public class SceneLoader : MonoBehaviour
         _enter_field_pos = new Vector2(-3f, 5.4f);
         _leave_field_pos = new Vector2(-3f, -5.5f);
         cow_pos = new Vector2(3.541f, -0.696f);
+        sheep_pos = new Vector2(3.137f, 2.138f);
         current_season = 1;
 
         if(Instance != null && Instance != this)
@@ -210,6 +211,11 @@ public class SceneLoader : MonoBehaviour
     public Vector2 getCowPos()
     {
         return cow_pos;
+    }
+
+    public Vector2 getSheepPos()
+    {
+        return sheep_pos;
     }
 
     public bool tryToEmptyContainer(AnimalScript.AnimalType animal_type)
