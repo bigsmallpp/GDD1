@@ -35,6 +35,9 @@ public class TimeManager : MonoBehaviour
     // TODO Save/Load Data
     private DataStore _game_data = null;
 
+    private Color _currentLightColor;
+    private bool _dayEnded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +70,7 @@ public class TimeManager : MonoBehaviour
         _game_data._current_seconds += Time.deltaTime;
         updateHUD(true);
         _light_manager.UpdateLighting(Utils.GetTransition(_game_data._current_seconds, _seconds_per_day));
+        _currentLightColor = _light_manager.GetGlobalColor();
         if (_game_data._current_seconds >= _seconds_per_day)
         {
             EndDay();
@@ -80,10 +84,7 @@ public class TimeManager : MonoBehaviour
     {
         _time_enabled = false;
         ++_game_data._current_day_in_season;
-        AdjustSeason();
-        updateHUD(false);
-        _field_manager.UpdateSeeds();
-        AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
+        _dayEnded = true;
     }
 
     private void AdjustSeason()
@@ -101,6 +102,7 @@ public class TimeManager : MonoBehaviour
         _light_manager.TurnOffLanterns();
         _light_manager.SetLightToDaytime();
         _time_enabled = true;
+        _dayEnded = false;
     }
 
     public void PauseTimeProgression()
@@ -154,7 +156,7 @@ public class TimeManager : MonoBehaviour
             _game_data._current_seconds = 0.0f;
         }
         
-        Debug.Log("Trying to save data");
+        // Debug.Log("Trying to save data");
 
         try
         {
@@ -213,15 +215,49 @@ public class TimeManager : MonoBehaviour
 
     public void skipToNextDay()
     {
-        if (_time_enabled)
+        if (!_dayEnded)
         {
-            EndDay();
+            return;
         }
+        
+        AdjustSeason();
+        updateHUD(false);
+        _field_manager.UpdateSeeds();
+        AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
         Debug.Log("You went to sleep. Starting a new Day!");
         StartDay(); //Start new Day
+
+        // Only occurs when Game is reloaded (Continued)
+        if (Chest.Instance != null)
+        {
+            Chest.Instance.SellItemsInChest();
+        }
         
-        Chest.Instance.SellItemsInChest();
         SaveDataToFile(true);
         _game_data._current_seconds = 0.0f;
+    }
+
+    public void UpdateLightManager(LightManager light)
+    {
+        if (_light_manager == null)
+        {
+            _light_manager = light;
+            _light_manager.SetGlobalColor(_currentLightColor);
+            _light_manager.UpdateLighting(Utils.GetTransition(_game_data._current_seconds, _seconds_per_day));
+            if (_dayEnded)
+            {
+                _light_manager.TurnOnLanterns();
+            }
+        }
+    }
+
+    public void UpdatePlantsPerScene(SceneLoader.Scene new_scene)
+    {
+        _plant_manager.UpdatePlantVisibility(new_scene);
+    }
+
+    public Fieldmanager GetFieldManager()
+    {
+        return _field_manager;
     }
 }

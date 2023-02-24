@@ -19,6 +19,8 @@ TagManager:
   - GoHome
   - HouseDoor
   - UICam
+  - PlayerInventory
+  - UI Chest
   layers:
   - Default
   - TransparentFX

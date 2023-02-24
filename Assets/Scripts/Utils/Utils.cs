@@ -11,11 +11,24 @@ public static class Utils
         Winter
     }
     
+    public enum TileStage
+    {
+        Empty,
+        Plowed,
+        Seeded
+    }
+    
     public enum PlantStage
     {
         Seed,
         Sprout,
         Ripe
+    }
+    
+    public enum PlantType
+    {
+        None,
+        Weed
     }
     
     public enum RequestType
@@ -35,6 +48,7 @@ public static class Utils
     {
         public PlantBaseClass _plant;
         public RequestType _type;
+        public int _scene;
     }
 
     public static class Constants

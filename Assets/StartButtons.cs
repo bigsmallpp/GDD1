@@ -19,6 +19,7 @@ public class StartButtons : MonoBehaviour
     if(SceneLoader.Instance.player_variant != 0)
     {
       SaveManager.Instance.ResetSaves();
+      SceneLoader.Instance.currentScene = SceneLoader.Scene.Outside;
       SceneManager.LoadScene("SampleScene");
     }
     else

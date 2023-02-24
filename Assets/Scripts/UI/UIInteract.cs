@@ -6,7 +6,7 @@ using TMPro;
 public class UIInteract : MonoBehaviour
 {
     [SerializeField] private GameObject containerGameObject;
-    [SerializeField] private PlayerController player;
+    [SerializeField] private PlayerController _player;
     [SerializeField] private TextMeshProUGUI interactText;
 
     public void Show(PlantBaseClass plant)
@@ -22,9 +22,14 @@ public class UIInteract : MonoBehaviour
 
     private void Update()
     {
-        if(player.GetInteractableObject() != null)
+        if (_player == null)
         {
-            Show(player.GetInteractableObject());
+            return;
+        }
+        
+        if(_player.GetInteractableObject() != null)
+        {
+            Show(_player.GetInteractableObject());
         }
         else
         {
@@ -32,4 +37,8 @@ public class UIInteract : MonoBehaviour
         }
     }
 
+    public void UpdatePlayer(PlayerController player)
+    {
+        _player = player;
+    }
 }

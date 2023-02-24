@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
@@ -36,7 +37,8 @@ public class PlayerController : MonoBehaviour
     public float bottomBoundary = -4.594f;
     
     private Vector2 movement;
-    public UIInteract uiInteract;
+    public UIInteract _uiInteract;
+    public SelectedToolHighlighted _toolHighlight;
 
     private Animator anim;
     private Sprite _current_sprite;
@@ -74,7 +76,20 @@ public class PlayerController : MonoBehaviour
         //Set Player variant
         setPlayerVariant();
         SaveManager.Instance.SetPlayer(this);
+        
+        // TODO Make differnce between reload and scene-transition
+        //      Tiles in Field disappear after save
+        _playerInventory = UIHandler.Instance.GetPlayerInventory();
         SaveManager.Instance.LoadPlayerData();
+        
+        _uiInteract = UIHandler.Instance.GetUIInteract();
+        _toolHighlight = UIHandler.Instance.GetSelectedTool();
+        
+        _chest = UIHandler.Instance.GetChest();
+        _uiInteract.UpdatePlayer(this);
+        fieldManager = TimeManager.Instance.GetFieldManager();
+        tileMapController = GameManager.Instance.GetTileManager();
+        Camera.main.GetUniversalAdditionalCameraData().cameraStack.Add(GameObject.FindWithTag("UICam").GetComponent<Camera>());
     }
 
     private void Update()
@@ -162,18 +177,18 @@ public class PlayerController : MonoBehaviour
 
     void CheckAction()
     {
-        if (interactionkey.action.WasPressedThisFrame())
+        if (interactionkey.action.WasPressedThisFrame() && TimeManager.Instance._time_enabled)
         { 
             if(Interact())
             {
                 return;
             }
-            if (currentToolNumb == 0)
+            if (currentToolNumb == 0 && CheckSeedOrPlowPossible())
             {
                 PlowGrid();
                 return;
             }
-            if(currentToolNumb == 1)
+            if(currentToolNumb == 1 && CheckSeedOrPlowPossible())
             {
                 SeedGrid();
                 return;
@@ -213,7 +228,7 @@ public class PlayerController : MonoBehaviour
     {
         //ToDo: Implement Harvestable Tag
         //if(gameObject.tag == "harvestable")
-        if (fieldManager.CheckStatus(selectedTilePos) == 2)
+        if (CheckSeedOrPlowPossible() && fieldManager.CheckStatus(selectedTilePos) == 2)
         {
             GameObject plantObj = fieldManager.GetPlantObj(selectedTilePos);
             if (plantObj == null)
@@ -226,6 +241,7 @@ public class PlayerController : MonoBehaviour
                 _playerInventory.AddItem(plant.getItem());
                 playerEnergy.EnergyChange();
                 fieldManager.deleteEntry(selectedTilePos);
+                GameManager.Instance.GetPlantManager()._plants[(int)SceneLoader.Instance.currentScene].Remove(plant);
                 Destroy(plant.gameObject);
                 return true;
             }
@@ -308,15 +324,10 @@ public class PlayerController : MonoBehaviour
 
     private void ToolSelection()
     {
+        int current_tool = currentToolNumb;
         
         if(currentToolNumb >= 0 && hotbarCycle.action.ReadValue<float>() > 0)
         {
-            /*currentToolNumb += 1;
-            if (currentToolNumb == 6)
-            {
-                currentToolNumb = 0;
-            }*/
-
             currentToolNumb -= 1;
             if (currentToolNumb == -1)
             {
@@ -326,12 +337,6 @@ public class PlayerController : MonoBehaviour
 
         if(currentToolNumb <= 5 && hotbarCycle.action.ReadValue<float>() < 0)
         {
-            /*currentToolNumb -= 1;
-            if (currentToolNumb == -1)
-            {
-                currentToolNumb = 5;
-            }*/
-
             currentToolNumb += 1;
             if (currentToolNumb == 6)
             {
@@ -364,11 +369,24 @@ public class PlayerController : MonoBehaviour
             currentToolNumb = 5;
         }
 
-        
+        if (currentToolNumb != current_tool)
+        {
+            _toolHighlight.HighlightTool(currentToolNumb);
+        }
     }
 
     private void Marker()
     {
+        if (!CheckSeedOrPlowPossible())
+        {
+            return;
+        }
+
+        if (tileMapController.GetTileMap() == null)
+        {
+            return;
+        }
+        
         selectedTilePos = tileMapController.GetGridPosition(Input.mousePosition);
         SelectableCheck();
         Vector3Int gridPos = selectedTilePos;
@@ -590,15 +608,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void LoadPlayerData(PlayerDataStore data)
+    public void LoadPlayerData(PlayerDataStore data, bool skip_position_and_inventory = false)
     {
-        foreach(ItemsDataStore item_store in data._items)
-        {
-            _playerInventory.AddItem(new Item(item_store._type, item_store._amount, item_store._price));            
-        }
-
         currentMoney = data._money;
-        transform.position = new Vector3(data._pos_x, data._pos_y);
+
+        if (!skip_position_and_inventory)
+        {
+            transform.position = new Vector3(data._pos_x, data._pos_y);
+            foreach(ItemsDataStore item_store in data._items)
+            {
+                _playerInventory.AddItem(new Item(item_store._type, item_store._amount, item_store._price));            
+            }
+        }
     }
 
     public Chest GetChest()
@@ -609,5 +630,16 @@ public class PlayerController : MonoBehaviour
     public void AddProfit(int profit)
     {
         currentMoney += profit;
+    }
+
+    private bool CheckSeedOrPlowPossible()
+    {
+        if (SceneLoader.Instance.currentScene == SceneLoader.Scene.Stable ||
+            SceneLoader.Instance.currentScene == SceneLoader.Scene.Shop)
+        {
+            return false;    
+        }
+
+        return true;
     }
 }

@@ -16,7 +16,7 @@ public class SceneLoader : MonoBehaviour
     //I know this enum is a bit unnecessary
     public enum actualPosition { Enter_stable_pos = 0, Leave_stable_pos = 1, Enter_field_pos = 2, Leave_field_pos = 3 };
 
-    public enum Scene {Start = 0, Outside = 1, Stable = 2, Field = 3};
+    public enum Scene {Start = 0, Outside = 1, Stable = 2, Field = 3, Shop = 4};
     public Scene currentScene;
     public actualPosition actualPos;
     public Scene previousScene = 0;
@@ -92,46 +92,58 @@ public class SceneLoader : MonoBehaviour
             
             case 1:
             //Debug.Log("Load Outside");
+            // Stable -> Outside
             previousScene = currentScene;
             currentScene = Scene.Outside;
             currentSceneString = SceneString.outside;
             updateCurrentPosition(_leave_stable_pos, actualPosition.Leave_stable_pos);
+            SaveManager.Instance.UpdatePlayerData();
+            SaveManager.Instance.UpdateTilesData(GameManager.Instance.GetCropsManager().GetTiles(), (int) previousScene);
             SceneManager.LoadScene("SampleScene");
             AnimalManager.Instance.setChickenRespawned();
-            
+            TimeManager.Instance.UpdatePlantsPerScene(currentScene);
             break;
             
             case 2:
             //Debug.Log("Load Stable");
+            // Outside -> Stable
             previousScene = currentScene;
             currentScene = Scene.Stable;
             currentSceneString = SceneString.stable;
             updateCurrentPosition(_enter_stable_pos, actualPosition.Enter_stable_pos);
+            SaveManager.Instance.UpdatePlayerData();
+            SaveManager.Instance.UpdateTilesData(GameManager.Instance.GetCropsManager().GetTiles(), (int) previousScene);
             SceneManager.LoadScene("Stable");
-            
+            TimeManager.Instance.UpdatePlantsPerScene(currentScene);
             //AnimalManager.Instance.setChickenRespawned();
             break;
 
             case 3:
             //Debug.Log("Load Outside");
+            // Outside -> Field
             previousScene = currentScene;
             currentScene = Scene.Field;
             currentSceneString = SceneString.field;
             updateCurrentPosition(_enter_field_pos, actualPosition.Enter_field_pos);
+            SaveManager.Instance.UpdatePlayerData();
+            SaveManager.Instance.UpdateTilesData(GameManager.Instance.GetCropsManager().GetTiles(), (int) previousScene);
             SceneManager.LoadScene("Field");
-            
+            TimeManager.Instance.UpdatePlantsPerScene(currentScene);
             break;
 
             case 4:
             //Leave Field and load scene with different position
+            // Field -> Outside
             //Debug.Log("Load Outside");
             previousScene = currentScene;
             currentScene = Scene.Outside;
             currentSceneString = SceneString.outside;
             updateCurrentPosition(_leave_field_pos, actualPosition.Leave_field_pos);
+            SaveManager.Instance.UpdatePlayerData();
+            SaveManager.Instance.UpdateTilesData(GameManager.Instance.GetCropsManager().GetTiles(), (int) previousScene);
             SceneManager.LoadScene("SampleScene");
             AnimalManager.Instance.setChickenRespawned();
-            
+            TimeManager.Instance.UpdatePlantsPerScene(currentScene);
             break;
         }
     }

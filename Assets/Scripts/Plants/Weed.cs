@@ -8,19 +8,23 @@ public class Weed : PlantBaseClass
     // Start is called before the first frame update
     protected override void Start()
     {
-        _current_plant_stage = Utils.PlantStage.Seed;
-        _current_time_spent_growing = 0.0f;
-        _interact_text = Utils.Constants.PLANT_NOT_RIPE_YET;
-        SwitchToNextSprite();
-
-        if (TimeManager.Instance != null && TimeManager.Instance.PlantManagerInstance() != null)
+        if (!_loaded_from_file)
         {
-            TimeManager.Instance.PlantManagerInstance().AddPlant(this);
-        }
-        // PlantManager isn't ready yet, so wait a bit and try again
-        else
-        {
-            StartCoroutine(lateStart());
+            _plant_type = Utils.PlantType.Weed;
+            _current_plant_stage = Utils.PlantStage.Seed;
+            _current_time_spent_growing = 0.0f;
+            _interact_text = Utils.Constants.PLANT_NOT_RIPE_YET;
+            SwitchToNextSprite();
+            
+            if (TimeManager.Instance != null && TimeManager.Instance.PlantManagerInstance() != null)
+            {
+                TimeManager.Instance.PlantManagerInstance().AddPlant(this);
+            }
+            // PlantManager isn't ready yet, so wait a bit and try again
+            else
+            {
+                StartCoroutine(lateStart());
+            }
         }
     }
 
@@ -32,7 +36,7 @@ public class Weed : PlantBaseClass
 
     public override void Grow()
     {
-        if (_current_plant_stage == Utils.PlantStage.Ripe)
+        if (_current_plant_stage == Utils.PlantStage.Ripe || !_active)
         {
             return;
         }
