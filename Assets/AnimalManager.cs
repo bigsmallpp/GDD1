@@ -22,6 +22,8 @@ public class AnimalManager : MonoBehaviour
     public int egg_counter = 0;
     //private bool hasFood_chicken = false;
 
+    public bool cowHasMilk = false;
+
     public float secondsPerDay;
     public float pointInTime;
     
@@ -212,6 +214,28 @@ public class AnimalManager : MonoBehaviour
             else
             {
                 if (!SceneLoader.Instance.tryToEmptyContainer(AnimalScript.AnimalType.chicken))
+                {
+                    Debug.Log("Try to empty container: [FAILED]");
+                }
+            }
+        }
+
+        if(SceneLoader.Instance.cowAlive)
+        {
+            int cow_food_state = SceneLoader.Instance.getContainerStateByType(AnimalScript.AnimalType.cow);
+            if (cow_food_state != 1) //check if animal has food to eat at night
+            {
+                //Animal dies
+                SceneLoader.Instance.cowAlive = false;
+                //make death sprite :(
+                /*if (SceneLoader.Instance.currentScene == SceneLoader.Scene.Stable && cow != null)
+                {
+                    chicken.gameObject.SetActive(false);
+                }*/
+            }
+            else
+            {
+                if (!SceneLoader.Instance.tryToEmptyContainer(AnimalScript.AnimalType.cow))
                 {
                     Debug.Log("Try to empty container: [FAILED]");
                 }

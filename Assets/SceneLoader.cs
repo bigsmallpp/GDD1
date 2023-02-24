@@ -35,6 +35,8 @@ public class SceneLoader : MonoBehaviour
     private Vector2 _chicken_start_pos;
     public Vector2 chicken_door_position;
     public Vector2 chicken_cage_position;
+    public Vector2 cow_pos;
+    public Vector2 sheep_pos;
     public bool enterStable = false;
 
     //Season stuff
@@ -44,6 +46,9 @@ public class SceneLoader : MonoBehaviour
     private Dictionary<AnimalScript.AnimalType, int> _container_states;
     public bool _chicken_state = false;
     private Vector2 _chicken_pos;
+
+    public bool cowAlive = false;
+    public bool sheepAlive = false;
 
     void Awake()
     {
@@ -56,6 +61,7 @@ public class SceneLoader : MonoBehaviour
         chicken_door_position = new Vector2(0.0f, 5.4f);
         _enter_field_pos = new Vector2(-3f, 5.4f);
         _leave_field_pos = new Vector2(-3f, -5.5f);
+        cow_pos = new Vector2(3.541f, -0.696f);
         current_season = 1;
 
         if(Instance != null && Instance != this)
@@ -201,22 +207,27 @@ public class SceneLoader : MonoBehaviour
         return _chicken_pos;
     }
 
-    public bool tryToEmptyContainer(AnimalScript.AnimalType type)
+    public Vector2 getCowPos()
+    {
+        return cow_pos;
+    }
+
+    public bool tryToEmptyContainer(AnimalScript.AnimalType animal_type)
     {
         bool returnState = false;
         GameObject[] container = GameObject.FindGameObjectsWithTag("Food Container");
         foreach (GameObject item in container)
         {
             FoodContainer foodContainer = item.GetComponent<FoodContainer>();
-            if (foodContainer.type == AnimalScript.AnimalType.chicken)
+            if (foodContainer.type == animal_type)
             {
                 foodContainer.emptyContainer();
                 return true;
             }
         }
-        if(getContainerStateByType(type) == 1)
+        if(getContainerStateByType(animal_type) == 1)
         {
-            returnState = updateContainerState(type, 0);
+            returnState = updateContainerState(animal_type, 0);
         }
         return returnState;
     }

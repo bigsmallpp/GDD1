@@ -18,6 +18,7 @@ TagManager:
   - GotToField
   - GoHome
   - HouseDoor
+  - Cow
   layers:
   - Default
   - TransparentFX

@@ -5,6 +5,7 @@ using UnityEngine;
 public class AnimalSpawner : MonoBehaviour
 {
     public AnimalScript chickenPrefab;
+    public cowScript cowPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,13 @@ public class AnimalSpawner : MonoBehaviour
             Vector2 chicknePos = SceneLoader.Instance.getChickenPos();
             Debug.Log("Init Chicken");
             Instantiate(chickenPrefab.gameObject, chicknePos, Quaternion.identity);
+        }
+
+        if(SceneLoader.Instance.cowAlive)
+        {
+            Vector2 cowPos = SceneLoader.Instance.getCowPos();
+            Debug.Log("Init Cow");
+            Instantiate(cowPrefab.gameObject, cowPos, Quaternion.identity);
         }
     }
 

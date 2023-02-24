@@ -460,6 +460,12 @@ public class PlayerController : MonoBehaviour
         {
             TimeManager.Instance.skipToNextDay();
         }
+
+        if(collision.gameObject.tag == "Cow" && currentToolNumb == 2)
+        {
+            //TODO: Get milk object
+            AnimalManager.Instance.cowHasMilk = false;
+        }
     }
 
     IEnumerator TransitionToNextScene(Direction direction, int scene)
