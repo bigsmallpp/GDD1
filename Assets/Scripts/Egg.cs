@@ -25,6 +25,7 @@ public class Egg : MonoBehaviour
         if(player != null)
         {
             player.GetPlayerInventory().AddItem(_egg);
+            SaveManager.Instance.RemoveEgg(transform.position);
             Destroy(gameObject);
         }
     }

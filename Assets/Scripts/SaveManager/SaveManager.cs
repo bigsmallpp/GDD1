@@ -506,4 +506,26 @@ public class SaveManager : MonoBehaviour
         Destroy(GameManager.Instance.gameObject);
         Destroy(UIHandler.Instance.gameObject);
     }
+
+    public void RemoveEgg(Vector2 pos)
+    {
+        EggDataStore egg_to_remove = null;
+        foreach (EggDataStore egg in _eggs.eggs_)
+        {
+            if (Math.Round(pos.x, 2) == Math.Round(egg._pos_x, 2) &&
+                Math.Round(pos.y, 2) == Math.Round(egg._pos_y, 2))
+            {
+                egg_to_remove = egg;
+                break;
+            }
+        }
+
+        if (egg_to_remove == null)
+        {
+            Debug.LogError("No egg found");
+            return;
+        }
+
+        _eggs.eggs_.Remove(egg_to_remove);
+    }
 }
