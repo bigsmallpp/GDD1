@@ -584,6 +584,9 @@ public class PlayerController : MonoBehaviour
             case 3:
             anim.SetInteger("variant", 3);
             break;
+            case 4:
+            anim.SetInteger("variant", 4);
+            break;
             default:
             break;
         }
