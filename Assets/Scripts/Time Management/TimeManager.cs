@@ -83,16 +83,21 @@ public class TimeManager : MonoBehaviour
     public void EndDay()
     {
         _time_enabled = false;
-        ++_game_data._current_day_in_season;
-        AdjustSeason();
         updateHUD(false);
         _field_manager.UpdateSeeds();
         _dayEnded = true;
-        AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
-        AnimalManager.Instance.cowHasMilk = true;
-        AnimalManager.Instance.sheepHasWool = true;
+        //AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
+        //AnimalManager.Instance.cowHasMilk = true;
+        //AnimalManager.Instance.sheepHasWool = true;
         //StartDay(); //Start Day when collision with House Door
         //TODO: Reload scene and update season to change map
+    }
+
+    private void increaseDay()
+    {
+        ++_game_data._current_day_in_season;
+        Debug.Log("Increase Day");
+        AdjustSeason();
     }
 
     private void AdjustSeason()
@@ -102,6 +107,7 @@ public class TimeManager : MonoBehaviour
             _game_data._current_day_in_season = 1;
             ++_game_data._current_season;
             _game_data._current_season = (Utils.Season)((int)_game_data._current_season % 4);
+            SceneLoader.Instance.increaseSeason();
         }
     }
 
@@ -227,11 +233,17 @@ public class TimeManager : MonoBehaviour
         {
             return;
         }
-        
+
+        increaseDay();
         AdjustSeason();
         updateHUD(false);
         _field_manager.UpdateSeeds();
         AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
+        if(_game_data._current_day_in_season % 2 == 0)
+        {
+            AnimalManager.Instance.cowHasMilk = true;
+            AnimalManager.Instance.sheepHasWool = true;
+        }
         Debug.Log("You went to sleep. Starting a new Day!");
         StartDay(); //Start new Day
 

@@ -63,7 +63,7 @@ public class SceneLoader : MonoBehaviour
         _leave_field_pos = new Vector2(-3f, -5.5f);
         cow_pos = new Vector2(3.541f, -0.696f);
         sheep_pos = new Vector2(3.137f, 2.138f);
-        current_season = 1;
+        current_season = 0;
 
         if(Instance != null && Instance != this)
         {
@@ -254,5 +254,10 @@ public class SceneLoader : MonoBehaviour
     public void setPlayerVariant(int variant)
     {
         player_variant = variant;
+    }
+
+    public void increaseSeason()
+    {
+        current_season = (current_season + 1) % 4;
     }
 }

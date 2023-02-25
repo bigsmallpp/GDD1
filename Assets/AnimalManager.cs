@@ -25,7 +25,7 @@ public class AnimalManager : MonoBehaviour
     public bool cowHasMilk = true;
     public bool sheepHasWool = true;
 
-    public float secondsPerDay;
+    public float secondsPerDay = 42;
     public float pointInTime;
     
     public float waitingTimer = 0f;
@@ -51,7 +51,7 @@ public class AnimalManager : MonoBehaviour
         _egg_positions = new Dictionary<int, Vector2>();
         //Get chicken
         initChicken();
-        getTimeToLayEgg();
+        //getTimeToLayEgg();
         getRandomPointInTime();
         SaveManager.Instance.SetAnimalManager(this);
         SaveManager.Instance.LoadEggs();
@@ -74,6 +74,11 @@ public class AnimalManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(secondsPerDay == 42)
+        {
+            getTimeToLayEgg();
+        }
+        
         if(checkForFood_Debug)
         {
             checkAnimalsHaveFood();

@@ -6,7 +6,7 @@ public class MapChangeScript : MonoBehaviour
 {
     public Sprite defaultMap;
     public Sprite[] mapSeasons;
-    public int current_season = 1;
+    public int current_season = 0;
     private SpriteRenderer _sprite_renderer;
     void Awake()
     {
@@ -30,16 +30,16 @@ public class MapChangeScript : MonoBehaviour
     {
         switch (current_season)
         {
-            case 1:
+            case 0:
             _sprite_renderer.sprite = mapSeasons[0];
             break;
-            case 2:
+            case 1:
             _sprite_renderer.sprite = mapSeasons[1];
             break;
-            case 3:
+            case 2:
             _sprite_renderer.sprite = mapSeasons[2];
             break;
-            case 4:
+            case 3:
             _sprite_renderer.sprite = mapSeasons[3];
             break;
             default:
