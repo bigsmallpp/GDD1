@@ -97,6 +97,7 @@ public class Fieldmanager : MonoBehaviour
                 GameObject val = Instantiate(plantPrefab, poscenter, Quaternion.identity);
                 val.GetComponent<PlantBaseClass>().SetScene((int) SceneLoader.Instance.currentScene);
                 val.GetComponent<PlantBaseClass>().SetTileMapPos(pos);
+                GameManager.Instance.GetPlantManager().AddPlant(val.GetComponent<PlantBaseClass>());
                 
                 Debug.Log("GameObject x: " + val.transform.position.x + " y: " + val.transform.position.y + "\n");
                 plants_.Add(tile.Key, val);

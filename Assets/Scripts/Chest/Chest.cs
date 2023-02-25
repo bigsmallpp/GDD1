@@ -16,7 +16,6 @@ public class Chest : MonoBehaviour
         if (!_instance)
         {
             _instance = this;
-            _player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             DontDestroyOnLoad(this);
         }
         else
@@ -45,5 +44,16 @@ public class Chest : MonoBehaviour
         int profit = _chestInventory.SellItems();
         _player.AddProfit(profit);
         Debug.Log("Made a profit of " + profit);
+    }
+
+    public void SetPlayer(PlayerController player)
+    {
+        _player = player;
+    }
+
+    public void CloseChest()
+    {
+        gameObject.SetActive(false);
+        _player.BlockMovement(false);
     }
 }

@@ -46,4 +46,13 @@ public class UIHandler : MonoBehaviour
     {
         return _uiChest;
     }
+
+    public void CloseChestAndInventory()
+    {
+        if (_uiChest.enabled)
+        {
+            _uiChest.CloseChest();
+            _uiInventory.SetActive(false);
+        }
+    }
 }

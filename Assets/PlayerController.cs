@@ -86,6 +86,7 @@ public class PlayerController : MonoBehaviour
         _toolHighlight = UIHandler.Instance.GetSelectedTool();
         
         _chest = UIHandler.Instance.GetChest();
+        _chest.SetPlayer(this);
         _uiInteract.UpdatePlayer(this);
         fieldManager = TimeManager.Instance.GetFieldManager();
         tileMapController = GameManager.Instance.GetTileManager();
@@ -658,5 +659,10 @@ public class PlayerController : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void BlockMovement(bool block)
+    {
+        blockMovementOnly = block;
     }
 }

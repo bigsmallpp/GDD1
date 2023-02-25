@@ -86,6 +86,7 @@ public class TimeManager : MonoBehaviour
         updateHUD(false);
         _field_manager.UpdateSeeds();
         _dayEnded = true;
+        UIHandler.Instance.CloseChestAndInventory();
         //AnimalManager.Instance.checkAnimalsHaveFood(); //Check if animals have food to eat
         //AnimalManager.Instance.cowHasMilk = true;
         //AnimalManager.Instance.sheepHasWool = true;

@@ -109,7 +109,7 @@ public class SceneLoader : MonoBehaviour
             currentSceneString = SceneString.outside;
             updateCurrentPosition(_leave_stable_pos, actualPosition.Leave_stable_pos);
             SaveManager.Instance.UpdatePlayerData();
-            SaveManager.Instance.UpdateTilesData(GameManager.Instance.GetCropsManager().GetTiles(), (int) previousScene);
+            // SaveManager.Instance.UpdateTilesData(GameManager.Instance.GetCropsManager().GetTiles(), (int) previousScene);
             SceneManager.LoadScene("SampleScene");
             AnimalManager.Instance.setChickenRespawned();
             TimeManager.Instance.UpdatePlantsPerScene(currentScene);
