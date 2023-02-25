@@ -13,6 +13,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private UIInteract _uiInteract;
     [SerializeField] private PlayerInventory _uiInventory;
     [SerializeField] private Chest _uiChest;
+    private bool itemIsBeingDragged = false;
     void Awake()
     {
         if (!_instance)
@@ -47,12 +48,13 @@ public class UIHandler : MonoBehaviour
         return _uiChest;
     }
 
-    public void CloseChestAndInventory()
+    public void SetItemBeingDragged(bool val)
     {
-        if (_uiChest.enabled)
-        {
-            _uiChest.CloseChest();
-            _uiInventory.SetActive(false);
-        }
+        itemIsBeingDragged = val;
+    }
+
+    public bool CheckItemBeingDragged()
+    {
+        return itemIsBeingDragged;
     }
 }

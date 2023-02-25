@@ -22,10 +22,10 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     private float _storeHeight = 115.0f;
     private float _storeWidth = 95.0f;
 
-    private float _inventoryPosX = 1090.0f;
+    private float _inventoryPosX = 1060.0f;
     private float _inventoryPosY = 85.0f;
-    private float _inventoryHeight = 100.0f;
-    private float _inventoryWidth = 110.0f;
+    private float _inventoryHeight = 120.0f;
+    private float _inventoryWidth = 90.0f;
     
     private void Start()
     {
@@ -65,6 +65,7 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public void OnBeginDrag(PointerEventData eventData)
     {
         SetUICamera();
+        UIHandler.Instance.SetItemBeingDragged(true);
         transform.parent = canvas.transform;
         grab_offset_to_center = UIcamera.ScreenToWorldPoint(Input.mousePosition) - initial_pos;
     }
@@ -99,6 +100,8 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             transform.parent = previousParent;
             gameObject.transform.position = initial_pos;
         }
+        
+        UIHandler.Instance.SetItemBeingDragged(false);
     }
 
     private void SetUICamera()

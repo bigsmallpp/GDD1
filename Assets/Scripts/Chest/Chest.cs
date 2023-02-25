@@ -26,6 +26,11 @@ public class Chest : MonoBehaviour
 
     public void OpenOrCloseChestUI()
     {
+        if (UIHandler.Instance.CheckItemBeingDragged())
+        {
+            return;
+        }
+        
         gameObject.SetActive(!gameObject.activeSelf);
     }
 
@@ -53,6 +58,11 @@ public class Chest : MonoBehaviour
 
     public void CloseChest()
     {
+        if (UIHandler.Instance.CheckItemBeingDragged())
+        {
+            return;
+        }
+        
         gameObject.SetActive(false);
         _player.BlockMovement(false);
     }

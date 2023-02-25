@@ -16,15 +16,15 @@ public class Weed : PlantBaseClass
             _interact_text = Utils.Constants.PLANT_NOT_RIPE_YET;
             SwitchToNextSprite();
             
-            if (TimeManager.Instance != null && TimeManager.Instance.PlantManagerInstance() != null)
-            {
-                TimeManager.Instance.PlantManagerInstance().AddPlant(this);
-            }
-            // PlantManager isn't ready yet, so wait a bit and try again
-            else
-            {
-                StartCoroutine(lateStart());
-            }
+            // if (TimeManager.Instance != null && TimeManager.Instance.PlantManagerInstance() != null)
+            // {
+            //     TimeManager.Instance.PlantManagerInstance().AddPlant(this);
+            // }
+            // // PlantManager isn't ready yet, so wait a bit and try again
+            // else
+            // {
+            //     StartCoroutine(lateStart());
+            // }
         }
     }
 

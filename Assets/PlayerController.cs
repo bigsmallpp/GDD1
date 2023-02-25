@@ -116,6 +116,10 @@ public class PlayerController : MonoBehaviour
             if (inventorykey.action.WasPressedThisFrame())
             {
                 _playerInventory.SetActiveAlternativly();
+                if (_chest != null && _chest.isActiveAndEnabled)
+                {
+                    _chest.CloseChest();
+                }
             }
 
             //Remove one Tomato from Inventory on Key Q -- Maybe Outsource to different Obj
@@ -135,26 +139,25 @@ public class PlayerController : MonoBehaviour
         rb.velocity = movement;
 
         if(isAutoMoving)
+        {
+            if(!startedMoving)
             {
-                if(!startedMoving)
-                {
-                    startMovingAnim();
-                    startedMoving = true;
-                }
-                AutoMovePlayer();
-
-                movingTimer += Time.deltaTime;
-                if(movingTimer >= autoMoveDuration)
-                {
-                    isAutoMoving = false;
-                    movingTimer = 0.0f;
-                    startedMoving = false;
-                    stopMovingAnim();
-                    blockControlling = false;
-                    _moving_direction = 0;
-                }
+                startMovingAnim();
+                startedMoving = true;
             }
+            AutoMovePlayer();
 
+            movingTimer += Time.deltaTime;
+            if(movingTimer >= autoMoveDuration)
+            {
+                isAutoMoving = false;
+                movingTimer = 0.0f;
+                startedMoving = false;
+                stopMovingAnim();
+                blockControlling = false;
+                _moving_direction = 0;
+            }
+        }
     }
 
     void CheckMovement()
@@ -239,7 +242,9 @@ public class PlayerController : MonoBehaviour
             plantObj.TryGetComponent(out PlantBaseClass plant);
             if (plant != null && plant.isRipe())
             {
-                _playerInventory.AddItem(plant.getItem());
+                Item new_item = new Item();
+                new_item.Duplicate(plant.getItem());
+                _playerInventory.AddItem(new_item);
                 playerEnergy.EnergyChange();
                 fieldManager.deleteEntry(selectedTilePos);
                 GameManager.Instance.GetPlantManager()._plants[(int)SceneLoader.Instance.currentScene].Remove(plant);

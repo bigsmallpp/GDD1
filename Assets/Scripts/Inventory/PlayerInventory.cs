@@ -107,6 +107,11 @@ public class PlayerInventory : MonoBehaviour
     
     public void SetActiveAlternativly()
     {
+        if (UIHandler.Instance.CheckItemBeingDragged())
+        {
+            return;
+        }
+        
         if (isActive)
         {
             gameObject.SetActive(false);
@@ -121,7 +126,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void SetActive(bool state)
     {
-        if (isActive == state)
+        if (isActive == state || UIHandler.Instance.CheckItemBeingDragged())
         {
             return;
         }
