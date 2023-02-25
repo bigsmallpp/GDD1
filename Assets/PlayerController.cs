@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     private Inventory inventory;
     public UIInteract uiInteract;
+    
 
 
     
@@ -62,6 +63,12 @@ public class PlayerController : MonoBehaviour
                     playerEnergy.EnergyChange();
                 }
             }
+
+            //Besides I the Inventory can also be opened and closed with TAB
+            if(Input.GetKeyDown(KeyCode.Tab))
+            {
+                _playerInventory.SetActiveAlternativly();
+            }
         }
 
         //Show Hide Inventory UI
@@ -87,8 +94,138 @@ public class PlayerController : MonoBehaviour
     
     public PlantWorld GetInteractableObject()
     {
+<<<<<<< Updated upstream
         List<PlantWorld> plantInteractableList = new List<PlantWorld>();
         float interactRange = 1f;
+=======
+        if (interactionkey.action.WasPressedThisFrame())
+        { 
+            if(Interact())
+            {
+                return;
+            }
+            if (currentToolNumb == 0)
+            {
+                PlowGrid();
+                return;
+            }
+            if(currentToolNumb == 1)
+            {
+                SeedGrid();
+                return;
+            }
+        }
+        return;
+    }
+
+    private void PlowGrid()
+    {
+        if(selectable)
+        {
+            if(fieldManager.CheckStatus(selectedTilePos) == 0)
+            {
+                if (playerEnergy.currentEnergy >= playerEnergy.EnergyCost(0))
+                {
+                    fieldManager.Plow(selectedTilePos);
+
+                    playerEnergy.EnergyChange(0);
+                    return;
+                }
+                
+            }
+        }
+    }
+
+
+    private void SeedGrid()
+    {
+        if(selectable && fieldManager.CheckStatus(selectedTilePos) == 1)
+        {
+            if (playerEnergy.currentEnergy >= playerEnergy.EnergyCost(1))
+            {
+                fieldManager.Seed(selectedTilePos);
+                playerEnergy.EnergyChange(1);
+                return;
+
+            }
+                
+        }
+    }
+
+    void SelectableCheck()
+    {
+        selectable = DistanceToObject() < maxInteractDistance;
+        markerManager.Show(selectable);
+    }
+
+    bool Interact()
+    {
+        //ToDo: Implement Harvestable Tag
+        //if(gameObject.tag == "harvestable")
+        if (fieldManager.CheckStatus(selectedTilePos) == 2)
+        {
+            GameObject plantObj = fieldManager.GetPlantObj(selectedTilePos);
+            if (plantObj == null)
+            {
+                return false;
+            }
+            plantObj.TryGetComponent(out PlantBaseClass plant);
+            if (plant != null && plant.isRipe() && playerEnergy.currentEnergy >= playerEnergy.EnergyCost(2))
+            {
+                _playerInventory.AddItem(plant.getItem());
+                playerEnergy.EnergyChange(2);
+                fieldManager.deleteEntry(selectedTilePos);
+                Destroy(plant.gameObject);
+                return true;
+            }
+        }
+        else
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D raycastHit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
+            if (raycastHit.collider != null && DistanceToObject() <= maxInteractDistance)
+            {
+                GameObject obj = raycastHit.collider.gameObject;
+                if (obj.tag == "Chest")
+                {
+                    _chest.OpenOrCloseChestUI();
+
+                    if (_chest.gameObject.activeSelf)
+                    {
+                        _playerInventory.SetActive(true);
+                        blockMovementOnly = true;
+                    }
+                    else
+                    {
+                        _playerInventory.SetActive(false);
+                        blockMovementOnly = false;
+                    }
+                    
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private float DistanceToObject()
+    {
+        Vector2 playerPos = transform.position;
+        Vector2 camPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return Vector2.Distance(playerPos, camPos);
+    }
+
+    public PlayerInventory GetPlayerInventory()
+    {
+        return _playerInventory;
+    }
+
+    public PlantBaseClass GetInteractableObject()
+    {
+        List<PlantBaseClass> plantInteractableList = new List<PlantBaseClass>();
+        // TODO Move to Utils
+        float interactRange = 0.37f;
+>>>>>>> Stashed changes
         Collider2D[] colliderArray = Physics2D.OverlapCircleAll(transform.position, interactRange);
 
             foreach (Collider2D collider in colliderArray)

@@ -8,7 +8,7 @@ public class EnergySlider : MonoBehaviour
     public Slider energySlider;
     
     
-    public void SetEnergy(int energy)
+    public void SetEnergySlider(int energy)
     {
         if(energy != null)
         {
