@@ -75,7 +75,11 @@ public class LightManager : MonoBehaviour
     {
         foreach (Light2D light in _lanterns)
         {
-            light.enabled = false;
+            if(light != null)
+            {
+                light.enabled = false;
+            }
+            
         }
 
         _lanterns_turned_on = false;
@@ -85,7 +89,10 @@ public class LightManager : MonoBehaviour
     {
         foreach (Light2D light in _lanterns)
         {
-            light.enabled = true;
+            if(light != null)
+            {
+                light.enabled = true;
+            }
         }
 
         _lanterns_turned_on = true;
