@@ -53,6 +53,8 @@ public class AnimalManager : MonoBehaviour
         initChicken();
         getTimeToLayEgg();
         getRandomPointInTime();
+        SaveManager.Instance.SetAnimalManager(this);
+        SaveManager.Instance.LoadEggs();
     }
 
     private bool initChicken()
@@ -257,6 +259,37 @@ public class AnimalManager : MonoBehaviour
                     Debug.Log("Try to empty container: [FAILED]");
                 }
             }
+        }
+    }
+
+    public Vector3 GetChickenPos()
+    {
+        return SceneLoader.Instance.getChickenPos();
+    }
+
+    public List<Vector2> GetEggs()
+    {
+        List<Vector2> eggs = new List<Vector2>();
+        foreach (Vector2 pos in _egg_positions.Values)
+        {
+            eggs.Add(pos);
+        }
+
+        return eggs;
+    }
+
+    public void LoadEggPositions(List<EggDataStore> saved_eggs)
+    {
+        int index = 0;
+        foreach(EggDataStore egg in saved_eggs)
+        {
+            _egg_positions.Add(index, new Vector2(egg._pos_x, egg._pos_y));
+            index++;
+        }
+
+        if (SceneLoader.Instance.currentScene == SceneLoader.Scene.Stable)
+        {
+            restoreEggs();
         }
     }
 }

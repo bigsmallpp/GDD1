@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,11 +19,10 @@ public class PlayerController : MonoBehaviour
 
     public int totalToolNumb = 6;
     public int currentToolNumb;
-
-    [SerializeField] private UIInventory uiInventory;
-    [SerializeField] private Store _store;
+    
+    [SerializeField] private PlayerInventory _playerInventory;
+    [SerializeField] private Chest _chest;
     [SerializeField] private PlayerEnergy playerEnergy;
-    [SerializeField] private UIMerchant uiMerchant;
     [SerializeField] private InputActionReference movementkey, interactionkey, inventorykey, hotbarkey1, hotbarkey2, hotbarkey3, hotbarkey4, hotbarkey5, hotbarkey6, hotbarCycle;
     [SerializeField] MarkerManager markerManager;
     [SerializeField] TileMapController tileMapController;
@@ -35,10 +35,10 @@ public class PlayerController : MonoBehaviour
     public float rightBoundary = 8.622f;
     public float topBoundary = 4.594f;
     public float bottomBoundary = -4.594f;
-
-    private Inventory inventory;
+    
     private Vector2 movement;
-    public UIInteract uiInteract;
+    public UIInteract _uiInteract;
+    public SelectedToolHighlighted _toolHighlight;
 
     private Animator anim;
     private Sprite _current_sprite;
@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
     bool selectable;
     private bool gamePaused = false;
     private bool blockControlling = false;
+    private bool blockMovementOnly = false;
     private bool isAutoMoving = false;
     private bool startedMoving = false;
     private float movingTimer = 0.0f;
@@ -64,9 +65,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        inventory = new Inventory();
-        uiInventory.SetInventory(inventory);
-        //uiMerchant.SetInventory(inventory);
     }
 
     void Start()
@@ -77,6 +75,21 @@ public class PlayerController : MonoBehaviour
 
         //Set Player variant
         setPlayerVariant();
+        SaveManager.Instance.SetPlayer(this);
+        
+        // TODO Make differnce between reload and scene-transition
+        //      Tiles in Field disappear after save
+        _playerInventory = UIHandler.Instance.GetPlayerInventory();
+        SaveManager.Instance.LoadPlayerData();
+        
+        _uiInteract = UIHandler.Instance.GetUIInteract();
+        _toolHighlight = UIHandler.Instance.GetSelectedTool();
+        
+        _chest = UIHandler.Instance.GetChest();
+        _uiInteract.UpdatePlayer(this);
+        fieldManager = TimeManager.Instance.GetFieldManager();
+        tileMapController = GameManager.Instance.GetTileManager();
+        Camera.main.GetUniversalAdditionalCameraData().cameraStack.Add(GameObject.FindWithTag("UICam").GetComponent<Camera>());
     }
 
     private void Update()
@@ -101,14 +114,14 @@ public class PlayerController : MonoBehaviour
             //Show Hide Inventory UI
             if (inventorykey.action.WasPressedThisFrame())
             {
-                uiInventory.SetActiveAlternativly();
+                _playerInventory.SetActiveAlternativly();
             }
 
             //Remove one Tomato from Inventory on Key Q -- Maybe Outsource to different Obj
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                Debug.Log(inventory.GetItemList());
-                inventory.RemoveItem(new Item { itemType = Item.ItemType.tomato, amount = 1 , prize = 10});
+                Debug.Log(_playerInventory.GetItems());
+                _playerInventory.DecreaseItem(new Item( (int) Item.ItemType.tomato, 0, 0), 1);
             }
         }
     }
@@ -145,6 +158,12 @@ public class PlayerController : MonoBehaviour
 
     void CheckMovement()
     {
+        if (blockMovementOnly)
+        {
+            movement = new Vector2(0.0f, 0.0f);
+            return;
+        }
+        
         Vector2 input = movementkey.action.ReadValue<Vector2>();
         float moveX = movementSpeed * input.x;
         float moveY = movementSpeed * input.y;
@@ -158,18 +177,18 @@ public class PlayerController : MonoBehaviour
 
     void CheckAction()
     {
-        if (interactionkey.action.WasPressedThisFrame())
+        if (interactionkey.action.WasPressedThisFrame() && TimeManager.Instance._time_enabled)
         { 
             if(Interact())
             {
                 return;
             }
-            if (currentToolNumb == 0)
+            if (currentToolNumb == 0 && CheckSeedOrPlowPossible())
             {
                 PlowGrid();
                 return;
             }
-            if(currentToolNumb == 1)
+            if(currentToolNumb == 1 && CheckSeedOrPlowPossible())
             {
                 SeedGrid();
                 return;
@@ -209,7 +228,7 @@ public class PlayerController : MonoBehaviour
     {
         //ToDo: Implement Harvestable Tag
         //if(gameObject.tag == "harvestable")
-        if (fieldManager.CheckStatus(selectedTilePos) == 2)
+        if (CheckSeedOrPlowPossible() && fieldManager.CheckStatus(selectedTilePos) == 2)
         {
             GameObject plantObj = fieldManager.GetPlantObj(selectedTilePos);
             if (plantObj == null)
@@ -219,9 +238,10 @@ public class PlayerController : MonoBehaviour
             plantObj.TryGetComponent(out PlantBaseClass plant);
             if (plant != null && plant.isRipe())
             {
-                inventory.AddItem(plant.getItem());
+                _playerInventory.AddItem(plant.getItem());
                 playerEnergy.EnergyChange();
                 fieldManager.deleteEntry(selectedTilePos);
+                GameManager.Instance.GetPlantManager()._plants[(int)SceneLoader.Instance.currentScene].Remove(plant);
                 Destroy(plant.gameObject);
                 return true;
             }
@@ -235,7 +255,19 @@ public class PlayerController : MonoBehaviour
                 GameObject obj = raycastHit.collider.gameObject;
                 if (obj.tag == "Chest")
                 {
-                    _store.OpenOrClose();
+                    _chest.OpenOrCloseChestUI();
+
+                    if (_chest.gameObject.activeSelf)
+                    {
+                        _playerInventory.SetActive(true);
+                        blockMovementOnly = true;
+                    }
+                    else
+                    {
+                        _playerInventory.SetActive(false);
+                        blockMovementOnly = false;
+                    }
+                    
                     return true;
                 }
             }
@@ -250,14 +282,9 @@ public class PlayerController : MonoBehaviour
         return Vector2.Distance(playerPos, camPos);
     }
 
-    public Inventory GetPlayerInventory()
+    public PlayerInventory GetPlayerInventory()
     {
-        return inventory;
-    }
-
-    public Store GetStore()
-    {
-        return _store;
+        return _playerInventory;
     }
 
     public PlantBaseClass GetInteractableObject()
@@ -297,15 +324,10 @@ public class PlayerController : MonoBehaviour
 
     private void ToolSelection()
     {
+        int current_tool = currentToolNumb;
         
         if(currentToolNumb >= 0 && hotbarCycle.action.ReadValue<float>() > 0)
         {
-            /*currentToolNumb += 1;
-            if (currentToolNumb == 6)
-            {
-                currentToolNumb = 0;
-            }*/
-
             currentToolNumb -= 1;
             if (currentToolNumb == -1)
             {
@@ -315,12 +337,6 @@ public class PlayerController : MonoBehaviour
 
         if(currentToolNumb <= 5 && hotbarCycle.action.ReadValue<float>() < 0)
         {
-            /*currentToolNumb -= 1;
-            if (currentToolNumb == -1)
-            {
-                currentToolNumb = 5;
-            }*/
-
             currentToolNumb += 1;
             if (currentToolNumb == 6)
             {
@@ -353,11 +369,24 @@ public class PlayerController : MonoBehaviour
             currentToolNumb = 5;
         }
 
-        
+        if (currentToolNumb != current_tool)
+        {
+            _toolHighlight.HighlightTool(currentToolNumb);
+        }
     }
 
     private void Marker()
     {
+        if (!CheckSeedOrPlowPossible())
+        {
+            return;
+        }
+
+        if (tileMapController.GetTileMap() == null)
+        {
+            return;
+        }
+        
         selectedTilePos = tileMapController.GetGridPosition(Input.mousePosition);
         SelectableCheck();
         Vector3Int gridPos = selectedTilePos;
@@ -365,11 +394,15 @@ public class PlayerController : MonoBehaviour
     }
     void updateAnim()
     {
-        
         anim.SetBool("directionDown", false);
         anim.SetBool("directionUp", false);
         anim.SetBool("directionLeft", false);
         anim.SetBool("directionRight", false);
+        
+        if (blockMovementOnly)
+        {
+            return;
+        }
         
         if(Input.GetKey(KeyCode.S))
         {
@@ -590,5 +623,40 @@ public class PlayerController : MonoBehaviour
             default:
             break;
         }
+    }
+
+    public void LoadPlayerData(PlayerDataStore data, bool skip_position_and_inventory = false)
+    {
+        currentMoney = data._money;
+
+        if (!skip_position_and_inventory)
+        {
+            transform.position = new Vector3(data._pos_x, data._pos_y);
+            foreach(ItemsDataStore item_store in data._items)
+            {
+                _playerInventory.AddItem(new Item(item_store._type, item_store._amount, item_store._price));            
+            }
+        }
+    }
+
+    public Chest GetChest()
+    {
+        return _chest;
+    }
+
+    public void AddProfit(int profit)
+    {
+        currentMoney += profit;
+    }
+
+    private bool CheckSeedOrPlowPossible()
+    {
+        if (SceneLoader.Instance.currentScene == SceneLoader.Scene.Stable ||
+            SceneLoader.Instance.currentScene == SceneLoader.Scene.Shop)
+        {
+            return false;    
+        }
+
+        return true;
     }
 }

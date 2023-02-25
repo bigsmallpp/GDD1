@@ -24,6 +24,12 @@ public class LightManager : MonoBehaviour
     {
         // TODO Enable flashlight as gadget for nighttime
         _player_light.enabled = false;
+        
+        // Might be null on first scene load
+        if (TimeManager.Instance != null)
+        {
+            TimeManager.Instance.UpdateLightManager(this);
+        }
     }
 
     public void UpdateLighting(Utils.LightingTransition target)
@@ -88,5 +94,15 @@ public class LightManager : MonoBehaviour
     private bool CheckTransitionNight(Utils.LightingTransition transition)
     {
         return transition == Utils.LightingTransition.Night;
+    }
+
+    public Color GetGlobalColor()
+    {
+        return _global_light.color;
+    }
+
+    public void SetGlobalColor(Color color)
+    {
+        _global_light.color = color;
     }
 }

@@ -26,7 +26,7 @@ public class TileMapController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && tilemap_ != null)
         {
             GetTileBase(Input.mousePosition);
         }
@@ -51,5 +51,14 @@ public class TileMapController : MonoBehaviour
     {
         return dataOfTiles_[tile];
     }
-    
+
+    public void SetMap(Tilemap map)
+    {
+        tilemap_ = map;
+    }
+
+    public Tilemap GetTileMap()
+    {
+        return tilemap_;
+    }
 }

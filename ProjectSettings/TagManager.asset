@@ -18,6 +18,9 @@ TagManager:
   - GotToField
   - GoHome
   - HouseDoor
+  - UICam
+  - PlayerInventory
+  - UI Chest
   - Cow
   - Sheep
   layers:
