@@ -4,46 +4,132 @@ using UnityEngine;
 
 public class Store : MonoBehaviour
 {
-    [SerializeField] private Inventory _inventory;
-    [SerializeField] private List<Item> _items_in_store;
-    
-    [Header("Handlers For The Purchasing/Selling Sections")]
-    [SerializeField] private PurchaseHandler _purchase_handler;
-    [SerializeField] private SellingHandler _selling_handler;
+    [SerializeField] private PlayerInventory _player_inventory;
+    [SerializeField] private int _money;
+    [SerializeField] private ItemDescriptionBox _itemDescriptionBox;
+    [SerializeField] private GameObject _itemEntries;
+    [SerializeField] private List<GameObject> _items;
 
+    private StoreDataStore _storeData;
+
+    enum ItemIndices
+    {
+        chicken = 3,
+        cow = 4,
+        sheep = 5,
+        bucket = 6,
+        lamp = 7,
+        scissors = 8
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
-
+        _storeData = SaveManager.Instance.LoadStoreData();
+        _player_inventory = UIHandler.Instance.GetPlayerInventory();
+        _money = SaveManager.Instance.GetPlayerMoney();
+        DeselectAll();
+        InitFirstItemEntry();
+        CheckDisablePermanentItems();
     }
 
-    // Update is called once per frame
-    void Update()
+    public StoreDataStore GetDataStore()
     {
-        
+        return _storeData;
     }
 
-    public void OpenOrClose()
+    public int GetMoney()
     {
-        gameObject.SetActive(!gameObject.activeSelf);
-        if (gameObject.activeSelf)
+        return _money;
+    }
+
+    private void CheckDisablePermanentItems()
+    {
+        if (!_storeData.chickenAvailable)
         {
-            ResetStore();
+            _items[(int) ItemIndices.chicken].gameObject.SetActive(false);
+        }
+
+        if (!_storeData.cowAvailable)
+        {
+            _items[(int) ItemIndices.cow].gameObject.SetActive(false);
+        }
+
+        if (!_storeData.sheepAvailable)
+        {
+            _items[(int) ItemIndices.sheep].gameObject.SetActive(false);
+        }
+
+        if (!_storeData.lampAvailable)
+        {
+            _items[(int) ItemIndices.lamp].gameObject.SetActive(false);
+        }
+
+        if (!_storeData.bucketAvailable)
+        {
+            _items[(int) ItemIndices.bucket].gameObject.SetActive(false);
+        }
+
+        if (!_storeData.scissorAvailable)
+        {
+            _items[(int) ItemIndices.scissors].gameObject.SetActive(false);
         }
     }
 
-    private void ResetStore()
+    public ItemDescriptionBox GetItemDescriptionBox()
     {
-        _purchase_handler.ResetStore();
-        
-        foreach (Item item in _items_in_store)
+        return _itemDescriptionBox;
+    }
+
+    public void DeselectAll()
+    {
+        foreach (ItemEntry entry in _itemEntries.GetComponentsInChildren<ItemEntry>())
         {
-            _purchase_handler.SpawnItemEntry(item);
+            entry.Deselect();
         }
     }
 
-    public void RemoveItem(Item item)
+    public void InitFirstItemEntry()
     {
-        _items_in_store.Remove(item);
+        _itemEntries.GetComponentsInChildren<ItemEntry>()[0].SetItemSelected();
+    }
+
+    public void AddItemToPlayer(Item item_reference)
+    {
+        Item new_item = new Item();
+        new_item.Duplicate(item_reference);
+        
+        _player_inventory.AddItem(new_item);
+        _money -= new_item.prize * new_item.amount;
+    }
+
+    public void HidePermanentItem(Item.ItemType type)
+    {
+        switch (type)
+        {
+            case Item.ItemType.bucket:
+                _storeData.bucketAvailable = false;
+                break;
+            case Item.ItemType.lamp:
+                _storeData.lampAvailable = false;
+                break;
+            case Item.ItemType.scissor:
+                _storeData.scissorAvailable = false;
+                break;
+            case Item.ItemType.chicken_upgrade:
+                _storeData.chickenAvailable = false;
+                SceneLoader.Instance.setChickenState(true);
+                break;
+            case Item.ItemType.cow_upgrade:
+                _storeData.cowAvailable = false;
+                SceneLoader.Instance.cowAlive = true;
+                break;
+            case Item.ItemType.sheep_upgrade:
+                _storeData.sheepAvailable = false;
+                SceneLoader.Instance.sheepAlive = true;
+                break;
+        }
+        
+        CheckDisablePermanentItems();
     }
 }

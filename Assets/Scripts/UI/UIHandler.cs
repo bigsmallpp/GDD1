@@ -19,6 +19,7 @@ public class UIHandler : MonoBehaviour
         if (!_instance)
         {
             _instance = this;
+            LoadItemsInToolbar();
             DontDestroyOnLoad(this);
         }
         else
@@ -56,5 +57,26 @@ public class UIHandler : MonoBehaviour
     public bool CheckItemBeingDragged()
     {
         return itemIsBeingDragged;
+    }
+
+    public void UnlockTool(SelectedToolHighlighted.ToolbarIndices index)
+    {
+        _toolHighlight.UnlockTool(index);
+    }
+
+    public void LoadItemsInToolbar()
+    {
+        // TODO Set amount of Seeds for each type
+        StoreDataStore store = SaveManager.Instance.LoadStoreData();
+
+        if (!store.bucketAvailable)
+        {
+            UnlockTool(SelectedToolHighlighted.ToolbarIndices.Bucket);
+        }
+
+        if (!store.scissorAvailable)
+        {
+            UnlockTool(SelectedToolHighlighted.ToolbarIndices.Scissors);
+        }
     }
 }

@@ -143,6 +143,7 @@ public class PlayerInventory : MonoBehaviour
         // Might be redundant
         obj.GetComponent<ItemDrag>().SetPreviousParent(_itemContents.transform);
         obj.GetComponent<ItemDrag>().SetInInventory(true);
+        obj.SetActive(_itemContents.activeSelf);
         _itemReferences.Add(item, obj);
     }
 

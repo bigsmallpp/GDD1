@@ -32,6 +32,7 @@ public class SaveManager : MonoBehaviour
     private PlayerDataStore _player_data = new PlayerDataStore();
     private SceneLoaderDataStore _loader_store = new SceneLoaderDataStore();
     private PlantsDataStoreWrapper _plants = new PlantsDataStoreWrapper();
+    private StoreDataStore _store_data = new StoreDataStore();
     [SerializeField] private TilesDataStoreWrapper _tiles = new TilesDataStoreWrapper();
 
     private string SAVE_DIR = "saves";
@@ -42,6 +43,7 @@ public class SaveManager : MonoBehaviour
     private string PLAYER = "Player.json";
     private string PLANTS = "Plants.json";
     private string TILES = "Tiles.json";
+    private string STORE = "Store.json";
     
     // Start is called before the first frame update
     void Start()
@@ -85,14 +87,9 @@ public class SaveManager : MonoBehaviour
     public void Save()
     {
         // Save Animals and their positions
-        if (_animal_manager.chickenAlive)
+        if (_animal_manager.chickenAlive || SceneLoader.Instance.cowAlive || SceneLoader.Instance.sheepAlive)
         {
-            Debug.Log("Saving chicken at " + _animal_manager.GetChickenPos());
-            Vector3 chicken_pos = _animal_manager.GetChickenPos();
-            AnimalsDataStore chicken = new AnimalsDataStore(AnimalScript.AnimalType.chicken, chicken_pos.x, chicken_pos.y, chicken_pos.z);
-            _animals.animals_ = new List<AnimalsDataStore>();
-            _animals.animals_.Add(chicken);
-            Debug.Log(_animals);
+            SaveAnimalData();
         }
         
         // Save eggs
@@ -148,9 +145,11 @@ public class SaveManager : MonoBehaviour
             data = JsonUtility.ToJson(_plants);
             WriteToFile(data, SAVE_PATH + PLANTS);
             
-            // Debug.Log("Elements in Tiles: " + _tiles.outside_tiles_.Count);
             data = JsonUtility.ToJson(_tiles);
             WriteToFile(data, SAVE_PATH + TILES);
+            
+            data = JsonUtility.ToJson(_store_data);
+            WriteToFile(data, SAVE_PATH + STORE);
         }
         catch (Exception e)
         {
@@ -205,7 +204,29 @@ public class SaveManager : MonoBehaviour
                         SceneLoader.Instance.setChickenState(true);
                         SceneLoader.Instance.saveChickenPos(new Vector2(anim._pos_x, anim._pos_y));
                     }
+                    else if (anim._type == (int)AnimalScript.AnimalType.cow)
+                    {
+                        SceneLoader.Instance.cowAlive = true;
+                        SceneLoader.Instance.cow_pos = new Vector2(anim._pos_x, anim._pos_y);
+                    }
+                    else if (anim._type == (int)AnimalScript.AnimalType.sheep)
+                    {
+                        SceneLoader.Instance.sheepAlive = true;
+                        SceneLoader.Instance.sheep_pos = new Vector2(anim._pos_x, anim._pos_y);
+                    }
+                    else
+                    {
+                        Debug.LogError("Unknown Animal: " + nameof(anim._type));
+                    }
                 }
+            }
+            
+            // Load Store Contents
+            if (File.Exists(SAVE_PATH + STORE))
+            {
+                json_text = File.ReadAllText(SAVE_PATH + STORE);
+                StoreDataStore loaded_data = JsonUtility.FromJson<StoreDataStore>(json_text);
+                _store_data = loaded_data;
             }
         }
         catch (Exception a)
@@ -345,6 +366,23 @@ public class SaveManager : MonoBehaviour
         _playerDataLocalSavePresent = true;
     }
 
+    public void UpdatePlayerMoneyAndInventory(int new_money_amount)
+    {
+        _player_data._items.Clear();
+        foreach (Item item in _player.GetPlayerInventory().GetItems())
+        {
+            ItemsDataStore item_save = new ItemsDataStore((int) item.itemType, item.amount, item.prize);
+            _player_data._items.Add(item_save);
+        }
+
+        _player_data._money = new_money_amount;
+    }
+
+    public int GetPlayerMoney()
+    {
+        return _player_data._money;
+    }
+
     public Dictionary<int, List<PlantBaseClass>> LoadPlantsData()
     {
         LoadPlantsFromFile();
@@ -390,6 +428,31 @@ public class SaveManager : MonoBehaviour
         }
 
         _plants = new PlantsDataStoreWrapper(saved_plants);
+    }
+
+    public void SaveAnimalData()
+    {
+        _animals.animals_ = new List<AnimalsDataStore>();
+        if (_animal_manager.chickenAlive)
+        {
+            Vector3 chicken_pos = _animal_manager.GetChickenPos();
+            AnimalsDataStore chicken = new AnimalsDataStore(AnimalScript.AnimalType.chicken, chicken_pos.x, chicken_pos.y, chicken_pos.z);
+            _animals.animals_.Add(chicken);
+        }
+
+        if (SceneLoader.Instance.cowAlive)
+        {
+            Vector3 cow_pos = SceneLoader.Instance.getCowPos();
+            AnimalsDataStore cow = new AnimalsDataStore(AnimalScript.AnimalType.cow, cow_pos.x, cow_pos.y, cow_pos.z);
+            _animals.animals_.Add(cow);
+        }
+            
+        if (SceneLoader.Instance.sheepAlive)
+        {
+            Vector3 sheep_pos = SceneLoader.Instance.getSheepPos();
+            AnimalsDataStore sheep = new AnimalsDataStore(AnimalScript.AnimalType.sheep, sheep_pos.x, sheep_pos.y, sheep_pos.z);
+            _animals.animals_.Add(sheep);
+        }
     }
 
     public void UpdateTilesData(Dictionary<Vector2Int, TileBase> tiles_, int scene)
@@ -527,5 +590,15 @@ public class SaveManager : MonoBehaviour
         }
 
         _eggs.eggs_.Remove(egg_to_remove);
+    }
+
+    public StoreDataStore LoadStoreData()
+    {
+        return _store_data;
+    }
+
+    public void UpdateStoreData(StoreDataStore store)
+    {
+        _store_data = store;
     }
 }

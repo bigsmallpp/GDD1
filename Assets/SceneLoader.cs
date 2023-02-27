@@ -156,6 +156,19 @@ public class SceneLoader : MonoBehaviour
             AnimalManager.Instance.setChickenRespawned();
             TimeManager.Instance.UpdatePlantsPerScene(currentScene);
             break;
+            
+            case 5:
+                // TODO Enter Store
+                SaveManager.Instance.UpdatePlayerData();
+                TimeManager.Instance.PauseTimeProgression();
+                SceneManager.LoadScene("Store");
+                break;
+            
+            case 6:
+                // TODO Leave Store
+                SceneManager.LoadScene("SampleScene");
+                TimeManager.Instance.UnpauseTimeProgression();
+                break;
         }
     }
 
@@ -259,5 +272,21 @@ public class SceneLoader : MonoBehaviour
     public void increaseSeason()
     {
         current_season = (current_season + 1) % 4;
+    }
+
+    public void EnableAnimal(Item.ItemType type)
+    {
+        switch (type)
+        {
+            case Item.ItemType.chicken_upgrade:
+                setChickenState(true);
+                break;
+            case Item.ItemType.cow_upgrade:
+                cowAlive = true;
+                break;
+            case Item.ItemType.sheep_upgrade:
+                sheepAlive = true;
+                break;
+        }
     }
 }

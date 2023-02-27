@@ -73,13 +73,18 @@ public class LightManager : MonoBehaviour
 
     public void TurnOffLanterns()
     {
+
+        if (TimeManager.Instance.CheckPlayerhasLantern())
+        {
+            _player_light.enabled = false;
+        }
+        
         foreach (Light2D light in _lanterns)
         {
             if(light != null)
             {
                 light.enabled = false;
             }
-            
         }
 
         _lanterns_turned_on = false;
@@ -87,6 +92,11 @@ public class LightManager : MonoBehaviour
     
     public void TurnOnLanterns()
     {
+        if (TimeManager.Instance.CheckPlayerhasLantern())
+        {
+            _player_light.enabled = true;
+        }
+        
         foreach (Light2D light in _lanterns)
         {
             if(light != null)

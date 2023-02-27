@@ -31,7 +31,7 @@ public class TimeManager : MonoBehaviour
     
     [Header("Enable/Disable Time Progression")]
     public bool _time_enabled = false;
-    
+
     // TODO Save/Load Data
     private DataStore _game_data = null;
 
@@ -41,6 +41,7 @@ public class TimeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _game_data = new DataStore();
         TryLoadSaveFile();
         
         if (!_instance)
@@ -48,6 +49,7 @@ public class TimeManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(this);
             SaveManager.Instance.SetTimeManager(this);
+            StartDay();
         }
         else
         {
@@ -71,12 +73,16 @@ public class TimeManager : MonoBehaviour
         updateHUD(true);
         _light_manager.UpdateLighting(Utils.GetTransition(_game_data._current_seconds, _seconds_per_day));
         _currentLightColor = _light_manager.GetGlobalColor();
-        if (_game_data._current_seconds >= _seconds_per_day)
+        if (!_game_data._player_lantern && _game_data._current_seconds >= _seconds_per_day)
         {
             EndDay();
             _game_data._current_seconds = 0.0f;
-            
-            // TODO Create Day-toDay transition here and then re-enable time again
+        }
+        // Extend day by 2 hours
+        else if(_game_data._current_seconds >= _seconds_per_day + (2 * _seconds_per_day / 12))
+        {
+            EndDay();
+            _game_data._current_seconds = 0.0f;
         }
     }
 
@@ -139,7 +145,6 @@ public class TimeManager : MonoBehaviour
             }
             
             string json_text = File.ReadAllText("saves/" + Utils.Constants.SAVEFILE_NAME);
-            // Debug.Log(json_text);
             DataStore loaded_data = JsonUtility.FromJson<DataStore>(json_text);
             _game_data = loaded_data;
         }
@@ -150,7 +155,7 @@ public class TimeManager : MonoBehaviour
         }
         
         updateHUD(false);
-        StartDay();
+        // StartDay();
     }
 
     private void CreateNewData()
@@ -279,5 +284,15 @@ public class TimeManager : MonoBehaviour
     public Fieldmanager GetFieldManager()
     {
         return _field_manager;
+    }
+
+    public bool CheckPlayerhasLantern()
+    {
+        return _game_data._player_lantern;
+    }
+
+    public void UnlockLantern()
+    {
+        _game_data._player_lantern = true;
     }
 }
