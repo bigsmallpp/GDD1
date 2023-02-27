@@ -302,8 +302,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3816458955954774341}
-          m_TargetAssemblyTypeName: InventoryStoreInteraction, Assembly-CSharp
-          m_MethodName: SendItemToStore
+          m_TargetAssemblyTypeName: InventoryInteraction, Assembly-CSharp
+          m_MethodName: SplitItem
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
