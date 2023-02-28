@@ -514,14 +514,16 @@ public class PlayerController : MonoBehaviour
             TimeManager.Instance.skipToNextDay();
         }
 
-        if(collision.gameObject.tag == "Cow" && currentToolNumb == 2 && AnimalManager.Instance.cowHasMilk)
+        if(collision.gameObject.tag == "Cow" && currentToolNumb == 2 && AnimalManager.Instance.cowHasMilk) //ToolbarIndices.Bucket
         {
             Debug.Log("Milk cow!");
             //TODO: Get milk object
+            //Item milk = new Item(itemType.milk, amount, price);
+            //PlayerInventory.AddItem(milk);
             AnimalManager.Instance.cowHasMilk = false;
         }
 
-        if(collision.gameObject.tag == "Sheep" && currentToolNumb == 3 && AnimalManager.Instance.sheepHasWool)
+        if(collision.gameObject.tag == "Sheep" && currentToolNumb == 3 && AnimalManager.Instance.sheepHasWool) //ToolbarIndices.Bucket
         {
             sheepScript sheep = collision.gameObject.GetComponent<sheepScript>();
             sheep.switchWoolState();
