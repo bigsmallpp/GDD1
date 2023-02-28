@@ -161,4 +161,9 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     {
         _isInInventory = value;
     }
+    
+    public bool GetItemInInventory()
+    {
+        return _isInInventory;
+    }
 }

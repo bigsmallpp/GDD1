@@ -13,6 +13,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
     [SerializeField] private PlayerController _player_controller;
     [SerializeField] private Image _itemSprite;
     [SerializeField] private TextMeshProUGUI _itemCount;
+    [SerializeField] private ItemDrag _drag;
 
     private bool right_clicked = false;
     private bool shift_down = false;
@@ -42,6 +43,12 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
 
     public void SplitItem()
     {
+        // Only allow interactions in Inventory
+        if (!_drag.GetItemInInventory())
+        {
+            return;
+        }
+        
         if (right_clicked && !shift_down)
         {
             if (_item.amount == 1)

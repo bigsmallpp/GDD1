@@ -270,6 +270,7 @@ MonoBehaviour:
   _player_controller: {fileID: 0}
   _itemSprite: {fileID: 3816458956880086570}
   _itemCount: {fileID: 3816458955471844977}
+  _drag: {fileID: 3816458955954774342}
 --- !u!114 &3816458955954774342
 MonoBehaviour:
   m_ObjectHideFlags: 0
