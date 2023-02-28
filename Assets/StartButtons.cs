@@ -13,8 +13,10 @@ public class StartButtons : MonoBehaviour
   [SerializeField] GameObject characterMenu;
   [SerializeField] GameObject errorWindow;
   [SerializeField] GameObject continueButton;
+  [SerializeField] GameObject storyWindow;
+  [SerializeField] GameObject creditsWindow;
 
-  public void LoadGame()
+    public void LoadGame()
   {
     if(SceneLoader.Instance.player_variant != 0)
     {
@@ -66,6 +68,7 @@ public class StartButtons : MonoBehaviour
 
   public void backToStartMenu()
   {
+    creditsWindow.SetActive(false);
     errorWindow.SetActive(false);
     characterMenu.SetActive(false);
     startMenu.SetActive(true);
@@ -77,4 +80,31 @@ public class StartButtons : MonoBehaviour
     errorWindow.SetActive(true);
     characterMenu.SetActive(false);
   }
+
+    public void showStoryWindow()
+    {
+        if (SceneLoader.Instance.player_variant != 0)
+        {
+            characterMenu.SetActive(false);
+            storyWindow.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Please choose a character!");
+            showErrorWindow();
+        }
+    }
+
+    public void backToCharacterMenu()
+    {
+        SceneLoader.Instance.setPlayerVariant(0);
+        storyWindow.SetActive(false);
+        characterMenu.SetActive(true);
+    }
+
+    public void openCredits()
+    {
+        startMenu.SetActive(false);
+        creditsWindow.SetActive(true);
+    }
 }
