@@ -270,6 +270,7 @@ MonoBehaviour:
   _player_controller: {fileID: 0}
   _itemSprite: {fileID: 3816458956880086570}
   _itemCount: {fileID: 3816458955471844977}
+  _drag: {fileID: 3816458955954774342}
 --- !u!114 &3816458955954774342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,8 +303,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3816458955954774341}
-          m_TargetAssemblyTypeName: InventoryStoreInteraction, Assembly-CSharp
-          m_MethodName: SendItemToStore
+          m_TargetAssemblyTypeName: InventoryInteraction, Assembly-CSharp
+          m_MethodName: SplitItem
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

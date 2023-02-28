@@ -51,6 +51,11 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            return;
+        }
+        
         Vector2 pos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             (RectTransform)canvas.transform,
@@ -64,6 +69,11 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            return;
+        }
+        
         SetUICamera();
         UIHandler.Instance.SetItemBeingDragged(true);
         transform.parent = canvas.transform;
@@ -150,5 +160,10 @@ public class ItemDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public void SetInInventory(bool value)
     {
         _isInInventory = value;
+    }
+    
+    public bool GetItemInInventory()
+    {
+        return _isInInventory;
     }
 }

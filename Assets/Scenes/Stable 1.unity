@@ -1835,7 +1835,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 863094793
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: -284627385986098231, guid: 99f71d079cf78b1429d57eaac07165e3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3005,7 +3005,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1708493165
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -2535706787207206176, guid: 69fd4a0fc88bf6c439d7d554315a92b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4265,7 +4265,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 213b879809c871336d89d565cf50af3965f6c72c7f37a53000000000
+  m_ApplyToSortingLayers: 09c871336d89d565cf50af3965f6c72c7f37a530000000001d142f0f01ebea2d
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
@@ -5395,6 +5395,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chickenPrefab: {fileID: 2489688550124121578, guid: b76cd2aeb29497d4ab4feaa8ab4871cb, type: 3}
+  cowPrefab: {fileID: 3225392334612970342, guid: 5b69d839ac8ec0349b7060795312b12b, type: 3}
+  sheepPrefab: {fileID: 2678467169813868658, guid: 800be8da039ac804fa76738ef4923da1, type: 3}
 --- !u!4 &1862576007
 Transform:
   m_ObjectHideFlags: 0
@@ -6119,6 +6121,10 @@ PrefabInstance:
       value: 1708493165
       objectReference: {fileID: 0}
     - target: {fileID: 8870721612721861653, guid: ee6952b41c20c7f4ebe635026b80e692, type: 3}
+      propertyPath: type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870721612721861653, guid: ee6952b41c20c7f4ebe635026b80e692, type: 3}
       propertyPath: index
       value: 2
       objectReference: {fileID: 0}
@@ -6174,14 +6180,6 @@ PrefabInstance:
     - target: {fileID: 4154263809139302759, guid: e991d37d0934e14488bae15d059bd89d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4912111998250392429, guid: e991d37d0934e14488bae15d059bd89d, type: 3}
-      propertyPath: type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4912111998250392429, guid: e991d37d0934e14488bae15d059bd89d, type: 3}
-      propertyPath: index
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6345585978792021641, guid: e991d37d0934e14488bae15d059bd89d, type: 3}
       propertyPath: m_Name
@@ -6247,7 +6245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4912111998250392429, guid: e991d37d0934e14488bae15d059bd89d, type: 3}
       propertyPath: type
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6345585978792021641, guid: e991d37d0934e14488bae15d059bd89d, type: 3}
       propertyPath: m_Name

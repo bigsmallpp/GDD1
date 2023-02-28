@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Chest : MonoBehaviour
@@ -9,10 +10,12 @@ public class Chest : MonoBehaviour
     public static Chest Instance => _instance;
 
     [SerializeField] private ChestInventoryHandler _chestInventory;
+    [SerializeField] private TextMeshProUGUI _profit;
     private PlayerController _player;
 
     private void Start()
     {
+        SetProfit(0);
         if (!_instance)
         {
             _instance = this;
@@ -65,5 +68,10 @@ public class Chest : MonoBehaviour
         
         gameObject.SetActive(false);
         _player.BlockMovement(false);
+    }
+
+    public void SetProfit(int amount)
+    {
+        _profit.text = "Profit: " + amount + "$";
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
@@ -68,7 +69,7 @@ public class PlayerInventory : MonoBehaviour
     
     public void RemoveItem(Item item)
     {
-        // Only use this if item is not  destroyed right after
+        // Only use this if item is not destroyed right after
         _items.Remove(item);
         _itemReferences.Remove(item);
     }
@@ -97,6 +98,26 @@ public class PlayerInventory : MonoBehaviour
         {
             _items.Remove(item);
             _itemReferences.Remove(item);
+        }
+    }
+
+    public void PruneEntries(Item item)
+    {
+        List<Item> items_to_remove = new List<Item>();
+        foreach (Item i in _items)
+        {
+            if (i.itemType == item.itemType)
+            {
+                items_to_remove.Add(i);
+            }
+        }
+
+        foreach (Item i in items_to_remove)
+        {
+            _items.Remove(i);
+            GameObject obj = _itemReferences[i];
+            _itemReferences.Remove(i);
+            Destroy(obj);
         }
     }
 
@@ -135,7 +156,7 @@ public class PlayerInventory : MonoBehaviour
         isActive = state;
     }
 
-    private void CreateNewItemEntry(Item item)
+    public void CreateNewItemEntry(Item item)
     {
         GameObject obj = Instantiate(_itemSlotTemplate, _itemContents.transform);
         obj.GetComponent<InventoryInteraction>().SetItem(item);
@@ -143,12 +164,49 @@ public class PlayerInventory : MonoBehaviour
         // Might be redundant
         obj.GetComponent<ItemDrag>().SetPreviousParent(_itemContents.transform);
         obj.GetComponent<ItemDrag>().SetInInventory(true);
+        obj.SetActive(_itemContents.activeSelf);
         _itemReferences.Add(item, obj);
     }
 
-    private void UpdateItemStats(Item item)
+    public void UpdateItemStats(Item item)
     {
         InventoryInteraction inv = _itemReferences[item].GetComponent<InventoryInteraction>();
         inv.UpdateItem();
+    }
+
+    public void SumUpOccurences(Item item)
+    {
+        int total = 0;
+        foreach(Item inventoryItem in _items)
+        {
+            total += inventoryItem.amount;
+        }
+
+        int amount_stacks = total / Utils.Constants.MAX_STACKS;
+        if (amount_stacks == 0) amount_stacks = 1;
+
+        List<Item> new_items = new List<Item>();
+        for (int i = 0; i < amount_stacks; i++)
+        {
+            Item temp = new Item();
+            temp.Duplicate(item);
+            temp.amount = i == amount_stacks - 1 ? total : Utils.Constants.MAX_STACKS;
+            total -= temp.amount;
+            
+            new_items.Add(temp);
+        }
+        
+        PruneEntries(item);
+        foreach (Item i in new_items)
+        {
+            _items.Add(i);
+            CreateNewItemEntry(i);
+            UpdateItemStats(i);
+        }
+    }
+
+    public void AddItemAfterSplit(Item item)
+    {
+        _items.Add(item);
     }
 }

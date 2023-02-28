@@ -23,6 +23,7 @@ TagManager:
   - UI Chest
   - Cow
   - Sheep
+  - StorePath
   layers:
   - Default
   - TransparentFX

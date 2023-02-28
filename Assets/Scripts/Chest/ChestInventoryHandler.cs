@@ -16,12 +16,15 @@ public class ChestInventoryHandler : MonoBehaviour
         obj.GetComponent<InventoryInteraction>().SetItem(item);
 
         obj.transform.parent = _contentOfChest.transform;
+        Chest.Instance.SetProfit(SumItemProfits());
     }
     
     public void RemoveItemFromChest(GameObject obj)
     {
         Item item = obj.GetComponent<InventoryInteraction>().GetItem();
         _itemsInChest.Remove(item);
+        
+        Chest.Instance.SetProfit(SumItemProfits());
     }
 
     public int SellItems()
@@ -35,6 +38,18 @@ public class ChestInventoryHandler : MonoBehaviour
         }
         
         _itemsInChest.Clear();
+        Chest.Instance.SetProfit(SumItemProfits());
+        return profit;
+    }
+
+    private int SumItemProfits()
+    {
+        int profit = 0;
+        foreach(InventoryInteraction inv in _contentOfChest.transform.GetComponentsInChildren<InventoryInteraction>())
+        {
+            Item item = inv.GetItem();
+            profit += item.prize * item.amount;
+        }
 
         return profit;
     }

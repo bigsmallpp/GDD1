@@ -192,9 +192,23 @@ public class PlayerController : MonoBehaviour
                 PlowGrid();
                 return;
             }
-            if(currentToolNumb == 1 && CheckSeedOrPlowPossible())
+            if(currentToolNumb >= 1 && currentToolNumb <= 3 && CheckSeedOrPlowPossible())
             {
                 SeedGrid();
+                return;
+            }
+            
+            if (currentToolNumb == (int) SelectedToolHighlighted.ToolbarIndices.Scissors &&
+                _toolHighlight.CheckUnlocked(SelectedToolHighlighted.ToolbarIndices.Scissors))
+            {
+                // TODO Sheep Stuff
+                return;
+            }
+
+            if (currentToolNumb == (int) SelectedToolHighlighted.ToolbarIndices.Bucket && 
+                _toolHighlight.CheckUnlocked(SelectedToolHighlighted.ToolbarIndices.Bucket))
+            {
+                // TODO Cow stuff
                 return;
             }
         }
@@ -512,6 +526,12 @@ public class PlayerController : MonoBehaviour
             sheepScript sheep = collision.gameObject.GetComponent<sheepScript>();
             sheep.switchWoolState();
             Debug.Log("Shore sheep!");
+        }
+
+        if (collision.gameObject.tag == "StorePath")
+        {
+            stopMovingAnim();
+            StartCoroutine(TransitionToNextScene(Direction.Right, 5));
         }
     }
 
