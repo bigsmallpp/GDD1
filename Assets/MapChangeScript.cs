@@ -26,10 +26,8 @@ public class MapChangeScript : MonoBehaviour
         
     }
 
-    public void chooseMap()
+    void chooseMap()
     {
-        current_season = SceneLoader.Instance.current_season;
-        Debug.Log("Check for season: " + current_season);
         switch (current_season)
         {
             case 0:
