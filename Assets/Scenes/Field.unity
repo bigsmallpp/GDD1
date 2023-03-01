@@ -817,7 +817,7 @@ GameObject:
   - component: {fileID: 43364995}
   m_Layer: 0
   m_Name: Sprite
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -954,6 +954,8 @@ MonoBehaviour:
   _plant_manager: {fileID: 1667500266}
   _field_manager: {fileID: 782041328}
   _light_manager: {fileID: 1551233548}
+  Map: {fileID: 0}
+  LayerAbove: {fileID: 0}
   _timer: {fileID: 430311189}
   _day: {fileID: 2003085058}
   _season: {fileID: 1219193195}

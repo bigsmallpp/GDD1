@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float maxInteractDistance = 1f;
     [SerializeField] Fieldmanager fieldManager;
     [SerializeField] GameObject pauseMenu;
-    
+
     public WinFunction WinningShowcaseObject;
 
     //Boundaries

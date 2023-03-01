@@ -26,6 +26,8 @@ public class SceneLoader : MonoBehaviour
     public AnimalScript chickenPrefab;
     public enum WinningState { running = 0, won = 1, lost = 2};
 
+    public WinningState gameState = WinningState.running;
+
     //pos inside stable: 0, -4.31
     //pos outside stable: 0.967, -0.609
     private Vector2 _enter_stable_pos;
@@ -324,11 +326,13 @@ public class SceneLoader : MonoBehaviour
         currentMoney = currentMoney - yearlyDebt;
         if (currentMoney < 0)
         {
+            gameState = WinningState.lost;
             SaveManager.Instance.playerLose();
         }
         debt = debt - yearlyDebt;
         if (debt <= 0)
         {
+            gameState = WinningState.won;
             SaveManager.Instance.playerWin();
         }
         SaveManager.Instance.updateCurrentPlayerMoney(currentMoney);
