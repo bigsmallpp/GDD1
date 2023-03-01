@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 34366524}
   m_Layer: 0
   m_Name: Sprite
-  m_TagString: Map
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3631,7 +3631,7 @@ GameObject:
   - component: {fileID: 786175205}
   m_Layer: 0
   m_Name: Layer Above
-  m_TagString: LayerAbove
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
