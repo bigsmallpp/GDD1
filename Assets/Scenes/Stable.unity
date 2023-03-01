@@ -3729,6 +3729,7 @@ MonoBehaviour:
   tomato_plant: {fileID: 21300000, guid: 63ed7fcff895a344a9b75cce4557e5c9, type: 3}
   chicken_upgrade: {fileID: 4211399048214100251, guid: a81c0520082276e46b4be28f77830d5c, type: 3}
   egg: {fileID: 21300000, guid: ec3296f9a26ce13479ffab1eceea7b1e, type: 3}
+  carrot: {fileID: 0}
 --- !u!4 &1133179626
 Transform:
   m_ObjectHideFlags: 0
@@ -5397,6 +5398,7 @@ MonoBehaviour:
   chickenPrefab: {fileID: 2489688550124121578, guid: b76cd2aeb29497d4ab4feaa8ab4871cb, type: 3}
   cowPrefab: {fileID: 3225392334612970342, guid: 5b69d839ac8ec0349b7060795312b12b, type: 3}
   sheepPrefab: {fileID: 2678467169813868658, guid: 800be8da039ac804fa76738ef4923da1, type: 3}
+  isStable: 1
 --- !u!4 &1862576007
 Transform:
   m_ObjectHideFlags: 0
