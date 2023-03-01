@@ -22,5 +22,7 @@ public class ItemAssets : MonoBehaviour
     public Sprite chicken_upgrade;
     public Sprite egg;
     public Sprite carrot;
+    public Sprite wheat;
+    public Sprite cauliflower;
 
 }

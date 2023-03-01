@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AnimalManager : MonoBehaviour
 {
@@ -291,10 +293,36 @@ public class AnimalManager : MonoBehaviour
             _egg_positions.Add(index, new Vector2(egg._pos_x, egg._pos_y));
             index++;
         }
+        egg_counter = index;
 
-        if (SceneLoader.Instance.currentScene == SceneLoader.Scene.Stable)
+        // if (SceneLoader.Instance.currentScene == SceneLoader.Scene.Stable)
+        // {
+        //     restoreEggs();
+        // }
+    }
+
+    public void RemoveEgg(Vector2 pos)
+    {
+        double x = Math.Round(pos.x, 2);
+        double y = Math.Round(pos.y, 2);
+        KeyValuePair<int, Vector2> egg_to_remove;
+        bool found = false;
+
+        foreach (KeyValuePair<int, Vector2> egg in _egg_positions)
         {
-            restoreEggs();
+            Debug.Log(Math.Round(egg.Value.x, 2) + " " + Math.Round(egg.Value.y, 2) + "\t" + x + " " + y);
+            if (Math.Round(egg.Value.x, 2) == x && Math.Round(egg.Value.y, 2) == y)
+            {
+                Debug.Log("Egg removed");
+                found = true;
+                egg_to_remove = egg;
+                break;
+            }
+        }
+
+        if (found)
+        {
+            _egg_positions.Remove(egg_to_remove.Key);
         }
     }
 }

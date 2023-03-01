@@ -1651,7 +1651,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f05230eefdd9d64b912aea2efc3738f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
   movementSpeed: 1.6
   moveDuration: 1.5
   waitDuration: 3

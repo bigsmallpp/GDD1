@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 464348996467849773}
   - component: {fileID: 464348996467849771}
-  - component: {fileID: 464348996467849772}
   - component: {fileID: -2357800075065387835}
+  - component: {fileID: -6416933689745171913}
   m_Layer: 3
-  m_Name: pfPlant
+  m_Name: pfCauliflower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,34 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &464348996467849772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464348996467849774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22523730ae85ef643a2d4b4680b247bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _required_time_to_grow: 25
-  _is_enhanced: 0
-  _sprites_growing_stages:
-  - {fileID: 21300000, guid: 3310edf8c6cef1542b271f71c7689429, type: 3}
-  - {fileID: 21300000, guid: adefff52f376e454b9740a8c71d4863a, type: 3}
-  - {fileID: 21300000, guid: 4dfd43be21eeb894fa3e74d907f4c1b5, type: 3}
-  _current_plant_stage: 0
-  _plant_type: 0
-  _plant_scene: 0
-  _pos_tilemap: {x: 0, y: 0, z: 0}
-  _interact_text: Press E To Harvest
-  _item:
-    itemType: 0
-    amount: 1
-    prize: 200
-  _loaded_from_file: 0
 --- !u!61 &-2357800075065387835
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -138,3 +110,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.18, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &-6416933689745171913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464348996467849774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf5f918c6761af840a7a8038bcc62495, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _required_time_to_grow: 60
+  _growing_seasons: 0100000002000000
+  _sprites_growing_stages:
+  - {fileID: 21300000, guid: e217d4eb98672fe45ba8b2ab495593ae, type: 3}
+  - {fileID: 21300000, guid: c7620e60ddd44b9449ffcc2c34bc00e2, type: 3}
+  - {fileID: 21300000, guid: f06f9043b41ff1b489dcc5b16f898bea, type: 3}
+  _current_plant_stage: 0
+  _plant_type: 3
+  _plant_scene: 0
+  _pos_tilemap: {x: 0, y: 0, z: 0}
+  _interact_text: 
+  _item:
+    itemType: 12
+    amount: 1
+    prize: 300
+  _loaded_from_file: 0

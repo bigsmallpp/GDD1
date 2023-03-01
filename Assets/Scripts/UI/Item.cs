@@ -78,9 +78,11 @@ public class Item
             case ItemType.egg: return ItemAssets.Instance.egg;
             case ItemType.wheat_seed: return ItemAssets.Instance.tomato_seed;
             case ItemType.carrot: return ItemAssets.Instance.carrot;
+            case ItemType.cauliflower: return ItemAssets.Instance.cauliflower;
+            case ItemType.wheat: return ItemAssets.Instance.wheat;
             
             default:
-                throw new NotImplementedException();
+                return ItemAssets.Instance.chicken_upgrade;
         }
     }
 
@@ -92,6 +94,12 @@ public class Item
             case ItemType.potato:
             case ItemType.tomato_seed:
             case ItemType.egg:
+            case ItemType.carrot:
+            case ItemType.carrot_seed:
+            case ItemType.cauliflower:
+            case ItemType.cauliflower_seed:
+            case ItemType.wheat:
+            case ItemType.wheat_seed:
                 return true;
             
             default:

@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weed : PlantBaseClass
+public class Cauliflower : PlantBaseClass
 {
     // Start is called before the first frame update
     protected override void Start()
     {
         if (!_loaded_from_file)
         {
-            _plant_type = Utils.PlantType.Weed;
+            _plant_type = Utils.PlantType.Cauliflower;
             _current_plant_stage = Utils.PlantStage.Seed;
             _current_time_spent_growing = 0.0f;
             _interact_text = Utils.Constants.PLANT_NOT_RIPE_YET;

@@ -130,12 +130,12 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            //Remove one Tomato from Inventory on Key Q -- Maybe Outsource to different Obj
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                Debug.Log(_playerInventory.GetItems());
-                _playerInventory.DecreaseItem(new Item( (int) Item.ItemType.tomato, 0, 0), 1);
-            }
+            // //Remove one Tomato from Inventory on Key Q -- Maybe Outsource to different Obj
+            // if (Input.GetKeyDown(KeyCode.Q))
+            // {
+            //     Debug.Log(_playerInventory.GetItems());
+            //     _playerInventory.DecreaseItem(new Item( (int) Item.ItemType.tomato, 0, 0), 1);
+            // }
         }
     }
     private void FixedUpdate()

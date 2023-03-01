@@ -28,7 +28,9 @@ public static class Utils
     public enum PlantType
     {
         None,
-        Weed
+        Weed,
+        Carrot,
+        Cauliflower
     }
     
     public enum RequestType

@@ -9,8 +9,9 @@ public class Fieldmanager : MonoBehaviour
     [SerializeField] TileBase plowed;
     [SerializeField] TileBase seeded;
     [SerializeField] Tilemap tilemap_;
-    [SerializeField] PlantBaseClass plant;
-    [SerializeField] GameObject plantPrefab;
+    [SerializeField] GameObject wheatPrefab;
+    [SerializeField] GameObject carrotPrefab;
+    [SerializeField] GameObject cauliflowerPrefab;
     Dictionary<Vector2Int, GameObject> plants_;
     Dictionary<Vector2Int, TileBase> tiles_;
 
@@ -90,16 +91,18 @@ public class Fieldmanager : MonoBehaviour
                 keys_to_remove.Add(tile.Key);
                 Vector3Int pos = new Vector3Int(tile.Key.x, tile.Key.y, 0);
                 Vector3 poscenter = tilemap_.GetCellCenterWorld(pos);
-                //Vector3 posWorld = tilemap_.CellToWorld(pos);
                 
-                Debug.Log("PosWorld x: " + poscenter.x + " y: " + poscenter.y + "\n");
                 tilemap_.SetTile(pos, null);
-                GameObject val = Instantiate(plantPrefab, poscenter, Quaternion.identity);
+
+                // TODO Store seeded plant type in tile map
+                // GameObject prefab = GetPlantPrefab(seeded_plant_type);
+                // GameObject val = Instantiate(prefab, poscenter, Quaternion.identity);
+                
+                GameObject val = Instantiate(wheatPrefab, poscenter, Quaternion.identity);
                 val.GetComponent<PlantBaseClass>().SetScene((int) SceneLoader.Instance.currentScene);
                 val.GetComponent<PlantBaseClass>().SetTileMapPos(pos);
                 GameManager.Instance.GetPlantManager().AddPlant(val.GetComponent<PlantBaseClass>());
                 
-                Debug.Log("GameObject x: " + val.transform.position.x + " y: " + val.transform.position.y + "\n");
                 plants_.Add(tile.Key, val);
             }
         }
@@ -124,17 +127,23 @@ public class Fieldmanager : MonoBehaviour
                 Vector3Int pos = new Vector3Int(tile.pos_.x, tile.pos_.y, 0);
                 Vector3 poscenter = tilemap_.GetCellCenterWorld(pos);
                 
-                // tilemap_.SetTile(pos, null);
-                GameObject val = Instantiate(plantPrefab, poscenter, Quaternion.identity);
+                // TODO Store seeded plant type in tile map
+                // GameObject prefab = GetPlantPrefab(seeded_plant_type);
+                // GameObject val = Instantiate(prefab, poscenter, Quaternion.identity);
+                
+                GameObject val = Instantiate(wheatPrefab, poscenter, Quaternion.identity);
+                
                 val.GetComponent<PlantBaseClass>()._plant_type = Utils.PlantType.Weed;
+                // val.GetComponent<PlantBaseClass>()._plant_type = seeded_plant_type;
+                
                 val.GetComponent<PlantBaseClass>().SetScene((int) SceneLoader.Scene.Field);
                 val.GetComponent<PlantBaseClass>().SetTileMapPos(pos);
                 val.GetComponent<PlantBaseClass>()._loaded_from_file = true;
                 val.GetComponent<PlantBaseClass>()._current_plant_stage = Utils.PlantStage.Seed;
                 val.GetComponent<PlantBaseClass>().SwitchToNextSprite();
                 val.SetActive(false);
+                
                 GameManager.Instance.GetPlantManager().AddPlant(val.GetComponent<PlantBaseClass>(), (int) SceneLoader.Scene.Field);
-                // plants_.Add(tile.pos_, val);
             }
         }
 
@@ -173,9 +182,15 @@ public class Fieldmanager : MonoBehaviour
     {
         plants_ = new Dictionary<Vector2Int, GameObject>();
         List<PlantBaseClass> plants = GameManager.Instance.GetPlantManager().GetActivePlantsInScene();
+
         foreach(PlantBaseClass p in plants)
         {
             Vector2Int pos = (Vector2Int) p._pos_tilemap;
+            if (plants_.ContainsKey(pos))
+            {
+                continue;
+            }
+            
             plants_.Add(pos, p.gameObject);
             SaveManager.Instance.RemoveTile(pos, (int)SceneLoader.Instance.currentScene);
         }
@@ -195,5 +210,26 @@ public class Fieldmanager : MonoBehaviour
             Vector3Int pos = new Vector3Int(t.pos_.x, t.pos_.y, 0);
             tilemap_.SetTile(pos, tile_base);
         }
+    }
+
+    private GameObject GetPlantPrefab(Utils.PlantType seed_type)
+    {
+        switch (seed_type)
+        {
+            case Utils.PlantType.Carrot:
+                return carrotPrefab;
+            
+            case Utils.PlantType.Cauliflower:
+                return cauliflowerPrefab;
+            
+            case Utils.PlantType.Weed:
+                return wheatPrefab;
+            
+            default:
+                Debug.LogError("Unknown PlantType");
+                break;
+        }
+
+        return null;
     }
 }

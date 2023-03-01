@@ -76,13 +76,11 @@ public class TimeManager : MonoBehaviour
         if (!_game_data._player_lantern && _game_data._current_seconds >= _seconds_per_day)
         {
             EndDay();
-            _game_data._current_seconds = 0.0f;
         }
         // Extend day by 2 hours
         else if(_game_data._current_seconds >= _seconds_per_day + (2 * _seconds_per_day / 12))
         {
             EndDay();
-            _game_data._current_seconds = 0.0f;
         }
     }
 
@@ -227,9 +225,21 @@ public class TimeManager : MonoBehaviour
         return _seconds_per_day;
     }
 
+    public Utils.Season GetCurrentSeason()
+    {
+        return _game_data._current_season;
+    }
+
     public void pauseTime(bool pausing)
     {
-        _time_enabled = pausing;
+        if (!pausing)
+        {
+            PauseTimeProgression();
+        }
+        else
+        {
+            UnpauseTimeProgression();
+        }
     }
 
     public void skipToNextDay()

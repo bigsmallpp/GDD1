@@ -3729,6 +3729,9 @@ MonoBehaviour:
   tomato_plant: {fileID: 21300000, guid: 63ed7fcff895a344a9b75cce4557e5c9, type: 3}
   chicken_upgrade: {fileID: 4211399048214100251, guid: a81c0520082276e46b4be28f77830d5c, type: 3}
   egg: {fileID: 21300000, guid: ec3296f9a26ce13479ffab1eceea7b1e, type: 3}
+  carrot: {fileID: 21300000, guid: dd7c93306d299cc458cc3bf818bf64be, type: 3}
+  wheat: {fileID: 21300000, guid: 12551887468e9984da72e7072a32069d, type: 3}
+  cauliflower: {fileID: 21300000, guid: cb6746ff41026d446a53be4413c20e17, type: 3}
 --- !u!4 &1133179626
 Transform:
   m_ObjectHideFlags: 0

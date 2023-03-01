@@ -7,7 +7,7 @@ public abstract class PlantBaseClass : MonoBehaviour
 {
     [Header("Growing Related Stuff")]
     [SerializeField] protected float _required_time_to_grow;
-    [SerializeField] protected bool _is_enhanced;
+    [SerializeField] protected List<Utils.Season> _growing_seasons;
     
     [Header("Sprites For Different Stages Of Growth (insert in order from low to high)")]
     [SerializeField] protected List<Sprite> _sprites_growing_stages;

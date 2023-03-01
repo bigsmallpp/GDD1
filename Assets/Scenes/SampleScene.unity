@@ -4110,7 +4110,9 @@ MonoBehaviour:
   tomato_plant: {fileID: 21300000, guid: 63ed7fcff895a344a9b75cce4557e5c9, type: 3}
   chicken_upgrade: {fileID: 4211399048214100251, guid: a81c0520082276e46b4be28f77830d5c, type: 3}
   egg: {fileID: 21300000, guid: ec3296f9a26ce13479ffab1eceea7b1e, type: 3}
-  carrot: {fileID: 0}
+  carrot: {fileID: 21300000, guid: dd7c93306d299cc458cc3bf818bf64be, type: 3}
+  wheat: {fileID: 21300000, guid: 12551887468e9984da72e7072a32069d, type: 3}
+  cauliflower: {fileID: 21300000, guid: cb6746ff41026d446a53be4413c20e17, type: 3}
 --- !u!4 &848988251
 Transform:
   m_ObjectHideFlags: 0
@@ -5536,8 +5538,9 @@ MonoBehaviour:
   plowed: {fileID: 11400000, guid: 797ef383d33f9d044aceb6c511a96d13, type: 2}
   seeded: {fileID: 11400000, guid: fe2dcb0186f04df4b83b57e70179ee9f, type: 2}
   tilemap_: {fileID: 1871482290}
-  plant: {fileID: 464348996467849772, guid: 22ec2bba3dfd9744b9fccbe808bcf19e, type: 3}
-  plantPrefab: {fileID: 464348996467849774, guid: 22ec2bba3dfd9744b9fccbe808bcf19e, type: 3}
+  wheatPrefab: {fileID: 464348996467849774, guid: 22ec2bba3dfd9744b9fccbe808bcf19e, type: 3}
+  carrotPrefab: {fileID: 464348996467849774, guid: 1bd7877caf2b92d4084e2896eb7feb2e, type: 3}
+  cauliflowerPrefab: {fileID: 464348996467849774, guid: 2f3be55806601b94bb0dd0bc87946d1a, type: 3}
 --- !u!4 &1066327172
 Transform:
   m_ObjectHideFlags: 0

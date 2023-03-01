@@ -101,7 +101,7 @@ public class SaveManager : MonoBehaviour
             {
                 _eggs.eggs_.Add(new EggDataStore(egg.x, egg.y));    
             }
-            Debug.Log("Eggs: " + _eggs.eggs_);
+            Debug.Log("Eggs: " + _eggs.eggs_.ToArray());
         }
         
         // Save Player Stuff
@@ -575,6 +575,7 @@ public class SaveManager : MonoBehaviour
         EggDataStore egg_to_remove = null;
         foreach (EggDataStore egg in _eggs.eggs_)
         {
+            Debug.Log(Math.Round(pos.x, 2).ToString() + " " + Math.Round(pos.x, 2).ToString() + "\t" + Math.Round(egg._pos_x, 2).ToString() + " " + Math.Round(egg._pos_y, 2).ToString());
             if (Math.Round(pos.x, 2) == Math.Round(egg._pos_x, 2) &&
                 Math.Round(pos.y, 2) == Math.Round(egg._pos_y, 2))
             {
