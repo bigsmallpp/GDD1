@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.Timeline.Actions;
 using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float maxInteractDistance = 1f;
     [SerializeField] Fieldmanager fieldManager;
     [SerializeField] GameObject pauseMenu;
+    
+    public WinFunction WinningShowcaseObject;
 
     //Boundaries
     public float leftBoundary = -8.621f;
@@ -497,10 +500,17 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.tag == "Food Container")
         {
-            if (currentToolNumb == 1)
+            FoodContainer container = collision.gameObject.GetComponent<FoodContainer>();
+            if (!container._filled)
             {
-                FoodContainer container = collision.gameObject.GetComponent<FoodContainer>();
-                container.fillContainer();
+                foreach (Item item in _playerInventory.GetItems())
+                {
+                    if (item.itemType == Item.ItemType.wheat)
+                    {
+                        _playerInventory.RemoveItem(item);
+                        container.fillContainer();
+                    }
+                }
             }
         }
         //transform.position = SceneLoader.Instance.current_position;
@@ -526,15 +536,17 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Milk cow!");
             //TODO: Get milk object
-            //Item milk = new Item(itemType.milk, amount, price);
-            //PlayerInventory.AddItem(milk);
+            Item milk = new Item(Item.ItemType.milk, 1, 250);
+            _playerInventory.AddItem(milk);
             AnimalManager.Instance.cowHasMilk = false;
         }
 
-        if(collision.gameObject.tag == "Sheep" && currentToolNumb == 3 && AnimalManager.Instance.sheepHasWool) //ToolbarIndices.Bucket
+        if(collision.gameObject.tag == "Sheep" && currentToolNumb == 3 && AnimalManager.Instance.sheepHasWool) //ToolbarIndices.Scissor
         {
             sheepScript sheep = collision.gameObject.GetComponent<sheepScript>();
             sheep.switchWoolState();
+            Item wool = new Item(Item.ItemType.wool, 1, 280);
+            _playerInventory.AddItem(wool);
             Debug.Log("Shore sheep!");
         }
 
@@ -708,5 +720,25 @@ public class PlayerController : MonoBehaviour
         autoMoveDuration = 1f;
         enterAutoMovementAnim(Direction.Left);
         yield return new WaitForSeconds(1.2f);
+    }
+    
+    public void LoseGame()
+    {
+        gamePaused = true;
+        stopMovingAnim();
+        TimeManager.Instance.PauseTimeProgression(); //????? time moving forward
+        //WinningShowcaseObject = GameObject.FindGameObjectWithTag("WinObject").GetComponent<WinFunction>();
+        WinningShowcaseObject.gameObject.SetActive(true);
+        WinningShowcaseObject.setWinState(SceneLoader.WinningState.lost);
+    }
+    
+    public void WinGame()
+    {
+        gamePaused = true;
+        stopMovingAnim();
+        TimeManager.Instance.PauseTimeProgression();
+        //WinningShowcaseObject = GameObject.FindGameObjectWithTag("WinObject").GetComponent<WinFunction>();
+        WinningShowcaseObject.gameObject.SetActive(true);
+        WinningShowcaseObject.setWinState(SceneLoader.WinningState.won);
     }
 }

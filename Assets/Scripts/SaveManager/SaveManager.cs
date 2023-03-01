@@ -602,4 +602,24 @@ public class SaveManager : MonoBehaviour
     {
         _store_data = store;
     }
+
+    public int getCurrentPlayerMoney()
+    {
+        return _player.currentMoney;
+    }
+    
+    public void updateCurrentPlayerMoney(int money)
+    {
+        _player.currentMoney = money;
+    }
+
+    public void playerLose()
+    {
+        _player.LoseGame();
+    }
+    
+    public void playerWin()
+    {
+        _player.WinGame();
+    }
 }

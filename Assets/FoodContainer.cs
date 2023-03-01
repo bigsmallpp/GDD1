@@ -7,7 +7,7 @@ public class FoodContainer : MonoBehaviour
     [SerializeField] protected List<Sprite> _sprites_fill_stages;
 
     protected Sprite _current_sprite;
-    protected bool _filled;
+    public bool _filled;
     protected int _stage = 0;
     //public int index;
     public AnimalScript.AnimalType type;

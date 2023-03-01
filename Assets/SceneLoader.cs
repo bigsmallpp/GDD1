@@ -24,6 +24,7 @@ public class SceneLoader : MonoBehaviour
     public SceneString currentSceneString;
     public static SceneLoader Instance;
     public AnimalScript chickenPrefab;
+    public enum WinningState { running = 0, won = 1, lost = 2};
 
     //pos inside stable: 0, -4.31
     //pos outside stable: 0.967, -0.609
@@ -53,6 +54,9 @@ public class SceneLoader : MonoBehaviour
 
     public bool cowAlive = false;
     public bool sheepAlive = false;
+
+    public int debt = 50000;
+    public int yearlyDebt = 5000;
 
     void Awake()
     {
@@ -289,6 +293,10 @@ public class SceneLoader : MonoBehaviour
     public void increaseSeason()
     {
         current_season = (current_season + 1) % 4;
+        if (current_season == 0)
+        {
+            payDebt();
+        }
     }
 
     public void EnableAnimal(Item.ItemType type)
@@ -305,5 +313,24 @@ public class SceneLoader : MonoBehaviour
                 sheepAlive = true;
                 break;
         }
+    }
+
+    
+
+    public void payDebt()
+    {
+        //TODO reduce from player and check if < 0
+        int currentMoney = SaveManager.Instance.getCurrentPlayerMoney();
+        currentMoney = currentMoney - yearlyDebt;
+        if (currentMoney < 0)
+        {
+            SaveManager.Instance.playerLose();
+        }
+        debt = debt - yearlyDebt;
+        if (debt <= 0)
+        {
+            SaveManager.Instance.playerWin();
+        }
+        SaveManager.Instance.updateCurrentPlayerMoney(currentMoney);
     }
 }

@@ -43,7 +43,9 @@ public class Item
         cauliflower,
         lamp,
         bucket,
-        scissor
+        scissor,
+        milk,
+        wool
     }
 
     public enum ItemPrices
@@ -60,7 +62,9 @@ public class Item
         lamp = 800,
         bucket = 550,
         egg = 250,
-        scissors = 600
+        scissors = 600,
+        milk = 250,
+        wool = 280
     }
 
     public ItemType itemType;

@@ -24,6 +24,7 @@ TagManager:
   - Cow
   - Sheep
   - StorePath
+  - WinObject
   layers:
   - Default
   - TransparentFX
