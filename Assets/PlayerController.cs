@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float maxInteractDistance = 1f;
     [SerializeField] Fieldmanager fieldManager;
     [SerializeField] GameObject pauseMenu;
-
+    
     public WinFunction WinningShowcaseObject;
 
     //Boundaries
@@ -203,7 +203,7 @@ public class PlayerController : MonoBehaviour
                 PlowGrid();
                 return;
             }
-            if(currentToolNumb >= 1 && currentToolNumb <= 3 && CheckSeedOrPlowPossible()) //change to seed
+            if(currentToolNumb >= 1 && currentToolNumb <= 3 && CheckSeedOrPlowPossible())
             {
                 SeedGrid();
                 return;

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class TimeManager : MonoBehaviour
@@ -23,8 +22,6 @@ public class TimeManager : MonoBehaviour
     [Header("Manager For All Light Sources In The Scene")]
     [SerializeField] private LightManager _light_manager;
     
-    [SerializeField] MapChangeScript Map;
-    [SerializeField] MapChangeScript LayerAbove;
     
     [Header("Timer In Our HUD")]
     // Timer in HUD
@@ -273,10 +270,6 @@ public class TimeManager : MonoBehaviour
         
         SaveDataToFile(true);
         _game_data._current_seconds = 0.0f;
-        if (SceneLoader.Instance.gameState == SceneLoader.WinningState.running && SceneLoader.Instance.gameState == SceneLoader.WinningState.won)
-        {
-           updateMap(); 
-        }
     }
 
     public void UpdateLightManager(LightManager light)
@@ -311,13 +304,5 @@ public class TimeManager : MonoBehaviour
     public void UnlockLantern()
     {
         _game_data._player_lantern = true;
-    }
-
-    public void updateMap()
-    {
-        Map = GameObject.FindGameObjectWithTag("Map").GetComponent<MapChangeScript>();
-        LayerAbove = GameObject.FindGameObjectWithTag("LayerAbove").GetComponent<MapChangeScript>();
-        Map.chooseMap();
-        LayerAbove.chooseMap();
     }
 }

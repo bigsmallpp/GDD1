@@ -58,6 +58,15 @@ public class Weed : PlantBaseClass
     {
         _current_sprite = _sprites_growing_stages[(int)_current_plant_stage];
         GetComponent<SpriteRenderer>().sprite = _current_sprite;
+        if(transform.position.y > 0)
+        {
+            GetComponent<SpriteRenderer>().sortingOrder = (int)-transform.position.y;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sortingOrder = (int)Mathf.Abs(transform.position.y);
+        }
+        
     }
 
     public override bool CheckEnterNextStage()

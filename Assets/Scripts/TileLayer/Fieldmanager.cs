@@ -59,6 +59,12 @@ public class Fieldmanager : MonoBehaviour
         {
             return;
         }
+        Vector3 poscenter = tilemap_.GetCellCenterWorld(pos);
+        Collider2D[] hit = Physics2D.OverlapCircleAll((new Vector2(poscenter.x, poscenter.y)), 0.005f);
+        if (hit.Length > 0)
+        {
+            return;
+        }
         tilemap_.SetTile(pos, plowed);
         tiles_.Add((Vector2Int)pos, plowed);
     }
