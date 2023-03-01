@@ -5006,10 +5006,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 315969438841123737, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
-      propertyPath: secondsPerDay
-      value: 42
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d28ce7e6ec487549b46fb63219487fd, type: 3}
 --- !u!1 &847609394
@@ -5085,6 +5081,8 @@ MonoBehaviour:
   carrot: {fileID: 21300000, guid: dd7c93306d299cc458cc3bf818bf64be, type: 3}
   wheat: {fileID: 21300000, guid: 12551887468e9984da72e7072a32069d, type: 3}
   cauliflower: {fileID: 21300000, guid: cb6746ff41026d446a53be4413c20e17, type: 3}
+  milk: {fileID: 3637369399953389363, guid: 134536297d83072428240632ff9d92ec, type: 3}
+  wool: {fileID: 21300000, guid: 8f366c3f99d60b7468c28003b228e355, type: 3}
 --- !u!4 &848988251
 Transform:
   m_ObjectHideFlags: 0

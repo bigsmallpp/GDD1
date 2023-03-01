@@ -84,6 +84,8 @@ public class Item
             case ItemType.carrot: return ItemAssets.Instance.carrot;
             case ItemType.cauliflower: return ItemAssets.Instance.cauliflower;
             case ItemType.wheat: return ItemAssets.Instance.wheat;
+            case ItemType.milk: return ItemAssets.Instance.milk;
+            case ItemType.wool: return ItemAssets.Instance.wool;
             
             default:
                 return ItemAssets.Instance.chicken_upgrade;

@@ -325,4 +325,13 @@ public class AnimalManager : MonoBehaviour
             _egg_positions.Remove(egg_to_remove.Key);
         }
     }
+
+    public void handleSheep()
+    {
+        sheepScript sheep = GameObject.FindGameObjectWithTag("Sheep").GetComponent<sheepScript>();
+        if (sheep != null)
+        {
+            sheep.switchWoolState();
+        }
+    }
 }

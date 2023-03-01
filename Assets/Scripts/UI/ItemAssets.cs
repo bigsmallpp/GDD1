@@ -24,5 +24,7 @@ public class ItemAssets : MonoBehaviour
     public Sprite carrot;
     public Sprite wheat;
     public Sprite cauliflower;
+    public Sprite milk;
+    public Sprite wool;
 
 }

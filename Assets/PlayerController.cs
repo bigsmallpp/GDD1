@@ -210,16 +210,27 @@ public class PlayerController : MonoBehaviour
             }
             
             if (currentToolNumb == (int) SelectedToolHighlighted.ToolbarIndices.Scissors &&
-                _toolHighlight.CheckUnlocked(SelectedToolHighlighted.ToolbarIndices.Scissors))
+                _toolHighlight.CheckUnlocked(SelectedToolHighlighted.ToolbarIndices.Scissors) && AnimalManager.Instance.sheepHasWool)
             {
                 // TODO Sheep Stuff
+                //sheepScript sheep = collision.gameObject.GetComponent<sheepScript>();
+                //sheep.switchWoolState();
+                AnimalManager.Instance.handleSheep();
+                Item wool = new Item(Item.ItemType.wool, 1, 280);
+                _playerInventory.AddItem(wool);
+                Debug.Log("Shore sheep!");
                 return;
             }
 
             if (currentToolNumb == (int) SelectedToolHighlighted.ToolbarIndices.Bucket && 
-                _toolHighlight.CheckUnlocked(SelectedToolHighlighted.ToolbarIndices.Bucket))
+                _toolHighlight.CheckUnlocked(SelectedToolHighlighted.ToolbarIndices.Bucket) && AnimalManager.Instance.cowHasMilk)
             {
                 // TODO Cow stuff
+                Debug.Log("Milk cow!");
+                //TODO: Get milk object
+                Item milk = new Item(Item.ItemType.milk, 1, 250);
+                _playerInventory.AddItem(milk);
+                AnimalManager.Instance.cowHasMilk = false;
                 return;
             }
         }
@@ -507,8 +518,10 @@ public class PlayerController : MonoBehaviour
                 {
                     if (item.itemType == Item.ItemType.wheat)
                     {
-                        _playerInventory.RemoveItem(item);
+                        //_playerInventory.RemoveItem(item);
+                        _playerInventory.DecreaseItem(item, 1);
                         container.fillContainer();
+                        break;
                     }
                 }
             }
@@ -534,20 +547,20 @@ public class PlayerController : MonoBehaviour
 
         if(collision.gameObject.tag == "Cow" && currentToolNumb == 2 && AnimalManager.Instance.cowHasMilk) //ToolbarIndices.Bucket
         {
-            Debug.Log("Milk cow!");
+            //Debug.Log("Milk cow!");
             //TODO: Get milk object
-            Item milk = new Item(Item.ItemType.milk, 1, 250);
-            _playerInventory.AddItem(milk);
-            AnimalManager.Instance.cowHasMilk = false;
+            //Item milk = new Item(Item.ItemType.milk, 1, 250);
+            //_playerInventory.AddItem(milk);
+            //AnimalManager.Instance.cowHasMilk = false;
         }
 
         if(collision.gameObject.tag == "Sheep" && currentToolNumb == 3 && AnimalManager.Instance.sheepHasWool) //ToolbarIndices.Scissor
         {
-            sheepScript sheep = collision.gameObject.GetComponent<sheepScript>();
-            sheep.switchWoolState();
-            Item wool = new Item(Item.ItemType.wool, 1, 280);
-            _playerInventory.AddItem(wool);
-            Debug.Log("Shore sheep!");
+            //sheepScript sheep = collision.gameObject.GetComponent<sheepScript>();
+            //sheep.switchWoolState();
+            //Item wool = new Item(Item.ItemType.wool, 1, 280);
+            //_playerInventory.AddItem(wool);
+            //Debug.Log("Shore sheep!");
         }
 
         if (collision.gameObject.tag == "StorePath")

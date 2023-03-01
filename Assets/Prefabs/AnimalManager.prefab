@@ -43,13 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3b6e65554e21548ba726206f3538b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chickenContainer: {fileID: 0}
   egg_prefab: {fileID: 62636019778509602, guid: 55527c3b31ecdee46beab86d65f1fd68, type: 3}
   layEgg_debug: 0
   chickenAlive: 0
   chickenInit: 0
-  pointInTime: 0
   layedEgg: 0
-  waitingTimer: 0
   egg_counter: 0
+  cowHasMilk: 1
+  sheepHasWool: 1
+  secondsPerDay: 42
+  pointInTime: 0
+  waitingTimer: 0
   checkForFood_Debug: 0
