@@ -5400,6 +5400,7 @@ MonoBehaviour:
   chickenPrefab: {fileID: 2489688550124121578, guid: b76cd2aeb29497d4ab4feaa8ab4871cb, type: 3}
   cowPrefab: {fileID: 3225392334612970342, guid: 5b69d839ac8ec0349b7060795312b12b, type: 3}
   sheepPrefab: {fileID: 2678467169813868658, guid: 800be8da039ac804fa76738ef4923da1, type: 3}
+  isStable: 1
 --- !u!4 &1862576007
 Transform:
   m_ObjectHideFlags: 0
