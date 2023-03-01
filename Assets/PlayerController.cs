@@ -91,6 +91,14 @@ public class PlayerController : MonoBehaviour
         fieldManager = TimeManager.Instance.GetFieldManager();
         tileMapController = GameManager.Instance.GetTileManager();
         Camera.main.GetUniversalAdditionalCameraData().cameraStack.Add(GameObject.FindWithTag("UICam").GetComponent<Camera>());
+
+        //Leaving Store Animation
+        if (SceneLoader.Instance.isLeavingStore)
+        {
+            stopMovingAnim();
+            StartCoroutine(leaveStoreAnimStart());
+            SceneLoader.Instance.isLeavingStore = false;
+        }
     }
 
     private void Update()
@@ -532,11 +540,13 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "StorePath")
         {
+            SceneLoader.Instance.safePos(transform.position);
             stopMovingAnim();
             StartCoroutine(TransitionToNextScene(Direction.Right, 5));
         }
     }
 
+    
     IEnumerator TransitionToNextScene(Direction direction, int scene)
     {
         //Set duration longer
@@ -691,5 +701,12 @@ public class PlayerController : MonoBehaviour
     public void BlockMovement(bool block)
     {
         blockMovementOnly = block;
+    }
+
+    IEnumerator leaveStoreAnimStart()
+    {
+        autoMoveDuration = 1f;
+        enterAutoMovementAnim(Direction.Left);
+        yield return new WaitForSeconds(1.2f);
     }
 }

@@ -11,10 +11,11 @@ public class SceneLoader : MonoBehaviour
     string outside = "SampleScene";
     string stable = "Stable";
     string field = "Field";
-    public enum SceneString {start, outside, stable, field};
+    string shop = "Shop";
+    public enum SceneString {start, outside, stable, field, shop};
 
     //I know this enum is a bit unnecessary
-    public enum actualPosition { Enter_stable_pos = 0, Leave_stable_pos = 1, Enter_field_pos = 2, Leave_field_pos = 3 };
+    public enum actualPosition { Enter_stable_pos = 0, Leave_stable_pos = 1, Enter_field_pos = 2, Leave_field_pos = 3, Enter_shop = 4, Leave_shop = 5};
 
     public enum Scene {Start = 0, Outside = 1, Stable = 2, Field = 3, Shop = 4};
     public Scene currentScene;
@@ -30,7 +31,9 @@ public class SceneLoader : MonoBehaviour
     public Vector2 _leave_stable_pos;
     private Vector2 _enter_field_pos;
     public Vector2 _leave_field_pos;
+    public Vector2 _leave_shop_pos;
     public Vector2 current_position;
+    public Vector2 _save_store_pos = Vector2.zero;
     public Vector2 previous_position = Vector2.zero;
     private Vector2 _chicken_start_pos;
     public Vector2 chicken_door_position;
@@ -41,6 +44,7 @@ public class SceneLoader : MonoBehaviour
 
     //Season stuff
     public int current_season;
+    public bool isLeavingStore = false;
 
     //Saving states
     private Dictionary<AnimalScript.AnimalType, int> _container_states;
@@ -55,6 +59,7 @@ public class SceneLoader : MonoBehaviour
         current_position = new Vector2(-0.79f, -2.34f); //Startzz
         _enter_stable_pos = new Vector2(0.0f, -5.4f);
         _leave_stable_pos = new Vector2(1f, -0.55f);
+        _leave_shop_pos = new Vector2(9.22f, -1.64f);
         _chicken_start_pos = new Vector2(chickenPrefab.startPositionX,chickenPrefab.startPositionY);
         _chicken_pos = _chicken_start_pos;
         chicken_cage_position = new Vector2(-3.7f, 5.4f);
@@ -85,6 +90,11 @@ public class SceneLoader : MonoBehaviour
         actualPos = actual;
         previous_position = current_position;
         current_position = pos;
+    }
+
+    public void safePos(Vector2 pos)
+    {
+        _save_store_pos = pos;
     }
 
     public void loadScene(int scene)
@@ -162,12 +172,19 @@ public class SceneLoader : MonoBehaviour
                 SaveManager.Instance.UpdatePlayerData();
                 TimeManager.Instance.PauseTimeProgression();
                 SceneManager.LoadScene("Store");
+                currentScene = Scene.Shop;
+                currentSceneString = SceneString.shop;
                 break;
             
             case 6:
                 // TODO Leave Store
+                isLeavingStore = true;
                 SceneManager.LoadScene("SampleScene");
                 TimeManager.Instance.UnpauseTimeProgression();
+                currentScene = Scene.Outside;
+                currentSceneString = SceneString.outside;
+                _leave_shop_pos.y = _save_store_pos.y;
+                updateCurrentPosition(_leave_shop_pos, actualPosition.Leave_shop);
                 break;
         }
     }
