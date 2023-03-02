@@ -267,6 +267,8 @@ public class AnimalManager : MonoBehaviour
                 }
             }
         }
+        
+        SaveManager.Instance.SetAnimalStates(SceneLoader.Instance._chicken_state, SceneLoader.Instance.cowAlive, SceneLoader.Instance.sheepAlive);
     }
 
     public Vector3 GetChickenPos()

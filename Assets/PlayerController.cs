@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 {
     public EnergySlider energySlider;
 
-    public int currentMoney = 100;
+    public int currentMoney = 1000;
 
     private float horizontal;
     private float vertical;
@@ -103,6 +103,8 @@ public class PlayerController : MonoBehaviour
         fieldManager = TimeManager.Instance.GetFieldManager();
         tileMapController = GameManager.Instance.GetTileManager();
         Camera.main.GetUniversalAdditionalCameraData().cameraStack.Add(GameObject.FindWithTag("UICam").GetComponent<Camera>());
+        
+        UIHandler.Instance.SetMoney(currentMoney);
 
         //Leaving Store Animation
         if (SceneLoader.Instance.isLeavingStore)
@@ -731,6 +733,7 @@ public class PlayerController : MonoBehaviour
     public void LoadPlayerData(PlayerDataStore data, bool skip_position_and_inventory = false)
     {
         currentMoney = data._money;
+        UIHandler.Instance.SetMoney(currentMoney);
 
         if (!skip_position_and_inventory)
         {
@@ -750,6 +753,7 @@ public class PlayerController : MonoBehaviour
     public void AddProfit(int profit)
     {
         currentMoney += profit;
+        UIHandler.Instance.SetMoney(currentMoney);
     }
 
     private bool CheckSeedOrPlowPossible()

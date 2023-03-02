@@ -145,6 +145,7 @@ public class TimeManager : MonoBehaviour
             string json_text = File.ReadAllText("saves/" + Utils.Constants.SAVEFILE_NAME);
             DataStore loaded_data = JsonUtility.FromJson<DataStore>(json_text);
             _game_data = loaded_data;
+            SceneLoader.Instance.current_season = (int) _game_data._current_season;
         }
         catch (Exception a)
         {

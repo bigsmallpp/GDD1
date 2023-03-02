@@ -621,4 +621,11 @@ public class SaveManager : MonoBehaviour
     {
         _player.WinGame();
     }
+
+    public void SetAnimalStates(bool chicken_alive, bool cow_alive, bool sheep_alive)
+    {
+        _store_data.chickenAvailable = !chicken_alive;
+        _store_data.cowAvailable = !cow_alive;
+        _store_data.sheepAvailable = !sheep_alive;
+    }
 }

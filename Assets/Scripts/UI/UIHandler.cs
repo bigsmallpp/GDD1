@@ -86,4 +86,9 @@ public class UIHandler : MonoBehaviour
     {
         _toolHighlight.EnableSeeds(type, is_present);
     }
+
+    public void SetMoney(int money)
+    {
+        money_text.text = money.ToString();
+    }
 }

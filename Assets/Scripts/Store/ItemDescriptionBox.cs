@@ -123,6 +123,7 @@ public class ItemDescriptionBox : MonoBehaviour
     {
         _amount.text = "1";
         _itemReference.amount = 1;
+        EnablePurchaseButton();
     }
 
     public void PurchaseItem()
