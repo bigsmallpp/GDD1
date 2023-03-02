@@ -211,7 +211,8 @@ public class PlayerController : MonoBehaviour
                 PlowGrid();
                 return;
             }
-            if(currentToolNumb >= 1 && currentToolNumb <= 3 && CheckSeedOrPlowPossible())
+            if(currentToolNumb >= 1 && currentToolNumb <= 3 && CheckSeedOrPlowPossible() &&
+               _toolHighlight.GetSeedsEnbaled(currentToolNumb))
             {
                 SeedGrid();
                 return;

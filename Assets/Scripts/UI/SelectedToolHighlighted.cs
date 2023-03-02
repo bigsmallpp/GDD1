@@ -112,7 +112,7 @@ public class SelectedToolHighlighted : MonoBehaviour
         }
     }
 
-    private bool GetSeedsEnbaled(int ToolIndex)
+    public bool GetSeedsEnbaled(int ToolIndex)
     {
         switch (ToolIndex)
         {
