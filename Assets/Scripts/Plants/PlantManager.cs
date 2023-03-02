@@ -79,7 +79,8 @@ public class PlantManager : MonoBehaviour
             }
             else if (current_request._plant != null && current_request._type == Utils.RequestType.Remove)
             {
-                _plants[current_request._scene].Remove(current_request._plant);
+                // _plants[current_request._scene].Remove(current_request._plant);
+                DestroyPlant(current_request._plant);
             }
             
             // Else Plant expired and is invalid
@@ -117,5 +118,12 @@ public class PlantManager : MonoBehaviour
     public List<PlantBaseClass> GetActivePlantsInScene()
     {
         return _plants[(int)SceneLoader.Instance.currentScene];
+    }
+
+    public void DestroyPlant(PlantBaseClass plant)
+    {
+        GameManager.Instance.GetCropsManager().deleteEntry(plant._pos_tilemap);
+        _plants[plant._plant_scene].Remove(plant);
+        Destroy(plant.gameObject);
     }
 }
