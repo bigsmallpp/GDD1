@@ -13,7 +13,7 @@ public class AnimalScript : MonoBehaviour
     //TODO put boundaries only one time anywhere
     private float leftBoundary = -5.2f;
     private float rightBoundary = -2.1f;
-    private float topBoundary = 4.6f;
+    private float topBoundary = 3.3f;
     private float bottomBoundary = 1.45f;
 
     private bool isMoving = false;

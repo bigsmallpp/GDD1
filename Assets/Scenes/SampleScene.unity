@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a20b50e268888409a7fae00fbb3275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _seconds_per_day: 10
-  _days_per_season: 5
+  _seconds_per_day: 30
+  _days_per_season: 4
   _plant_manager: {fileID: 425642017}
   _field_manager: {fileID: 1066327171}
   _light_manager: {fileID: 696930661}
@@ -11111,7 +11111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -299.1, y: -30}
+  m_AnchoredPosition: {x: -299.10004, y: -30}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1700764556
