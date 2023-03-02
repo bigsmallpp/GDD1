@@ -75,20 +75,22 @@ public class Item
     {
         switch (itemType)
         {
-            case ItemType.potato: return ItemAssets.Instance.potato;
-            case ItemType.tomato: return ItemAssets.Instance.tomato;
-            case ItemType.tomato_seed: return ItemAssets.Instance.tomato_seed;
             case ItemType.chicken_upgrade: return ItemAssets.Instance.chicken_upgrade;
             case ItemType.egg: return ItemAssets.Instance.egg;
-            case ItemType.wheat_seed: return ItemAssets.Instance.tomato_seed;
+            case ItemType.carrot_seed: return ItemAssets.Instance.carrot_seed;
             case ItemType.carrot: return ItemAssets.Instance.carrot;
+            case ItemType.cauliflower_seed: return ItemAssets.Instance.cauliflower_seed;
             case ItemType.cauliflower: return ItemAssets.Instance.cauliflower;
+            case ItemType.wheat_seed: return ItemAssets.Instance.wheat_seed;
             case ItemType.wheat: return ItemAssets.Instance.wheat;
             case ItemType.milk: return ItemAssets.Instance.milk;
             case ItemType.wool: return ItemAssets.Instance.wool;
+            case ItemType.lamp: return ItemAssets.Instance.lamp;
+            case ItemType.scissor: return ItemAssets.Instance.scissors;
+            case ItemType.bucket: return ItemAssets.Instance.bucket;
             
             default:
-                return ItemAssets.Instance.chicken_upgrade;
+                throw new NotImplementedException();
         }
     }
 

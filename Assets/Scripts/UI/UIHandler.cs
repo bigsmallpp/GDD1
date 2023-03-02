@@ -79,4 +79,9 @@ public class UIHandler : MonoBehaviour
             UnlockTool(SelectedToolHighlighted.ToolbarIndices.Scissors);
         }
     }
+
+    public void UpdateSeedsInToolbar(Item.ItemType type, bool is_present)
+    {
+        _toolHighlight.EnableSeeds(type, is_present);
+    }
 }

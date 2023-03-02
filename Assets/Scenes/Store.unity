@@ -511,7 +511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3cb19aadc8e05469f008526f5af1c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: cb6746ff41026d446a53be4413c20e17, type: 3}
+  _sprite: {fileID: 21300000, guid: ca17ffd345e5c894ba895168534347bc, type: 3}
   _name: {fileID: 1941247162}
   _price: {fileID: 698139419}
   _outline: {fileID: 155151123}
@@ -1265,7 +1265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3cb19aadc8e05469f008526f5af1c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: dd7c93306d299cc458cc3bf818bf64be, type: 3}
+  _sprite: {fileID: 21300000, guid: 4b53f7824bfdab34a9dcac72d476f1c5, type: 3}
   _name: {fileID: 269325229}
   _price: {fileID: 364708402}
   _outline: {fileID: 1317433961}
@@ -3166,7 +3166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &848988250
 MonoBehaviour:
   m_ObjectHideFlags: 0

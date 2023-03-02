@@ -171,4 +171,16 @@ public class ItemDescriptionBox : MonoBehaviour
             Debug.LogError("Unknown Item " + type);
         }
     }
+
+    public void EnablePurchaseButton()
+    {
+        if (_itemReference.prize > _store.GetMoney())
+        {
+            _purchase.interactable = false;
+        }
+        else
+        {
+            _purchase.interactable = true;
+        }
+    }
 }

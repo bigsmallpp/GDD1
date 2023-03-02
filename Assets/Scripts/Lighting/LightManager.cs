@@ -22,7 +22,11 @@ public class LightManager : MonoBehaviour
 
     private void Start()
     {
-        // TODO Enable flashlight as gadget for nighttime
+        if (_player_light == null)
+        {
+            _player_light = GameObject.FindWithTag("Player").GetComponent<Light2D>();
+        }
+        
         _player_light.enabled = false;
         
         // Might be null on first scene load

@@ -31,6 +31,11 @@ public class PlayerInventory : MonoBehaviour
         _itemReferences.Add(new_item, obj);
         obj.GetComponent<InventoryInteraction>().SetItem(new_item);
         obj.transform.parent = _itemContents.transform;
+        
+        if (CheckIsSeed(new_item))
+        {
+            UIHandler.Instance.UpdateSeedsInToolbar(new_item.itemType, CheckIsPresentInInventory(new_item.itemType));
+        }
     }
 
     public void AddItem(Item item)
@@ -65,6 +70,25 @@ public class PlayerInventory : MonoBehaviour
         _items.Add(item);
         CreateNewItemEntry(item);
         UpdateItemStats(item);
+
+        if (CheckIsSeed(item))
+        {
+            UIHandler.Instance.UpdateSeedsInToolbar(item.itemType, CheckIsPresentInInventory(item.itemType));
+        }
+    }
+
+    private bool CheckIsSeed(Item item)
+    {
+        switch (item.itemType)
+        {
+            case Item.ItemType.carrot_seed:
+            case Item.ItemType.cauliflower_seed:
+            case Item.ItemType.wheat_seed:
+                return true;
+            
+            default:
+                return false;
+        }
     }
     
     public void RemoveItem(Item item)
@@ -72,6 +96,11 @@ public class PlayerInventory : MonoBehaviour
         // Only use this if item is not destroyed right after
         _items.Remove(item);
         _itemReferences.Remove(item);
+        
+        if (CheckIsSeed(item))
+        {
+            UIHandler.Instance.UpdateSeedsInToolbar(item.itemType, CheckIsPresentInInventory(item.itemType));
+        }
     }
 
     public void DecreaseItem(Item item, int amount)
@@ -90,14 +119,17 @@ public class PlayerInventory : MonoBehaviour
             }
             if(itemInInventory != null && itemInInventory.amount <= 0)
             {
-                _items.Remove(itemInInventory);
-                _itemReferences.Remove(itemInInventory);
+                PruneEntries(itemInInventory);
             }
         }
         else
         {
-            _items.Remove(item);
-            _itemReferences.Remove(item);
+            PruneEntries(item);
+        }
+        
+        if (CheckIsSeed(item))
+        {
+            UIHandler.Instance.UpdateSeedsInToolbar(item.itemType, CheckIsPresentInInventory(item.itemType));
         }
     }
 
@@ -208,5 +240,18 @@ public class PlayerInventory : MonoBehaviour
     public void AddItemAfterSplit(Item item)
     {
         _items.Add(item);
+    }
+
+    private bool CheckIsPresentInInventory(Item.ItemType type)
+    {
+        foreach(Item inventoryItem in _items)
+        {
+            if (inventoryItem.itemType == type)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -338,13 +338,12 @@ public class SaveManager : MonoBehaviour
             if (Directory.Exists(SAVE_DIR))
             {
                 Directory.Delete(SAVE_DIR, true);
-                Directory.CreateDirectory(SAVE_DIR);
                 Debug.Log("Deleted Directory");
             }
         }
         catch (Exception e)
         {
-            Debug.Log(e);
+            Debug.LogError(e);
             throw;
         }
     }

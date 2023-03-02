@@ -40,6 +40,7 @@ public class ItemEntry : MonoBehaviour
         _store.GetItemDescriptionBox().SetDescription(ItemDescriptions.GetDescriptionForStore(_item.itemType));
         _store.GetItemDescriptionBox().SetSprite(_sprite);
         _store.GetItemDescriptionBox().SetItemReference(_item);
+        _store.GetItemDescriptionBox().EnablePurchaseButton();
     }
 
     public void Deselect()

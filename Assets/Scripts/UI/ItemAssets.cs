@@ -4,21 +4,28 @@ using UnityEngine;
 
 public class ItemAssets : MonoBehaviour
 {
-    public static ItemAssets Instance { get; private set; }
+    private static ItemAssets _instance = null;
+    public static ItemAssets Instance => _instance;
 
     private void Awake()
     {
-        Instance = this;
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public Transform pfPlantWorld;
 
 
-
-    public Sprite tomato;
-    public Sprite potato;
-    public Sprite tomato_seed;
-    public Sprite tomato_plant;
+    public Sprite wheat_seed;
+    public Sprite carrot_seed;
+    public Sprite cauliflower_seed;
     public Sprite chicken_upgrade;
     public Sprite egg;
     public Sprite carrot;
@@ -26,5 +33,7 @@ public class ItemAssets : MonoBehaviour
     public Sprite cauliflower;
     public Sprite milk;
     public Sprite wool;
-
+    public Sprite lamp;
+    public Sprite scissors;
+    public Sprite bucket;
 }
