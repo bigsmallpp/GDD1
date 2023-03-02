@@ -36,7 +36,7 @@ public class TimeManager : MonoBehaviour
     private DataStore _game_data = null;
 
     private Color _currentLightColor;
-    private bool _dayEnded = false;
+    public bool _dayEnded = false;
 
     // Start is called before the first frame update
     void Start()

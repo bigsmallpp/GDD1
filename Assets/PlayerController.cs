@@ -578,7 +578,10 @@ public class PlayerController : MonoBehaviour
 
         if(collision.gameObject.tag == "HouseDoor")
         {
-            endDay_Sound.Play();
+            if (TimeManager.Instance._dayEnded)
+            {
+                endDay_Sound.Play();
+            }
             TimeManager.Instance.skipToNextDay();
         }
 

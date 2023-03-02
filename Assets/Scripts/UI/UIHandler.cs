@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private UIInteract _uiInteract;
     [SerializeField] private PlayerInventory _uiInventory;
     [SerializeField] private Chest _uiChest;
+    [SerializeField] private TextMeshProUGUI money_text;
     private bool itemIsBeingDragged = false;
     void Awake()
     {

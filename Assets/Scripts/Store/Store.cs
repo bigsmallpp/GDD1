@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Store : MonoBehaviour
@@ -10,7 +11,8 @@ public class Store : MonoBehaviour
     [SerializeField] private GameObject _itemEntries;
     [SerializeField] private List<GameObject> _items;
     [SerializeField] private AudioSource purchase_Sound;
-
+    [SerializeField] private TextMeshProUGUI money_text;
+    
     private StoreDataStore _storeData;
 
     enum ItemIndices
@@ -29,6 +31,7 @@ public class Store : MonoBehaviour
         _storeData = SaveManager.Instance.LoadStoreData();
         _player_inventory = UIHandler.Instance.GetPlayerInventory();
         _money = SaveManager.Instance.GetPlayerMoney();
+        money_text.text = _money + "$";
         DeselectAll();
         InitFirstItemEntry();
         CheckDisablePermanentItems();
@@ -102,6 +105,7 @@ public class Store : MonoBehaviour
         
         _player_inventory.AddItem(new_item);
         _money -= new_item.prize * new_item.amount;
+        money_text.text = _money + "$";
     }
 
     public void HidePermanentItem(Item.ItemType type)
@@ -142,5 +146,6 @@ public class Store : MonoBehaviour
     public void DecreaseMoney(int amount)
     {
         _money -= amount;
+        money_text.text = _money + "$";
     }
 }
