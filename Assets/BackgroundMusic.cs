@@ -52,4 +52,10 @@ public class BackgroundMusic : MonoBehaviour
             ambient_Sound_field.Stop();
         }
     }
+
+    public void stopMusic()
+    {
+        background_Music.Stop();
+        ambient_Sound.Stop();
+    }
 }

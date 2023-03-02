@@ -52,6 +52,7 @@ public class Chest : MonoBehaviour
         int profit = _chestInventory.SellItems();
         _player.AddProfit(profit);
         Debug.Log("Made a profit of " + profit);
+        SetProfit(0); //Reset Profit
     }
 
     public void SetPlayer(PlayerController player)

@@ -301,6 +301,10 @@ public class SceneLoader : MonoBehaviour
     public void increaseSeason()
     {
         current_season = (current_season + 1) % 4;
+        if (current_season == 3)
+        {
+            GameManager.Instance.GetPlantManager().DestroyAllPlants();
+        }
         if (current_season == 0)
         {
             payDebt();

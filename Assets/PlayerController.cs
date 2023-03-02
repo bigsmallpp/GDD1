@@ -531,17 +531,35 @@ public class PlayerController : MonoBehaviour
             FoodContainer container = collision.gameObject.GetComponent<FoodContainer>();
             if (!container._filled)
             {
-                foreach (Item item in _playerInventory.GetItems())
+                if (container.type == AnimalScript.AnimalType.chicken)
                 {
-                    if (item.itemType == Item.ItemType.wheat)
+                    foreach (Item item in _playerInventory.GetItems())
                     {
-                        //_playerInventory.RemoveItem(item);
-                        fillContainer_Sound.Play();
-                        _playerInventory.DecreaseItem(item, 1);
-                        container.fillContainer();
-                        break;
-                    }
+                        if (item.itemType == Item.ItemType.wheat_seed)
+                        {
+                            //_playerInventory.RemoveItem(item);
+                            fillContainer_Sound.Play();
+                            _playerInventory.DecreaseItem(item, 1);
+                            container.fillContainer();
+                            break;
+                        }
+                    }     
                 }
+                else
+                {
+                    foreach (Item item in _playerInventory.GetItems())
+                    {
+                        if (item.itemType == Item.ItemType.wheat)
+                        {
+                            //_playerInventory.RemoveItem(item);
+                            fillContainer_Sound.Play();
+                            _playerInventory.DecreaseItem(item, 1);
+                            container.fillContainer();
+                            break;
+                        }
+                    }  
+                }
+                
             }
         }
         //transform.position = SceneLoader.Instance.current_position;

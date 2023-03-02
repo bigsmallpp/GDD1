@@ -22,10 +22,12 @@ public class WinFunction : MonoBehaviour
         switch (state)
         {
             case SceneLoader.WinningState.won:
+                BackgroundMusic.Instance.stopMusic();
                 WinText.SetActive(true);
                 win_Sound.Play();
                 break;
             case SceneLoader.WinningState.lost:
+                BackgroundMusic.Instance.stopMusic();
                 LoseText.SetActive(true);
                 lose_Sound.Play();
                 break;
