@@ -58,7 +58,7 @@ public class PlantManager : MonoBehaviour
         Utils.Request remove_plant_request;
         remove_plant_request._scene = (int) SceneLoader.Instance.currentScene;
         remove_plant_request._plant = plant;
-        remove_plant_request._type = Utils.RequestType.Add;
+        remove_plant_request._type = Utils.RequestType.Remove;
         
         _plant_requests.Enqueue(remove_plant_request);
     }
@@ -125,5 +125,16 @@ public class PlantManager : MonoBehaviour
         GameManager.Instance.GetCropsManager().deleteEntry(plant._pos_tilemap);
         _plants[plant._plant_scene].Remove(plant);
         Destroy(plant.gameObject);
+    }
+
+    public void DestroyAllPlants()
+    {
+        foreach (int scene in _plants.Keys)
+        {
+            foreach (PlantBaseClass p in _plants[scene])
+            {
+                RemovePlant(p);
+            }
+        }
     }
 }
