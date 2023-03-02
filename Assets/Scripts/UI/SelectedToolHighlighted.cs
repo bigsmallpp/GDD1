@@ -129,4 +129,22 @@ public class SelectedToolHighlighted : MonoBehaviour
                 throw new NotImplementedException();
         }
     }
+
+    public Item.ItemType GetSelectedSeedType(int ToolNumb)
+    {
+        switch (ToolNumb)
+        {
+            case 1:
+                return Item.ItemType.wheat_seed;
+            
+            case 2:
+                return Item.ItemType.carrot_seed;
+            
+            case 3:
+                return Item.ItemType.cauliflower_seed;
+            
+            default:
+                throw new NotImplementedException();
+        }
+    }
 }

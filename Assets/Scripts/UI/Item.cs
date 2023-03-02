@@ -20,6 +20,14 @@ public class Item
         this.amount = amount;
         prize = price;
     }
+    
+    public Item(ItemType type, int amount)
+    {
+        itemType = type;
+        this.amount = amount;
+        prize = 0;
+        SetPrice();
+    }
 
     public Item()
     {
@@ -108,6 +116,7 @@ public class Item
             case ItemType.cauliflower_seed:
             case ItemType.wheat:
             case ItemType.wheat_seed:
+            case ItemType.milk:
                 return true;
             
             default:

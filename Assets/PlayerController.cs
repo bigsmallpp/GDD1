@@ -214,6 +214,8 @@ public class PlayerController : MonoBehaviour
             if(currentToolNumb >= 1 && currentToolNumb <= 3 && CheckSeedOrPlowPossible() &&
                _toolHighlight.GetSeedsEnbaled(currentToolNumb))
             {
+                Item dummy = new Item(_toolHighlight.GetSelectedSeedType(currentToolNumb), 1);
+                _playerInventory.DecreaseItem(dummy, 1);
                 SeedGrid();
                 return;
             }
