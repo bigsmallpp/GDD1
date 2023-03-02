@@ -175,6 +175,7 @@ MonoBehaviour:
   _day: {fileID: 1879686522}
   _season: {fileID: 114092056}
   _time_enabled: 0
+  _dayEnded: 0
 --- !u!1 &39188217
 GameObject:
   m_ObjectHideFlags: 0
@@ -8923,7 +8924,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0779ad3feec52124e97114bcbb12ef13, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b5112bdfc837a2242b522f068dc1e172, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10464,7 +10465,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0779ad3feec52124e97114bcbb12ef13, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b5112bdfc837a2242b522f068dc1e172, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11294,6 +11295,7 @@ MonoBehaviour:
   _uiInteract: {fileID: 1698204545}
   _uiInventory: {fileID: 1746884682}
   _uiChest: {fileID: 1156309862}
+  money_text: {fileID: 0}
 --- !u!4 &1682156128
 Transform:
   m_ObjectHideFlags: 0
@@ -13259,7 +13261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0779ad3feec52124e97114bcbb12ef13, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b5112bdfc837a2242b522f068dc1e172, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
