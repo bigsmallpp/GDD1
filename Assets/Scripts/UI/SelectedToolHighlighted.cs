@@ -36,7 +36,7 @@ public class SelectedToolHighlighted : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        last_tool = firstTool;
+        last_tool = SceneLoader.Instance.lastSelectedTool;
         childImage = transform.GetChild(firstTool).gameObject.GetComponent<Image>();
         HighlightTool(firstTool); //Highlight first tool
     }
@@ -61,6 +61,7 @@ public class SelectedToolHighlighted : MonoBehaviour
         }
         
         last_tool = ToolNumb;
+        SceneLoader.Instance.lastSelectedTool = last_tool;
     }
 
     public void UnlockTool(ToolbarIndices index)

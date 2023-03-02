@@ -26,6 +26,8 @@ public class SceneLoader : MonoBehaviour
     public AnimalScript chickenPrefab;
     public enum WinningState { running = 0, won = 1, lost = 2};
 
+    public int lastSelectedTool = 0;
+
     //pos inside stable: 0, -4.31
     //pos outside stable: 0.967, -0.609
     private Vector2 _enter_stable_pos;
