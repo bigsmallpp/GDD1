@@ -133,6 +133,7 @@ public class ItemDescriptionBox : MonoBehaviour
             _store.playPurchaseSound();
             _store.HidePermanentItem(_itemReference.itemType);
             SceneLoader.Instance.EnableAnimal(_itemReference.itemType);
+            _store.DecreaseMoney(_itemReference.amount * _itemReference.prize);
             _store.InitFirstItemEntry();
         }
         else if (_itemReference.itemType == Item.ItemType.bucket || _itemReference.itemType == Item.ItemType.lamp ||
@@ -142,6 +143,7 @@ public class ItemDescriptionBox : MonoBehaviour
             // TODO Add Item To Playerbar
             AddItemToToolbar(_itemReference.itemType);
             _store.HidePermanentItem(_itemReference.itemType);
+            _store.DecreaseMoney(_itemReference.amount * _itemReference.prize);
             _store.InitFirstItemEntry();
         }
         else

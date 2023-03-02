@@ -138,4 +138,9 @@ public class Store : MonoBehaviour
     {
         purchase_Sound.Play();
     }
+
+    public void DecreaseMoney(int amount)
+    {
+        _money -= amount;
+    }
 }
