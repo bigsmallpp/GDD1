@@ -270,6 +270,10 @@ public class TimeManager : MonoBehaviour
         
         SaveDataToFile(true);
         _game_data._current_seconds = 0.0f;
+        MapChangeScript Map = GameObject.FindGameObjectWithTag("Map").GetComponent<MapChangeScript>();
+        MapChangeScript LayerAbove = GameObject.FindGameObjectWithTag("LayerAbove").GetComponent<MapChangeScript>();
+        Map.chooseMap();
+        LayerAbove.chooseMap();
     }
 
     public void UpdateLightManager(LightManager light)

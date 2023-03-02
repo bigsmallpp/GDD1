@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
+    //public static PauseMenu Instance;
     //enum View {currPauseView, currControlView};
     public GameObject pauseView;
     public GameObject controlView;

@@ -38,18 +38,19 @@ public class Fieldmanager : MonoBehaviour
         RestoreTileMap();
     }
 
-    public void Seed(Vector3Int pos)
+    public void Seed(Vector3Int pos, AudioSource sound)
     {
         if(!tiles_.ContainsKey((Vector2Int)pos) || plants_.ContainsKey((Vector2Int)pos))
         {
             return;
         }
+        sound.Play();
         tilemap_.SetTile(pos, seeded);
         // tiles_.Remove((Vector2Int)pos);
         tiles_[(Vector2Int)pos] = seeded;
         // plants_.Add((Vector2Int)pos, null);
     }
-    public void Plow(Vector3Int pos)
+    public void Plow(Vector3Int pos, AudioSource sound)
     {
         if (plants_.ContainsKey((Vector2Int)pos))
         {
@@ -65,6 +66,7 @@ public class Fieldmanager : MonoBehaviour
         {
             return;
         }
+        sound.Play();
         tilemap_.SetTile(pos, plowed);
         tiles_.Add((Vector2Int)pos, plowed);
     }

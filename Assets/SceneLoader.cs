@@ -113,6 +113,7 @@ public class SceneLoader : MonoBehaviour
             //Destroy all shit
             Destroy(gameObject);
             Destroy(AnimalManager.Instance.gameObject);
+            Destroy(BackgroundMusic.Instance.gameObject);
             break;
             
             case 1:

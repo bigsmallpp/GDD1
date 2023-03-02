@@ -9,6 +9,7 @@ public class Store : MonoBehaviour
     [SerializeField] private ItemDescriptionBox _itemDescriptionBox;
     [SerializeField] private GameObject _itemEntries;
     [SerializeField] private List<GameObject> _items;
+    [SerializeField] private AudioSource purchase_Sound;
 
     private StoreDataStore _storeData;
 
@@ -131,5 +132,10 @@ public class Store : MonoBehaviour
         }
         
         CheckDisablePermanentItems();
+    }
+    
+    public void playPurchaseSound()
+    {
+        purchase_Sound.Play();
     }
 }

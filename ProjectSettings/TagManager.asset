@@ -25,6 +25,8 @@ TagManager:
   - Sheep
   - StorePath
   - WinObject
+  - Map
+  - LayerAbove
   layers:
   - Default
   - TransparentFX

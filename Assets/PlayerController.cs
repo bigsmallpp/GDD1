@@ -65,7 +65,15 @@ public class PlayerController : MonoBehaviour
     public float autoMoveSpeedScaling = 0.35f;
     private Direction _moving_direction = 0;
 
-
+    //Audio
+    [SerializeField] private AudioSource scissor_Sound;
+    [SerializeField] private AudioSource milk_and_egg_Sound; //milk and egg
+    [SerializeField] private AudioSource dig_Sound;
+    [SerializeField] private AudioSource harvest_Sound;
+    [SerializeField] private AudioSource endDay_Sound;
+    [SerializeField] private AudioSource fillContainer_Sound;
+    [SerializeField] private AudioSource seed_Sound;
+    
     private void Awake()
     {
     }
@@ -215,6 +223,7 @@ public class PlayerController : MonoBehaviour
                 // TODO Sheep Stuff
                 //sheepScript sheep = collision.gameObject.GetComponent<sheepScript>();
                 //sheep.switchWoolState();
+                scissor_Sound.Play();
                 AnimalManager.Instance.handleSheep();
                 Item wool = new Item(Item.ItemType.wool, 1, 280);
                 _playerInventory.AddItem(wool);
@@ -228,6 +237,7 @@ public class PlayerController : MonoBehaviour
                 // TODO Cow stuff
                 Debug.Log("Milk cow!");
                 //TODO: Get milk object
+                milk_and_egg_Sound.Play();
                 Item milk = new Item(Item.ItemType.milk, 1, 250);
                 _playerInventory.AddItem(milk);
                 AnimalManager.Instance.cowHasMilk = false;
@@ -243,7 +253,8 @@ public class PlayerController : MonoBehaviour
         {
             if(fieldManager.CheckStatus(selectedTilePos) == 0)
             {
-                fieldManager.Plow(selectedTilePos);
+                //dig_Sound.Play();
+                fieldManager.Plow(selectedTilePos, dig_Sound);
                 return;
             }
         }
@@ -253,7 +264,8 @@ public class PlayerController : MonoBehaviour
     {
         if(selectable && fieldManager.CheckStatus(selectedTilePos) == 1)
         {
-            fieldManager.Seed(selectedTilePos);
+            //seed_Sound.Play();
+            fieldManager.Seed(selectedTilePos, seed_Sound);
             return;
         }
     }
@@ -278,6 +290,7 @@ public class PlayerController : MonoBehaviour
             plantObj.TryGetComponent(out PlantBaseClass plant);
             if (plant != null && plant.isRipe())
             {
+                harvest_Sound.Play();
                 Item new_item = new Item();
                 new_item.Duplicate(plant.getItem());
                 _playerInventory.AddItem(new_item);
@@ -519,6 +532,7 @@ public class PlayerController : MonoBehaviour
                     if (item.itemType == Item.ItemType.wheat)
                     {
                         //_playerInventory.RemoveItem(item);
+                        fillContainer_Sound.Play();
                         _playerInventory.DecreaseItem(item, 1);
                         container.fillContainer();
                         break;
@@ -542,6 +556,7 @@ public class PlayerController : MonoBehaviour
 
         if(collision.gameObject.tag == "HouseDoor")
         {
+            endDay_Sound.Play();
             TimeManager.Instance.skipToNextDay();
         }
 
@@ -753,5 +768,10 @@ public class PlayerController : MonoBehaviour
         //WinningShowcaseObject = GameObject.FindGameObjectWithTag("WinObject").GetComponent<WinFunction>();
         WinningShowcaseObject.gameObject.SetActive(true);
         WinningShowcaseObject.setWinState(SceneLoader.WinningState.won);
+    }
+
+    public void playEggSound()
+    {
+        milk_and_egg_Sound.Play();
     }
 }

@@ -130,6 +130,7 @@ public class ItemDescriptionBox : MonoBehaviour
         if (_itemReference.itemType == Item.ItemType.chicken_upgrade || _itemReference.itemType == Item.ItemType.sheep_upgrade ||
             _itemReference.itemType == Item.ItemType.cow_upgrade)
         {
+            _store.playPurchaseSound();
             _store.HidePermanentItem(_itemReference.itemType);
             SceneLoader.Instance.EnableAnimal(_itemReference.itemType);
             _store.InitFirstItemEntry();
@@ -137,6 +138,7 @@ public class ItemDescriptionBox : MonoBehaviour
         else if (_itemReference.itemType == Item.ItemType.bucket || _itemReference.itemType == Item.ItemType.lamp ||
                  _itemReference.itemType == Item.ItemType.scissor)
         {
+            _store.playPurchaseSound();
             // TODO Add Item To Playerbar
             AddItemToToolbar(_itemReference.itemType);
             _store.HidePermanentItem(_itemReference.itemType);
@@ -144,6 +146,7 @@ public class ItemDescriptionBox : MonoBehaviour
         }
         else
         {
+            _store.playPurchaseSound();
             _store.AddItemToPlayer(_itemReference);
             ResetAmount();
         }

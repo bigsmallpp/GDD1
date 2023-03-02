@@ -7,6 +7,9 @@ public class WinFunction : MonoBehaviour
     // Start is called before the first frame update
     public GameObject WinText;
     public GameObject LoseText;
+    
+    [SerializeField] private AudioSource win_Sound;
+    [SerializeField] private AudioSource lose_Sound;
 
     // Update is called once per frame
     void Update()
@@ -20,9 +23,11 @@ public class WinFunction : MonoBehaviour
         {
             case SceneLoader.WinningState.won:
                 WinText.SetActive(true);
+                win_Sound.Play();
                 break;
             case SceneLoader.WinningState.lost:
                 LoseText.SetActive(true);
+                lose_Sound.Play();
                 break;
         }
     }
