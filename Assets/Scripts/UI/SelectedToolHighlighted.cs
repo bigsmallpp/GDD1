@@ -56,7 +56,7 @@ public class SelectedToolHighlighted : MonoBehaviour
         
         if (ToolNumb > 0 && ToolNumb < 4)
         {
-            _customizableSlotsCrosses[ToolNumb - 1].enabled = !GetSeedsEnbaled(ToolNumb);;
+            _customizableSlotsCrosses[ToolNumb - 1].enabled = !GetSeedsEnbaled(ToolNumb);
             _customizableSlotsCrosses[ToolNumb - 1].color = colorSelected;
         }
         
@@ -110,6 +110,8 @@ public class SelectedToolHighlighted : MonoBehaviour
             default:
                 throw new NotImplementedException();
         }
+        
+        UpdateCrosses();
     }
 
     public bool GetSeedsEnbaled(int ToolIndex)
@@ -145,6 +147,14 @@ public class SelectedToolHighlighted : MonoBehaviour
             
             default:
                 throw new NotImplementedException();
+        }
+    }
+
+    public void UpdateCrosses()
+    {
+        for(int i = 1; i < 4; i++)
+        { 
+            _customizableSlotsCrosses[i - 1].enabled = !GetSeedsEnbaled(i);
         }
     }
 }
