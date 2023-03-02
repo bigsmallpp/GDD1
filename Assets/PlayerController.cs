@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
         
         _uiInteract = UIHandler.Instance.GetUIInteract();
         _toolHighlight = UIHandler.Instance.GetSelectedTool();
+        currentToolNumb = SceneLoader.Instance.lastSelectedTool;
         
         _chest = UIHandler.Instance.GetChest();
         _chest.SetPlayer(this);
