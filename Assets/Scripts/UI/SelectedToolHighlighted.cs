@@ -153,8 +153,11 @@ public class SelectedToolHighlighted : MonoBehaviour
     public void UpdateCrosses()
     {
         for(int i = 1; i < 4; i++)
-        { 
-            _customizableSlotsCrosses[i - 1].enabled = !GetSeedsEnbaled(i);
+        {
+            if (last_tool == i)
+            {
+                _customizableSlotsCrosses[i - 1].enabled = !GetSeedsEnbaled(i);
+            }
         }
     }
 }

@@ -174,8 +174,11 @@ public class SceneLoader : MonoBehaviour
             
             case 5:
                 // TODO Enter Store
+                previousScene = currentScene;
+                currentScene = Scene.Shop;
                 SaveManager.Instance.UpdatePlayerData();
                 TimeManager.Instance.PauseTimeProgression();
+                SaveManager.Instance.UpdateTilesData(GameManager.Instance.GetCropsManager().GetTiles(), (int) previousScene);
                 SceneManager.LoadScene("Store");
                 currentScene = Scene.Shop;
                 currentSceneString = SceneString.shop;
@@ -183,6 +186,8 @@ public class SceneLoader : MonoBehaviour
             
             case 6:
                 // TODO Leave Store
+                previousScene = currentScene;
+                currentScene = Scene.Outside;
                 isLeavingStore = true;
                 SceneManager.LoadScene("SampleScene");
                 TimeManager.Instance.UnpauseTimeProgression();
