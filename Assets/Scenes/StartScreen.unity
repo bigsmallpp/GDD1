@@ -1357,7 +1357,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pfWeed: {fileID: 464348996467849774, guid: 22ec2bba3dfd9744b9fccbe808bcf19e, type: 3}
   _plowed: {fileID: 11400000, guid: 797ef383d33f9d044aceb6c511a96d13, type: 2}
-  _seeded: {fileID: 11400000, guid: fe2dcb0186f04df4b83b57e70179ee9f, type: 2}
+  _seeded_wheat: {fileID: 11400000, guid: fe2dcb0186f04df4b83b57e70179ee9f, type: 2}
+  _seeded_carrot: {fileID: 11400000, guid: 8d9fdb669a0562a4b99662db796808ef, type: 2}
+  _seeded_cauliflower: {fileID: 11400000, guid: 1621106aa2ebb0544be8d86f95e4d544, type: 2}
   _tiles:
     outside_tiles_: []
     field_tiles_: []

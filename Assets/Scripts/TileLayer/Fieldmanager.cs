@@ -118,7 +118,10 @@ public class Fieldmanager : MonoBehaviour
                 Vector3Int pos = new Vector3Int(tile.Key.x, tile.Key.y, 0);
                 Vector3 poscenter = tilemap_.GetCellCenterWorld(pos);
                 
-                tilemap_.SetTile(pos, null);
+                if (tilemap_ != null)
+                {
+                    tilemap_.SetTile(pos, null);
+                }
 
                 // TODO Store seeded plant type in tile map
                 // GameObject prefab = GetPlantPrefab(seeded_plant_type);
@@ -138,8 +141,11 @@ public class Fieldmanager : MonoBehaviour
                 Vector3Int pos = new Vector3Int(tile.Key.x, tile.Key.y, 0);
                 Vector3 poscenter = tilemap_.GetCellCenterWorld(pos);
 
-                tilemap_.SetTile(pos, null);
-
+                if (tilemap_ != null)
+                {
+                    tilemap_.SetTile(pos, null);
+                }
+                
                 // TODO Store seeded plant type in tile map
                 // GameObject prefab = GetPlantPrefab(seeded_plant_type);
                 // GameObject val = Instantiate(prefab, poscenter, Quaternion.identity);
@@ -158,7 +164,10 @@ public class Fieldmanager : MonoBehaviour
                 Vector3Int pos = new Vector3Int(tile.Key.x, tile.Key.y, 0);
                 Vector3 poscenter = tilemap_.GetCellCenterWorld(pos);
 
-                tilemap_.SetTile(pos, null);
+                if (tilemap_ != null)
+                {
+                    tilemap_.SetTile(pos, null);
+                }
 
                 // TODO Store seeded plant type in tile map
                 // GameObject prefab = GetPlantPrefab(seeded_plant_type);

@@ -38,7 +38,7 @@ public class SelectedToolHighlighted : MonoBehaviour
     {
         last_tool = SceneLoader.Instance.lastSelectedTool;
         childImage = transform.GetChild(last_tool).gameObject.GetComponent<Image>();
-        Debug.Log("START HIGHLIGHT LAST TOOL CALLED");
+        Debug.Log("START HIGHLIGHT LAST TOOL CALLED " + last_tool);
         HighlightTool(last_tool);
     }
 
