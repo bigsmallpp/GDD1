@@ -162,4 +162,9 @@ public class SelectedToolHighlighted : MonoBehaviour
             }
         }
     }
+
+    public int getLastTool()
+    {
+        return last_tool;
+    }
 }

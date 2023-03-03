@@ -15,7 +15,10 @@ public static class Utils
     {
         Empty,
         Plowed,
-        Seeded
+        Seeded,
+        _seeded_wheat,
+        _seeded_carrot,
+        _seeded_cauliflower
     }
     
     public enum PlantStage

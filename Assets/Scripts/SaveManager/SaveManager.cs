@@ -14,7 +14,9 @@ public class SaveManager : MonoBehaviour
 
     [SerializeField] private GameObject _pfWeed;
     [SerializeField] private TileBase _plowed;
-    [SerializeField] private TileBase _seeded;
+    [SerializeField] private TileBase _seeded_wheat;
+    [SerializeField] private TileBase _seeded_carrot;
+    [SerializeField] private TileBase _seeded_cauliflower;
 
     private TimeManager _time_manager = null;
     private AnimalManager _animal_manager = null;
@@ -460,6 +462,21 @@ public class SaveManager : MonoBehaviour
         foreach(KeyValuePair<Vector2Int, TileBase> t in tiles_)
         {
             Utils.TileStage stage = t.Value == _plowed ? Utils.TileStage.Plowed : Utils.TileStage.Seeded;
+            if(stage == Utils.TileStage.Seeded)
+            {
+                if(t.Value == _seeded_wheat)
+                {
+                    stage = Utils.TileStage._seeded_wheat;
+                }
+                if(t.Value == _seeded_carrot)
+                {
+                    stage = Utils.TileStage._seeded_carrot;
+                }
+                if(t.Value == _seeded_cauliflower)
+                {
+                    stage = Utils.TileStage._seeded_cauliflower;
+                }
+            }
             TilesDataStore saved_data = new TilesDataStore(t.Key, stage);
 
             if (scene == (int)SceneLoader.Scene.Outside)

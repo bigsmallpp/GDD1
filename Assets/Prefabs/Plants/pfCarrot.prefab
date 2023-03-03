@@ -108,9 +108,9 @@ MonoBehaviour:
   _pos_tilemap: {x: 0, y: 0, z: 0}
   _interact_text: Press E To Harvest
   _item:
-    itemType: 0
-    amount: 0
-    prize: 0
+    itemType: 11
+    amount: 1
+    prize: 200
   _loaded_from_file: 0
 --- !u!61 &-2357800075065387835
 BoxCollider2D:

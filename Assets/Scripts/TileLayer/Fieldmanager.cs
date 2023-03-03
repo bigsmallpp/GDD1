@@ -7,11 +7,14 @@ using UnityEngine.Tilemaps;
 public class Fieldmanager : MonoBehaviour
 {
     [SerializeField] TileBase plowed;
-    [SerializeField] TileBase seeded;
+    [SerializeField] TileBase seeded_wheat;
+    [SerializeField] TileBase seeded_carrot;
+    [SerializeField] TileBase seeded_cauliflower;
     [SerializeField] Tilemap tilemap_;
     [SerializeField] GameObject wheatPrefab;
     [SerializeField] GameObject carrotPrefab;
     [SerializeField] GameObject cauliflowerPrefab;
+    [SerializeField] SelectedToolHighlighted selectedTool_;
     Dictionary<Vector2Int, GameObject> plants_;
     Dictionary<Vector2Int, TileBase> tiles_;
 
@@ -45,9 +48,24 @@ public class Fieldmanager : MonoBehaviour
             return;
         }
         sound.Play();
-        tilemap_.SetTile(pos, seeded);
-        // tiles_.Remove((Vector2Int)pos);
-        tiles_[(Vector2Int)pos] = seeded;
+        if(selectedTool_.getLastTool() == 1)
+        {
+            tilemap_.SetTile(pos, seeded_wheat);
+            // tiles_.Remove((Vector2Int)pos);
+            tiles_[(Vector2Int)pos] = seeded_wheat;
+        }
+        if (selectedTool_.getLastTool() == 2)
+        {
+            tilemap_.SetTile(pos, seeded_carrot);
+            // tiles_.Remove((Vector2Int)pos);
+            tiles_[(Vector2Int)pos] = seeded_carrot;
+        }
+        if (selectedTool_.getLastTool() == 3)
+        {
+            tilemap_.SetTile(pos, seeded_cauliflower);
+            // tiles_.Remove((Vector2Int)pos);
+            tiles_[(Vector2Int)pos] = seeded_cauliflower;
+        }        
         // plants_.Add((Vector2Int)pos, null);
     }
     public void Plow(Vector3Int pos, AudioSource sound)
@@ -94,7 +112,7 @@ public class Fieldmanager : MonoBehaviour
         List<Vector2Int> keys_to_remove = new List<Vector2Int>();
         foreach (var tile in tiles_)
         {
-            if(tile.Value == seeded)
+            if(tile.Value == seeded_wheat)
             {
                 keys_to_remove.Add(tile.Key);
                 Vector3Int pos = new Vector3Int(tile.Key.x, tile.Key.y, 0);
@@ -112,6 +130,47 @@ public class Fieldmanager : MonoBehaviour
                 GameManager.Instance.GetPlantManager().AddPlant(val.GetComponent<PlantBaseClass>());
                 
                 plants_.Add(tile.Key, val);
+                continue;
+            }
+            if (tile.Value == seeded_carrot)
+            {
+                keys_to_remove.Add(tile.Key);
+                Vector3Int pos = new Vector3Int(tile.Key.x, tile.Key.y, 0);
+                Vector3 poscenter = tilemap_.GetCellCenterWorld(pos);
+
+                tilemap_.SetTile(pos, null);
+
+                // TODO Store seeded plant type in tile map
+                // GameObject prefab = GetPlantPrefab(seeded_plant_type);
+                // GameObject val = Instantiate(prefab, poscenter, Quaternion.identity);
+
+                GameObject val = Instantiate(carrotPrefab, poscenter, Quaternion.identity);
+                val.GetComponent<PlantBaseClass>().SetScene((int)SceneLoader.Instance.currentScene);
+                val.GetComponent<PlantBaseClass>().SetTileMapPos(pos);
+                GameManager.Instance.GetPlantManager().AddPlant(val.GetComponent<PlantBaseClass>());
+
+                plants_.Add(tile.Key, val);
+                continue;
+            }
+            if (tile.Value == seeded_cauliflower)
+            {
+                keys_to_remove.Add(tile.Key);
+                Vector3Int pos = new Vector3Int(tile.Key.x, tile.Key.y, 0);
+                Vector3 poscenter = tilemap_.GetCellCenterWorld(pos);
+
+                tilemap_.SetTile(pos, null);
+
+                // TODO Store seeded plant type in tile map
+                // GameObject prefab = GetPlantPrefab(seeded_plant_type);
+                // GameObject val = Instantiate(prefab, poscenter, Quaternion.identity);
+
+                GameObject val = Instantiate(cauliflowerPrefab, poscenter, Quaternion.identity);
+                val.GetComponent<PlantBaseClass>().SetScene((int)SceneLoader.Instance.currentScene);
+                val.GetComponent<PlantBaseClass>().SetTileMapPos(pos);
+                GameManager.Instance.GetPlantManager().AddPlant(val.GetComponent<PlantBaseClass>());
+
+                plants_.Add(tile.Key, val);
+                continue;
             }
         }
 
@@ -129,7 +188,7 @@ public class Fieldmanager : MonoBehaviour
         List<Vector2Int> keys_to_remove = new List<Vector2Int>();
         foreach (var tile in SaveManager.Instance.GetTileStore().field_tiles_)
         {
-            if(tile.stage_ == Utils.TileStage.Seeded)
+            if(tile.stage_ == Utils.TileStage._seeded_wheat)
             {
                 keys_to_remove.Add(tile.pos_);
                 Vector3Int pos = new Vector3Int(tile.pos_.x, tile.pos_.y, 0);
@@ -152,6 +211,54 @@ public class Fieldmanager : MonoBehaviour
                 val.SetActive(false);
                 
                 GameManager.Instance.GetPlantManager().AddPlant(val.GetComponent<PlantBaseClass>(), (int) SceneLoader.Scene.Field);
+            }
+            if (tile.stage_ == Utils.TileStage._seeded_carrot)
+            {
+                keys_to_remove.Add(tile.pos_);
+                Vector3Int pos = new Vector3Int(tile.pos_.x, tile.pos_.y, 0);
+                Vector3 poscenter = tilemap_.GetCellCenterWorld(pos);
+
+                // TODO Store seeded plant type in tile map
+                // GameObject prefab = GetPlantPrefab(seeded_plant_type);
+                // GameObject val = Instantiate(prefab, poscenter, Quaternion.identity);
+
+                GameObject val = Instantiate(carrotPrefab, poscenter, Quaternion.identity);
+
+                val.GetComponent<PlantBaseClass>()._plant_type = Utils.PlantType.Carrot;
+                // val.GetComponent<PlantBaseClass>()._plant_type = seeded_plant_type;
+
+                val.GetComponent<PlantBaseClass>().SetScene((int)SceneLoader.Scene.Field);
+                val.GetComponent<PlantBaseClass>().SetTileMapPos(pos);
+                val.GetComponent<PlantBaseClass>()._loaded_from_file = true;
+                val.GetComponent<PlantBaseClass>()._current_plant_stage = Utils.PlantStage.Seed;
+                val.GetComponent<PlantBaseClass>().SwitchToNextSprite();
+                val.SetActive(false);
+
+                GameManager.Instance.GetPlantManager().AddPlant(val.GetComponent<PlantBaseClass>(), (int)SceneLoader.Scene.Field);
+            }
+            if (tile.stage_ == Utils.TileStage._seeded_cauliflower)
+            {
+                keys_to_remove.Add(tile.pos_);
+                Vector3Int pos = new Vector3Int(tile.pos_.x, tile.pos_.y, 0);
+                Vector3 poscenter = tilemap_.GetCellCenterWorld(pos);
+
+                // TODO Store seeded plant type in tile map
+                // GameObject prefab = GetPlantPrefab(seeded_plant_type);
+                // GameObject val = Instantiate(prefab, poscenter, Quaternion.identity);
+
+                GameObject val = Instantiate(cauliflowerPrefab, poscenter, Quaternion.identity);
+
+                val.GetComponent<PlantBaseClass>()._plant_type = Utils.PlantType.Cauliflower;
+                // val.GetComponent<PlantBaseClass>()._plant_type = seeded_plant_type;
+
+                val.GetComponent<PlantBaseClass>().SetScene((int)SceneLoader.Scene.Field);
+                val.GetComponent<PlantBaseClass>().SetTileMapPos(pos);
+                val.GetComponent<PlantBaseClass>()._loaded_from_file = true;
+                val.GetComponent<PlantBaseClass>()._current_plant_stage = Utils.PlantStage.Seed;
+                val.GetComponent<PlantBaseClass>().SwitchToNextSprite();
+                val.SetActive(false);
+
+                GameManager.Instance.GetPlantManager().AddPlant(val.GetComponent<PlantBaseClass>(), (int)SceneLoader.Scene.Field);
             }
         }
 
@@ -212,7 +319,22 @@ public class Fieldmanager : MonoBehaviour
         
         foreach(TilesDataStore t in saved_tile)
         {
-            TileBase tile_base = t.stage_ == Utils.TileStage.Plowed ? plowed : seeded;
+            TileBase tile_base = t.stage_ == Utils.TileStage.Plowed ? plowed : null;
+            if(tile_base == null)
+            {
+                if(t.stage_ == Utils.TileStage._seeded_cauliflower)
+                {
+                    tile_base = seeded_cauliflower;
+                }
+                if (t.stage_ == Utils.TileStage._seeded_wheat)
+                {
+                    tile_base = seeded_wheat;
+                }
+                if (t.stage_ == Utils.TileStage._seeded_carrot)
+                {
+                    tile_base = seeded_carrot;
+                }
+            }
             tiles_.Add(t.pos_, tile_base);
 
             Vector3Int pos = new Vector3Int(t.pos_.x, t.pos_.y, 0);
